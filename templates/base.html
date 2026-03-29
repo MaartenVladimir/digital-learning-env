@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}DLE{% endblock %}</title>
+
+  <!-- KaTeX for rendering math problems -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <!-- MathLive for math input (ESM — registers <math-field> custom element) -->
+  <script type="module">
+    import 'https://esm.sh/mathlive';
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: sans-serif;
+      max-width: 680px;
+      margin: 60px auto;
+      padding: 0 24px;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    h2 { margin-top: 0; }
+
+    .progress {
+      font-size: 0.85em;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .problem-box {
+      font-size: 1.6em;
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+
+    .steps { margin: 16px 0; }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 1.05em;
+    }
+
+    .step.correct  { color: #2a7a2a; }
+    .step.incorrect { color: #b00; }
+
+    .feedback {
+      margin: 12px 0;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.95em;
+    }
+
+    .feedback.ok      { background: #eaf5ea; border-left: 3px solid #2a7a2a; }
+    .feedback.warning { background: #fff8e1; border-left: 3px solid #f9a825; }
+    .feedback.error   { background: #fdecea; border-left: 3px solid #b00; }
+
+    math-field {
+      width: 100%;
+      font-size: 1.2em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 8px;
+    }
+
+    math-field:focus-within {
+      outline: 2px solid #4a90d9;
+      border-color: transparent;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 24px;
+      font-size: 1em;
+      background: #4a90d9;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: #357abd; }
+
+    form input[type="text"], form select {
+      font-size: 1em;
+      padding: 7px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 4px;
+      width: 260px;
+    }
+
+    label { display: block; margin-bottom: 14px; font-weight: 500; }
+  </style>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

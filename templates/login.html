@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Inloggen — DLE{% endblock %}
+{% block content %}
+
+<h2>Digitale Leeromgeving</h2>
+
+<form method="post" action="/login">
+  <label>
+    Leerlingnummer
+    <input type="text" name="student_id" required autofocus placeholder="bijv. leerling01">
+  </label>
+
+  <label>
+    Groep
+    <select name="group">
+      <option value="control">Controle</option>
+      <option value="treatment">Behandeling</option>
+    </select>
+  </label>
+
+  <button type="submit" class="btn">Start</button>
+</form>
+
+{% endblock %}
