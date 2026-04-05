@@ -18,15 +18,16 @@ def init_db():
                 created_at TEXT NOT NULL
             );
             CREATE TABLE IF NOT EXISTS attempts (
-                id         INTEGER PRIMARY KEY AUTOINCREMENT,
-                student_id TEXT NOT NULL,
-                item_id    TEXT NOT NULL,
-                step_input TEXT NOT NULL,
-                is_correct INTEGER NOT NULL,
-                error_id   TEXT,
-                module_id  TEXT NOT NULL,
-                is_crisis  INTEGER NOT NULL DEFAULT 0,
-                timestamp  TEXT NOT NULL
+                id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                student_id   TEXT NOT NULL,
+                item_id      TEXT NOT NULL,
+                step_input   TEXT NOT NULL,
+                is_correct   INTEGER NOT NULL,
+                error_id     TEXT,
+                module_id    TEXT NOT NULL,
+                is_crisis    INTEGER NOT NULL DEFAULT 0,
+                crisis_phase TEXT,
+                timestamp    TEXT NOT NULL
             );
         """)
 
@@ -40,13 +41,14 @@ def register_student(student_id, group):
 
 
 def log_attempt(student_id, item_id, step_input, is_correct,
-                error_id, module_id, is_crisis):
+                error_id, module_id, is_crisis, crisis_phase=None):
     with _conn() as conn:
         conn.execute(
             """INSERT INTO attempts
                (student_id, item_id, step_input, is_correct,
-                error_id, module_id, is_crisis, timestamp)
-               VALUES (?,?,?,?,?,?,?,?)""",
+                error_id, module_id, is_crisis, crisis_phase, timestamp)
+               VALUES (?,?,?,?,?,?,?,?,?)""",
             (student_id, item_id, step_input, int(is_correct),
-             error_id, module_id, int(is_crisis), datetime.utcnow().isoformat()),
+             error_id, module_id, int(is_crisis), crisis_phase,
+             datetime.utcnow().isoformat()),
         )

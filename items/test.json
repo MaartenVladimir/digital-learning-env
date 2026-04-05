@@ -1,0 +1,68 @@
+[
+  {
+    "id": "d1_p0",
+    "form": "ax + b = c",
+    "display": "{{a}}x {{b:term}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "c":     {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "x_sol":     "(c - b) / a"
+    }
+  },
+  {
+    "id": "d1_c2",
+    "form": "a(x + b) = c",
+    "display": "{{a}}(x + {{b}}) = {{c}}",
+    "sympy_str": "{{a}}*(x + {{b}}) = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": true,
+    "crisis_tuple": {
+      "pre_crisis": {
+        "id": "d1_c2_pre",
+        "form": "ax + b = c",
+        "display": "{{a}}x {{b:term}} = {{c}}",
+        "sympy_str": "{{a}}*x + {{b}} = {{c}}",
+        "goal": "solve_equation",
+        "params": {
+          "a":     {"int": [2, 9]},
+          "x_sol": {"int": [1, 8]},
+          "b":     {"int": [1, 9]},
+          "c":     "a * x_sol + b"
+        }
+      },
+      "post_crisis": {
+        "explanation": "Als je a(x + b) = c hebt, moet je eerst de haakjes uitwerken: a·x + a·b = c. Vergeet niet dat je de factor a met élk getal in de haakjes vermenigvuldigt, dus ook met b.",
+        "explanation_latex": "a(x + b) = c \\implies ax + ab = c"
+      }
+    },
+    "params": {
+      "a":     {"int": [2, 7]},
+      "x_sol": {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "c":     "a * (x_sol + b)"
+    }
+  },
+  {
+    "id": "d1_c1",
+    "display": "(x+3)(x-2) = 0",
+    "sympy_str": "(x+3)*(x-2) = 0",
+    "goal": "solve_quadratic_equation",
+    "is_crisis": true,
+    "crisis_tuple": {
+      "pre_crisis": {
+        "id": "d1_c1_pre",
+        "display": "2x - 6 = 0",
+        "sympy_str": "2*x - 6 = 0",
+        "goal": "solve_equation"
+      },
+      "post_crisis": {
+        "explanation": "Als een product van twee factoren gelijk is aan nul, dan moet minstens één van de factoren nul zijn. Dit heet de nulpuntseigenschap: als A · B = 0, dan geldt A = 0 of B = 0. Je hoeft de haakjes dus niet uit te werken — je kunt de vergelijking direct opsplitsen in twee eenvoudige vergelijkingen.",
+        "explanation_latex": "A \\cdot B = 0 \\implies A = 0 \\text{ of } B = 0"
+      }
+    }
+  }
+]

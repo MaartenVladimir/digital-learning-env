@@ -1,37 +1,149 @@
 [
   {
-    "id": "d1_00",
-    "display": "2(x+5)=30",
-    "sympy_str": "2(x+5)=30",
+    "id": "d1_p0",
+    "form": "ax + b = c",
+    "display": "{{a}}x + {{b}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
-    "is_crisis": false
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "x_sol": {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "c":     "a * x_sol + b"
+    }
   },
   {
-    "id": "d1_01",
-    "display": "\\frac{x}{2} + 1 = 3",
-    "sympy_str": "x/2 + 1 = 3",
+    "id": "d1_p1",
+    "form": "ax + b = c",
+    "display": "{{a}}x + {{b}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
-    "is_crisis": false
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "x_sol": {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "c":     "a * x_sol + b"
+    }
   },
   {
-    "id": "d1_02",
-    "display": "2x + 5 = 11",
-    "sympy_str": "2*x + 5 = 11",
+    "id": "d1_p2",
+    "form": "ax + b = c",
+    "display": "{{a}}x + {{b}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
-    "is_crisis": false
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "c":     {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "x_sol":     "(c - b) / a"
+    }
   },
   {
-    "id": "d1_03",
-    "display": "3x - 4 = 2x + 1",
-    "sympy_str": "3*x - 4 = 2*x + 1",
+    "id": "d1_p3",
+    "form": "ax + b = c",
+    "display": "{{a}}x + {{b}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
-    "is_crisis": false
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "c":     {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "x_sol":     "(c - b) / a"
+    }
   },
   {
-    "id": "d1_04",
-    "display": "\\frac{x}{3} + \\frac{x}{6} = 5",
-    "sympy_str": "x/3 + x/6 = 5",
+    "id": "d1_p4",
+    "form": "ax = c",
+    "display": "{{a}}x = {{c:frac}}",
+    "sympy_str": "{{a}}*x = {{c}}",
     "goal": "solve_equation",
-    "is_crisis": false
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 9]},
+      "teller":  {"int": [1, 3]},
+      "noemer":  {"int": [4, 7]},
+      "c":     "teller / noemer",
+      "x_sol":     "c / a"
+    }
+  },
+  {
+    "id": "d1_p5",
+    "form": "ax = c",
+    "display": "{{a}}x {{b:term}} = {{c:frac}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":       {"int": [2, 9]},
+      "b":       {"int": [-3, -1]},
+      "teller":  {"int": [1, 3]},
+      "noemer":  {"int": [4, 7]},
+      "c":     "teller / noemer",
+      "x_sol":     "c / a"
+    }
+  },
+  {
+    "id": "d1_p6",
+    "form": "b + ax = c",
+    "display": "{{b}} + {{a}}x = {{c}}",
+    "sympy_str": "{{b}} + {{a}}*x = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":       {"int": [2, 9]},
+      "b":       {"int": [1, 3]},
+      "x_sol":   {"int": [-8, -3]},
+      "c":       "b + a * x_sol"
+    }
+  },
+  {
+    "id": "d1_c7",
+    "form": "a(x + b) = c",
+    "display": "{{a}}(x + {{b}}) = {{c}}",
+    "sympy_str": "{{a}}*(x + {{b}}) = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": true,
+    "post_crisis": {
+      "explanation": "Als je een vergelijking met haakjes hebt, moet je eerst de haakjes uitwerken. Dit doe je met de bordjesmethode. Leg een bordje op de haakjes en vraag jezelf wat er onder moet staan zodat de vergelijking klopt",
+      "explanation_latex": "2(x - 3) = 30\\newline x - 3 = 15"
+    },
+    "params": {
+      "a":     {"int": [2, 7]},
+      "x_sol": {"int": [1, 8]},
+      "b":     {"int": [1, 9]},
+      "c":     "a * (x_sol + b)"
+    }
+  },
+  {
+    "id": "d1_p8",
+    "form": "ax + b = c",
+    "display": "{{a}}*x {{b:term}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":       {"int": [-2, -4]},
+      "b":       {"int": [-1, -4]},
+      "c":       {"int": [5, 10]},
+      "x_sol":   "(c - b) / a"
+    }
+  },
+  {
+    "id": "d1_p9",
+    "form": "ax + b = c",
+    "display": "{{a}}*x {{b:term}} = {{c}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":       {"int": [-4, -8]},
+      "b":       {"int": [1, 5]},
+      "c":       {"int": [5, 10]},
+      "x_sol":   "(c - b) / a"
+    }
   }
 ]

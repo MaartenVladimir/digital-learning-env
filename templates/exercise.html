@@ -4,30 +4,60 @@
 
 <p class="progress">Module {{ module_id }} &mdash; opgave {{ item_num }} van {{ total }}</p>
 
+{% if post_crisis_explanation %}
+<div class="post-crisis-box">
+  <strong>Uitleg</strong>
+  <p>{{ post_crisis_explanation.text }}</p>
+  {% if post_crisis_explanation.latex %}
+  <div class="post-crisis-formula">
+    <span id="explanation-formula"></span>
+  </div>
+  {% endif %}
+  <p class="post-crisis-prompt">Probeer de opgave nu opnieuw:</p>
+</div>
+{% endif %}
+
 <div class="problem-box">
   <span id="problem-display"></span>
 </div>
 
-<div class="steps" id="steps"></div>
+<div class="steps" id="steps"
+  {% if item.goal == 'direct_answer' %}style="display:none"{% endif %}
+></div>
 
 <div id="input-area">
   <math-field id="mf" virtual-keyboard-mode="onfocus"></math-field>
   <br>
+  {% if item.goal == 'solve_quadratic_equation' %}
+  <button class="btn btn-secondary" onclick="insertOr()" title='Voeg "of" in (∨)'>&nbsp;∨</button>
+  {% endif %}
+  {% if item.goal == 'direct_answer' %}
+  <button class="btn" onclick="checkStep()">Controleer antwoord</button>
+  {% else %}
   <button class="btn" onclick="checkStep()">Controleer stap</button>
+  {% endif %}
 </div>
 
 <div id="feedback" class="feedback" style="display:none"></div>
 
 <script>
-  const ITEM_ID   = {{ item.id | tojson }};
-  const PROBLEM   = {{ item.display | tojson }};
-  const MODULE_ID = {{ module_id | tojson }};
+  const ITEM_ID      = {{ item.id | tojson }};
+  const PROBLEM      = {{ item.display | tojson }};
+  const MODULE_ID    = {{ module_id | tojson }};
+  const IS_DIRECT    = {{ (item.goal == 'direct_answer') | tojson }};
 
   // Render the problem with KaTeX
   katex.render(PROBLEM, document.getElementById('problem-display'), {
     throwOnError: false,
     displayMode: true,
   });
+
+  {% if post_crisis_explanation and post_crisis_explanation.latex %}
+  katex.render({{ post_crisis_explanation.latex | tojson }}, document.getElementById('explanation-formula'), {
+    throwOnError: false,
+    displayMode: true,
+  });
+  {% endif %}
 
   const mf         = document.getElementById('mf');
   const stepsEl    = document.getElementById('steps');
@@ -62,15 +92,17 @@
 
       const msg = data.message;
 
-      if (data.status === 'COMPLETE') {
-        showFeedback('Goed gedaan! Volgende opgave...', 'ok');
+      if (data.status === 'COMPLETE' || data.status === 'PHASE_COMPLETE') {
+        showFeedback(data.message || 'Goed gedaan! Volgende opgave...', 'ok');
         document.getElementById('input-area').style.display = 'none';
-        setTimeout(() => location.reload(), 1400);
+        setTimeout(() => location.reload(), 1800);
         return;
       }
 
       if (!data.is_correct) {
         showFeedback(msg || 'Deze stap klopt niet.', 'error');
+        if (!IS_DIRECT) { mf.setValue(''); }
+        mf.focus();
         return;
       }
 
@@ -85,6 +117,11 @@
       mf.setValue('');
       mf.focus();
     });
+  }
+
+  function insertOr() {
+    mf.insert('\\vee');
+    mf.focus();
   }
 
   // Submit on Enter
