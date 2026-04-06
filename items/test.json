@@ -1,4 +1,7 @@
-[
+{
+  "title": "Test module",
+  "log_steps": false,
+  "items": [
   {
     "id": "d1_p0",
     "form": "ax + b = c",
@@ -65,4 +68,5 @@
       }
     }
   }
-]
+  ]
+}

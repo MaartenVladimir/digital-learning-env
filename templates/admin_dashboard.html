@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Beheer — Dashboard{% endblock %}
+{% block content %}
+
+<div class="admin-header">
+  <h2>Beheer</h2>
+  <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary">Uitloggen</a>
+</div>
+
+<!-- Classes -->
+<div class="admin-section">
+  <h3>Klassen</h3>
+  {% if classes %}
+  <table class="admin-table">
+    <thead><tr><th>ID</th><th>Naam</th><th></th></tr></thead>
+    <tbody>
+    {% for klas in classes %}
+      <tr>
+        <td><code>{{ klas.id }}</code></td>
+        <td>{{ klas.name }}</td>
+        <td><a href="{{ url_for('admin_class', class_id=klas.id) }}" class="btn btn-secondary btn-sm">Beheren</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="admin-empty">Nog geen klassen aangemaakt.</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('admin_create_class') }}" class="inline-form">
+    <input type="text" name="name" placeholder="Naam (bijv. vwo5-2025)" required>
+    <button type="submit" class="btn">Klas aanmaken</button>
+  </form>
+</div>
+
+<!-- Modules -->
+<div class="admin-section">
+  <h3>Geregistreerde modules</h3>
+  {% if all_modules %}
+  <table class="admin-table">
+    <thead><tr><th>ID</th><th>Titel</th></tr></thead>
+    <tbody>
+    {% for m in all_modules %}
+      <tr>
+        <td><code>{{ m.id }}</code></td>
+        <td>{{ m.title }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="admin-empty">Nog geen modules geregistreerd.</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('admin_register_module') }}" class="inline-form">
+    <input type="text" name="module_id" placeholder="ID (bijv. d1)" required>
+    <input type="text" name="title" placeholder="Titel (bijv. Vergelijkingen)" required>
+    <button type="submit" class="btn">Module registreren</button>
+  </form>
+</div>
+
+{% endblock %}

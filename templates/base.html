@@ -144,6 +144,105 @@
       font-weight: 500;
       color: #444;
     }
+
+    /* ── Home page ── */
+    .module-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .module-info { display: flex; align-items: center; gap: 10px; }
+    .module-title { font-weight: 500; }
+
+    .badge {
+      font-size: 0.75em;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #e0e0e0;
+      color: #555;
+    }
+
+    .badge-done     { background: #d4edda; color: #1a6b2a; }
+    .badge-progress { background: #fff3cd; color: #856404; }
+    .badge-new      { background: #e8f0fe; color: #1a56a8; }
+
+    .logout-link { margin-top: 24px; font-size: 0.9em; }
+
+    /* ── Admin ── */
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .admin-header h2 { margin: 0; }
+
+    .klas-id {
+      font-size: 0.6em;
+      color: #888;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    .admin-section {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .admin-section h3 { margin-top: 0; }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92em;
+      margin-bottom: 16px;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 6px 10px;
+      border-bottom: 2px solid #e0e0e0;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .admin-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .admin-date { color: #999; font-size: 0.9em; }
+    .admin-empty { color: #999; font-style: italic; }
+
+    .inline-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .btn-sm { padding: 5px 12px; font-size: 0.85em; }
+
+    .badge-treatment { background: #fde8f0; color: #8b1a4a; }
+    .badge-control   { background: #e8f0fe; color: #1a56a8; }
+
+    .form-error {
+      color: #b00;
+      background: #fdecea;
+      border-left: 3px solid #b00;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>

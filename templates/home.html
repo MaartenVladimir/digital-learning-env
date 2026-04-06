@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Mijn modules — DLE{% endblock %}
+{% block content %}
+
+<h2>Mijn modules</h2>
+
+{% if not modules %}
+  <p>Er zijn nog geen modules beschikbaar. Vraag je docent.</p>
+{% else %}
+  {% for entry in modules %}
+  <div class="module-card">
+    <div class="module-info">
+      <span class="module-title">{{ entry.module.title }}</span>
+      {% if entry.status == 'completed' %}
+        <span class="badge badge-done">Afgerond</span>
+      {% elif entry.status == 'in_progress' %}
+        <span class="badge badge-progress">Bezig</span>
+      {% else %}
+        <span class="badge badge-new">Nieuw</span>
+      {% endif %}
+    </div>
+    <a href="{{ url_for('module', module_id=entry.module.id) }}"
+       class="btn {% if entry.status == 'completed' %}btn-secondary{% endif %}">
+      {% if entry.status == 'completed' %}Opnieuw
+      {% elif entry.status == 'in_progress' %}Verder
+      {% else %}Start
+      {% endif %}
+    </a>
+  </div>
+  {% endfor %}
+{% endif %}
+
+<p class="logout-link"><a href="{{ url_for('logout') }}">Uitloggen</a></p>
+
+{% endblock %}

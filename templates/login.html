@@ -4,21 +4,20 @@
 
 <h2>Digitale Leeromgeving</h2>
 
+{% if error %}
+<p class="form-error">{{ error }}</p>
+{% endif %}
+
 <form method="post" action="/login">
   <label>
-    Leerlingnummer
-    <input type="text" name="student_id" required autofocus placeholder="bijv. leerling01">
+    Klas
+    <input type="text" name="class_id" required autofocus placeholder="bijv. vwo5-2025">
   </label>
-
   <label>
-    Groep
-    <select name="group">
-      <option value="control">Controle</option>
-      <option value="treatment">Behandeling</option>
-    </select>
+    Leerlingnummer
+    <input type="text" name="student_id" required placeholder="bijv. leerling01">
   </label>
-
-  <button type="submit" class="btn">Start</button>
+  <button type="submit" class="btn">Inloggen</button>
 </form>
 
 {% endblock %}
