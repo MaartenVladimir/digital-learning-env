@@ -124,7 +124,7 @@
   {
     "id": "d1_p8",
     "form": "ax + b = c",
-    "display": "{{a}}*x {{b:term}} = {{c}}",
+    "display": "{{a}}x {{b:term}} = {{c}}",
     "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
     "is_crisis": false,
@@ -138,7 +138,7 @@
   {
     "id": "d1_p9",
     "form": "ax + b = c",
-    "display": "{{a}}*x {{b:term}} = {{c}}",
+    "display": "{{a}}x {{b:term}} = {{c}}",
     "sympy_str": "{{a}}*x + {{b}} = {{c}}",
     "goal": "solve_equation",
     "is_crisis": false,
