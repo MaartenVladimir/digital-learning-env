@@ -4,7 +4,10 @@
 
 <div class="admin-header">
   <h2>Beheer</h2>
-  <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary">Uitloggen</a>
+  <div>
+    <a href="{{ url_for('admin.data') }}" class="btn btn-secondary">Data inzien</a>
+    <a href="{{ url_for('admin.logout') }}" class="btn btn-secondary">Uitloggen</a>
+  </div>
 </div>
 
 <!-- Classes -->
@@ -18,7 +21,7 @@
       <tr>
         <td><code>{{ klas.id }}</code></td>
         <td>{{ klas.name }}</td>
-        <td><a href="{{ url_for('admin_class', class_id=klas.id) }}" class="btn btn-secondary btn-sm">Beheren</a></td>
+        <td><a href="{{ url_for('admin.klas', class_id=klas.id) }}" class="btn btn-secondary btn-sm">Beheren</a></td>
       </tr>
     {% endfor %}
     </tbody>
@@ -27,7 +30,7 @@
     <p class="admin-empty">Nog geen klassen aangemaakt.</p>
   {% endif %}
 
-  <form method="post" action="{{ url_for('admin_create_class') }}" class="inline-form">
+  <form method="post" action="{{ url_for('admin.create_class') }}" class="inline-form">
     <input type="text" name="name" placeholder="Naam (bijv. vwo5-2025)" required>
     <button type="submit" class="btn">Klas aanmaken</button>
   </form>
@@ -52,7 +55,7 @@
     <p class="admin-empty">Nog geen modules geregistreerd.</p>
   {% endif %}
 
-  <form method="post" action="{{ url_for('admin_register_module') }}" class="inline-form">
+  <form method="post" action="{{ url_for('admin.register_module') }}" class="inline-form">
     <input type="text" name="module_id" placeholder="ID (bijv. d1)" required>
     <input type="text" name="title" placeholder="Titel (bijv. Vergelijkingen)" required>
     <button type="submit" class="btn">Module registreren</button>

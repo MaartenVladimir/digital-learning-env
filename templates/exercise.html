@@ -99,6 +99,13 @@
         return;
       }
 
+      if (data.status === 'RETRY') {
+        showFeedback(data.message, 'ok');
+        document.getElementById('input-area').style.display = 'none';
+        setTimeout(() => location.reload(), 2000);
+        return;
+      }
+
       if (!data.is_correct) {
         showFeedback(msg || 'Deze stap klopt niet.', 'error');
         if (!IS_DIRECT) { mf.setValue(''); }

@@ -4,7 +4,7 @@
 
 <div class="admin-header">
   <h2>{{ klas.name }} <code class="klas-id">{{ klas.id }}</code></h2>
-  <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">← Terug</a>
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">← Terug</a>
 </div>
 
 <!-- Students -->
@@ -27,7 +27,7 @@
     <p class="admin-empty">Nog geen leerlingen in deze klas.</p>
   {% endif %}
 
-  <form method="post" action="{{ url_for('admin_create_student', class_id=klas.id) }}" class="inline-form">
+  <form method="post" action="{{ url_for('admin.create_student', class_id=klas.id) }}" class="inline-form">
     <input type="text" name="student_id" placeholder="Leerlingnummer" required>
     <select name="group">
       <option value="control">Control</option>
@@ -57,7 +57,7 @@
         </td>
         <td>
           <form method="post"
-                action="{{ url_for('admin_toggle_module', class_id=klas.id, module_id=mod.id) }}"
+                action="{{ url_for('admin.toggle_module', class_id=klas.id, module_id=mod.id) }}"
                 style="display:inline">
             {% if cm.is_visible %}
               <input type="hidden" name="is_visible" value="0">
@@ -77,7 +77,7 @@
   {% endif %}
 
   {% if unassigned_modules %}
-  <form method="post" action="{{ url_for('admin_add_module', class_id=klas.id) }}" class="inline-form">
+  <form method="post" action="{{ url_for('admin.add_module', class_id=klas.id) }}" class="inline-form">
     <select name="module_id">
       {% for m in unassigned_modules %}
         <option value="{{ m.id }}">{{ m.title }} ({{ m.id }})</option>

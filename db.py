@@ -17,28 +17,26 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-# ── Models ────────────────────────────────────────────────────────────────────
-
 @dataclass
 class Klas:
-    id: str          # slug used at login, e.g. 'vwo5-2025'
-    name: str        # display name
+    id: str          
+    name: str        
     created_at: str
 
 
 @dataclass
 class Module:
-    id: str          # matches JSON filename, e.g. 'd1'
+    id: str         
     title: str
     created_at: str
 
 
 @dataclass
 class Student:
-    pk: int          # surrogate PK used in all FK relations
-    id: str          # student number shown/entered by student
-    class_id: str    # FK -> classes.id
-    group_name: str  # 'control' | 'treatment'
+    pk: int          
+    id: str          
+    class_id: str    
+    group_name: str  
     created_at: str
 
 
@@ -55,7 +53,7 @@ class ModuleProgress:
     student_pk: int
     module_id: str
     item_index: int
-    status: str      # 'in_progress' | 'completed'
+    status: str     
     started_at: str
     completed_at: Optional[str] = None
 
@@ -67,7 +65,8 @@ class ItemSession:
     module_id: str
     item_id: str
     crisis_phase: Optional[str]
-    attempt_count: int
+    step_count: int
+    retry_n: int
     started_at: str
     completed_at: Optional[str] = None
     time_seconds: Optional[float] = None
@@ -83,7 +82,6 @@ class StepInput:
     timestamp: str
 
 
-# ── Schema ────────────────────────────────────────────────────────────────────
 
 def init_db():
     with _conn() as conn:
@@ -137,15 +135,16 @@ def init_db():
             -- crisis_phase is NULL for normal items, 'crisis' or 'post_crisis'
             -- for treatment-group crisis items.
             CREATE TABLE IF NOT EXISTS item_sessions (
-                id            INTEGER PRIMARY KEY AUTOINCREMENT,
-                student_pk    INTEGER NOT NULL REFERENCES students(pk),
-                module_id     TEXT NOT NULL,
-                item_id       TEXT NOT NULL,
-                crisis_phase  TEXT,
-                attempt_count INTEGER NOT NULL DEFAULT 0,
-                started_at    TEXT NOT NULL,
-                completed_at  TEXT,
-                time_seconds  REAL
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                student_pk     INTEGER NOT NULL REFERENCES students(pk),
+                module_id      TEXT NOT NULL,
+                item_id        TEXT NOT NULL,
+                crisis_phase   TEXT,
+                step_count     INTEGER NOT NULL DEFAULT 0,
+                retry_n        INTEGER NOT NULL DEFAULT 0,
+                started_at     TEXT NOT NULL,
+                completed_at   TEXT,
+                time_seconds   REAL
             );
 
             -- Optional per-step input log; only written when the module's
@@ -161,7 +160,6 @@ def init_db():
         """)
 
 
-# ── Classes ───────────────────────────────────────────────────────────────────
 
 def get_klas(class_id: str) -> Optional[Klas]:
     with _conn() as conn:
@@ -187,7 +185,6 @@ def get_all_classes() -> list[Klas]:
     return [Klas(**r) for r in rows]
 
 
-# ── Modules ───────────────────────────────────────────────────────────────────
 
 def get_module(module_id: str) -> Optional[Module]:
     with _conn() as conn:
@@ -213,7 +210,6 @@ def get_all_modules() -> list[Module]:
     return [Module(**r) for r in rows]
 
 
-# ── Class ↔ Module assignments ────────────────────────────────────────────────
 
 def add_module_to_class(class_id: str, module_id: str) -> ClassModule:
     """Register a module in a class (hidden by default)."""
@@ -272,7 +268,6 @@ def get_class_modules(class_id: str) -> list[tuple[Module, ClassModule]]:
     ]
 
 
-# ── Students ──────────────────────────────────────────────────────────────────
 
 def get_student(student_id: str, class_id: str) -> Optional[Student]:
     with _conn() as conn:
@@ -307,7 +302,6 @@ def get_students_in_class(class_id: str) -> list[Student]:
     return [Student(**r) for r in rows]
 
 
-# ── Module progress ───────────────────────────────────────────────────────────
 
 def get_module_progress(student_pk: int, module_id: str) -> Optional[ModuleProgress]:
     with _conn() as conn:
@@ -364,7 +358,6 @@ def advance_module(student_pk: int, module_id: str,
             )
 
 
-# ── Item sessions ─────────────────────────────────────────────────────────────
 
 def get_active_item_session(student_pk: int, module_id: str,
                              item_id: str,
@@ -381,7 +374,8 @@ def get_active_item_session(student_pk: int, module_id: str,
 
 def start_item_session(student_pk: int, module_id: str,
                         item_id: str,
-                        crisis_phase: Optional[str]) -> ItemSession:
+                        crisis_phase: Optional[str],
+                        retry_n: int = 0) -> ItemSession:
     """Return the open session for this item, creating one if needed."""
     existing = get_active_item_session(student_pk, module_id, item_id, crisis_phase)
     if existing:
@@ -390,22 +384,22 @@ def start_item_session(student_pk: int, module_id: str,
     with _conn() as conn:
         cursor = conn.execute(
             """INSERT INTO item_sessions
-               (student_pk, module_id, item_id, crisis_phase, attempt_count, started_at)
-               VALUES (?,?,?,?,0,?)""",
-            (student_pk, module_id, item_id, crisis_phase, now),
+               (student_pk, module_id, item_id, crisis_phase, step_count, retry_n, started_at)
+               VALUES (?,?,?,?,0,?,?)""",
+            (student_pk, module_id, item_id, crisis_phase, retry_n, now),
         )
         session_id = cursor.lastrowid
     return ItemSession(id=session_id, student_pk=student_pk, module_id=module_id,
                        item_id=item_id, crisis_phase=crisis_phase,
-                       attempt_count=0, started_at=now)
+                       step_count=0, retry_n=retry_n, started_at=now)
 
 
 def record_attempt(session_id: int, step_input: str, is_correct: bool,
                    error_id: Optional[str], log_steps: bool) -> None:
-    """Increment attempt count; write a step_inputs row only if log_steps is True."""
+    """Increment step count; write a step_inputs row only if log_steps is True."""
     with _conn() as conn:
         conn.execute(
-            "UPDATE item_sessions SET attempt_count = attempt_count + 1 WHERE id=?",
+            "UPDATE item_sessions SET step_count = step_count + 1 WHERE id=?",
             (session_id,)
         )
         if log_steps:
@@ -415,6 +409,33 @@ def record_attempt(session_id: int, step_input: str, is_correct: bool,
                    VALUES (?,?,?,?,?)""",
                 (session_id, step_input, int(is_correct), error_id, _now()),
             )
+
+
+def get_sessions(module_id: str) -> list[dict]:
+    """All item sessions for a module, joined with student info."""
+    with _conn() as conn:
+        rows = conn.execute(
+            """SELECT s.id AS student_id, s.group_name,
+                      i.id, i.item_id, i.crisis_phase, i.step_count,
+                      i.retry_n, i.started_at, i.completed_at, i.time_seconds
+               FROM item_sessions i
+               JOIN students s ON s.pk = i.student_pk
+               WHERE i.module_id = ?
+               ORDER BY s.id, i.item_id, i.retry_n""",
+            (module_id,)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def get_steps(session_id: int) -> list[dict]:
+    """All step inputs for a given item session."""
+    with _conn() as conn:
+        rows = conn.execute(
+            """SELECT step_input, is_correct, error_id, timestamp
+               FROM step_inputs WHERE session_id = ? ORDER BY id""",
+            (session_id,)
+        ).fetchall()
+    return [dict(r) for r in rows]
 
 
 def complete_item_session(session_id: int) -> None:

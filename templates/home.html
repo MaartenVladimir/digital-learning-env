@@ -19,7 +19,7 @@
         <span class="badge badge-new">Nieuw</span>
       {% endif %}
     </div>
-    <a href="{{ url_for('module', module_id=entry.module.id) }}"
+    <a href="{{ url_for('student.module', module_id=entry.module.id) }}"
        class="btn {% if entry.status == 'completed' %}btn-secondary{% endif %}">
       {% if entry.status == 'completed' %}Opnieuw
       {% elif entry.status == 'in_progress' %}Verder
@@ -30,6 +30,6 @@
   {% endfor %}
 {% endif %}
 
-<p class="logout-link"><a href="{{ url_for('logout') }}">Uitloggen</a></p>
+<p class="logout-link"><a href="{{ url_for('student.logout') }}">Uitloggen</a></p>
 
 {% endblock %}

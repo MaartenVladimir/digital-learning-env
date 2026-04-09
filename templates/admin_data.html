@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Data — {{ selected }}{% endblock %}
+{% block content %}
+
+<style>
+  body { max-width: 1100px; }
+
+  .data-table { font-size: 0.85em; }
+
+  .data-table td, .data-table th { padding: 6px 12px; }
+
+  .tag-treatment { color: #8b1a4a; font-weight: 600; }
+  .tag-control   { color: #1a56a8; font-weight: 600; }
+
+  .incomplete { color: #999; }
+
+  details summary {
+    cursor: pointer;
+    color: #4a90d9;
+    font-size: 0.9em;
+  }
+
+  .step-log {
+    margin-top: 6px;
+    font-size: 0.85em;
+    border-left: 3px solid #e0e0e0;
+    padding-left: 10px;
+  }
+
+  .step-log div { padding: 2px 0; }
+  .step-ok  { color: #2a7a2a; }
+  .step-err { color: #b00; }
+</style>
+
+<div class="admin-header">
+  <h2>Data <span class="klas-id">{{ selected }}</span></h2>
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">← Beheer</a>
+</div>
+
+<div class="admin-section" style="margin-top: 16px; padding-top: 0; border-top: none;">
+  <form method="get" class="inline-form">
+    <select name="module_id" onchange="this.form.submit()">
+      {% for m in modules %}
+        <option value="{{ m.id }}" {% if m.id == selected %}selected{% endif %}>{{ m.title }} ({{ m.id }})</option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+{% if sessions %}
+<div class="admin-section">
+  <table class="admin-table data-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Groep</th>
+        <th>Item</th>
+        <th>Fase</th>
+        <th>Poging</th>
+        <th>Stappen</th>
+        <th>Tijd (s)</th>
+        <th>Afgerond</th>
+        <th>Ingevoerde stappen</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in sessions %}
+      <tr>
+        <td><code>{{ s.student_id }}</code></td>
+        <td>
+          <span class="tag-{{ s.group_name }}">{{ s.group_name }}</span>
+        </td>
+        <td><code>{{ s.item_id }}</code></td>
+        <td>{{ s.crisis_phase or '—' }}</td>
+        <td>{{ s.retry_n + 1 }}</td>
+        <td>{{ s.step_count }}</td>
+        <td>{{ '%.1f' % s.time_seconds if s.time_seconds else '—' }}</td>
+        <td>
+          {% if s.completed_at %}
+            <span class="admin-date">{{ s.completed_at[:16] }}</span>
+          {% else %}
+            <span class="incomplete">bezig</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if s.steps %}
+          <details>
+            <summary>{{ s.steps | length }} stap(pen)</summary>
+            <div class="step-log">
+              {% for step in s.steps %}
+              <div class="{{ 'step-ok' if step.is_correct else 'step-err' }}">
+                {{ '✓' if step.is_correct else '✗' }}
+                <code>{{ step.step_input }}</code>
+                {% if step.error_id %}<span style="color:#999">({{ step.error_id }})</span>{% endif %}
+              </div>
+              {% endfor %}
+            </div>
+          </details>
+          {% else %}
+            <span class="admin-empty">niet gelogd</span>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <p class="admin-empty" style="margin-top: 24px;">Geen sessies gevonden voor deze module.</p>
+{% endif %}
+
+{% endblock %}
