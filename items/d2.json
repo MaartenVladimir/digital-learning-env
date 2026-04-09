@@ -1,6 +1,6 @@
 {
-  "title": "Vergelijkingen oplossen",
-  "log_steps": true,
+  "title": "Vergelijkingen met x aan beide kanten oplossen",
+  "log_steps": false,
   "items": [
   {
     "id": "d1_p0",
