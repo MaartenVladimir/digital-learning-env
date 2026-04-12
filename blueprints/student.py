@@ -98,8 +98,15 @@ def module(module_id):
     if crisis_phase == 'post_crisis':
         item = exercise.get_item(items, progress.item_index, session['student_id'] + 'rr', 0)
 
-    session['module_id']    = module_id
-    session['current_step'] = item['sympy_str']
+    session['module_id'] = module_id
+    if 'parts' in item:
+        session['current_steps'] = {str(i): part['sympy_str'] for i, part in enumerate(item['parts'])}
+        session.pop('current_step', None)
+        session.pop('parts_done', None)
+    else:
+        session['current_step'] = item['sympy_str']
+        session.pop('current_steps', None)
+        session.pop('parts_done', None)
 
     return render_template('exercise.html',
         item=item,
@@ -114,18 +121,78 @@ def module(module_id):
 @bp.post('/check')
 @student_required
 def check():
-    step_input = request.get_json().get('step', '').strip()
+    body       = request.get_json()
+    step_input = body.get('step', '').strip()
+    part_index = body.get('part_index')   # None for single-part items
     student_pk = session['student_pk']
     module_id  = session['module_id']
-    prev_step  = session['current_step']
     group      = session['group']
     retry_n    = session.get('item_retry', 0)
 
     mod      = module_service.load_module(module_id)
     progress = exercise.get_progress(student_pk, module_id)
-    item     = exercise.get_item(mod['items'], progress.item_index, session['student_id'], retry_n)
-
+    item         = exercise.get_item(mod['items'], progress.item_index, session['student_id'], retry_n)
     crisis_phase = exercise.resolve_crisis_phase(student_pk, module_id, item, group)
+
+    # Post-crisis items are regenerated with a different seed in the module route;
+    # mirror that here so expected_answer and graph match what was shown.
+    if crisis_phase == 'post_crisis':
+        item = exercise.get_item(mod['items'], progress.item_index, session['student_id'] + 'rr', 0)
+
+    # ── Multi-part item ────────────────────────────────────────────────────────
+    if part_index is not None:
+        part_index = int(part_index)
+        sub_item   = item['parts'][part_index]
+        prev_step  = session.get('current_steps', {})[str(part_index)]
+        result     = exercise.check_step(sub_item, prev_step, step_input)
+
+        if not result.is_correct:
+            session['had_error'] = True
+
+        item_session = exercise.record_step(
+            student_pk, module_id, item['id'], crisis_phase,
+            step_input, result.is_correct, result.error_id,
+            mod.get('log_steps', False),
+        )
+
+        if result.is_intermediate:
+            steps = dict(session.get('current_steps', {}))
+            steps[str(part_index)] = step_input
+            session['current_steps'] = steps
+
+        if result.is_complete:
+            parts_done = set(session.get('parts_done', []))
+            parts_done.add(part_index)
+            session['parts_done'] = list(parts_done)
+
+            if len(parts_done) < len(item['parts']):
+                return jsonify({'status': 'PART_COMPLETE', 'is_correct': True, 'message': ''})
+
+            # All parts done
+            outcome = exercise.handle_completion(
+                student_pk, module_id, item, item_session,
+                progress.item_index, len(mod['items']),
+                group, crisis_phase,
+                had_error=session.pop('had_error', False),
+                retry_n=retry_n,
+            )
+            if outcome['action'] == 'retry':
+                session['item_retry'] = outcome['retry_n']
+                session['current_steps'] = {str(i): part['sympy_str']
+                                            for i, part in enumerate(item['parts'])}
+                session['parts_done'] = []
+                return jsonify({'status': 'RETRY', 'is_correct': True,
+                                'message': outcome['message']})
+            session.pop('item_retry', None)
+
+        return jsonify({
+            'status': result.status,
+            'is_correct': result.is_correct,
+            'message': result.message,
+        })
+
+    # ── Single-part item ───────────────────────────────────────────────────────
+    prev_step    = session['current_step']
     result       = exercise.check_step(item, prev_step, step_input)
 
     if not result.is_correct:

@@ -14,6 +14,8 @@
     import 'https://esm.sh/mathlive';
   </script>
 
+  {% block extra_head %}{% endblock %}
+
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -116,6 +118,15 @@
     }
 
     label { display: block; margin-bottom: 14px; font-weight: 500; }
+
+    .graph-box {
+      width: 100%;
+      height: 340px;
+      margin: 16px 0;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
 
     .post-crisis-box {
       background: #f0f4ff;

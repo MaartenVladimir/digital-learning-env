@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Module {{ module_id }} — DLE{% endblock %}
+
+{% if item.graph %}
+{% block extra_head %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.9.2/distrib/jsxgraph.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsxgraph@1.9.2/distrib/jsxgraphcore.js"></script>
+{% endblock %}
+{% endif %}
+
 {% block content %}
 
 <p class="progress">Module {{ module_id }} &mdash; opgave {{ item_num }} van {{ total }}</p>
@@ -17,6 +25,175 @@
 </div>
 {% endif %}
 
+{% if item.parts %}
+
+{# ── Multi-part item ──────────────────────────────────────────────────────── #}
+{% if item.graph %}
+<div id="graph-context" class="graph-box"></div>
+{% elif item.context %}
+<div class="problem-box">
+  <span id="problem-context"></span>
+</div>
+{% endif %}
+
+{% for part in item.parts %}
+<div class="part-block">
+  <p class="part-label"><strong>{{ part.label }}</strong></p>
+  <div class="problem-box-part">
+    <span id="part-display-{{ loop.index0 }}"></span>
+  </div>
+  <div class="steps" id="steps-{{ loop.index0 }}"
+    {% if part.goal == 'direct_answer' %}style="display:none"{% endif %}
+  ></div>
+  <div id="input-area-{{ loop.index0 }}">
+    <math-field id="mf-{{ loop.index0 }}" virtual-keyboard-mode="onfocus"></math-field>
+    <br>
+    {% if part.goal == 'direct_answer' %}
+    <button class="btn" onclick="checkPart({{ loop.index0 }})">Controleer antwoord</button>
+    {% else %}
+    <button class="btn" onclick="checkPart({{ loop.index0 }})">Controleer stap</button>
+    {% endif %}
+  </div>
+  <div id="feedback-{{ loop.index0 }}" class="feedback" style="display:none"></div>
+</div>
+{% endfor %}
+
+<div id="global-feedback" class="feedback" style="display:none"></div>
+
+<script>
+  const MODULE_ID = {{ module_id | tojson }};
+  const NUM_PARTS = {{ item.parts | length }};
+  const partsDone = new Set();
+
+  {% if item.graph %}
+  (function() {
+    const g = {{ item.graph | tojson }};
+    const board = JXG.JSXGraph.initBoard('graph-context', {
+      boundingbox: g.bounding_box.map(v => Function('return (' + v + ')')()),
+      axis: true,
+      grid: g.show_labels !== false,
+      showNavigation: false,
+      showCopyright: false,
+      defaultAxes: {
+        x: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+        y: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+      },
+    });
+    (g.lines || []).forEach(line => {
+      // formula is a JS expression in x, e.g. "2/3 * x + 1"
+      const fn = new Function('x', 'return ' + line.formula);
+      board.create('functiongraph', [fn], { strokeWidth: line.strokeWidth || 2 });
+    });
+    (g.points || []).forEach(pt => {
+      const x = Function('return (' + pt.x + ')')(), y = Function('return (' + pt.y + ')')();
+      const label = pt.label !== undefined ? pt.label : '(' + x + ', ' + y + ')';
+      board.create('point', [x, y], {
+        fixed: true, size: 4,
+        name: label,
+        label: { fontSize: 13, offset: [8, 8] },
+      });
+    });
+  })();
+  {% elif item.context %}
+  katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), {
+    throwOnError: false,
+    displayMode: true,
+  });
+  {% endif %}
+
+  {% if post_crisis_explanation and post_crisis_explanation.latex %}
+  katex.render({{ post_crisis_explanation.latex | tojson }}, document.getElementById('explanation-formula'), {
+    throwOnError: false,
+    displayMode: true,
+  });
+  {% endif %}
+
+  {% for part in item.parts %}
+  katex.render({{ part.display | tojson }}, document.getElementById('part-display-{{ loop.index0 }}'), {
+    throwOnError: false,
+    displayMode: false,
+  });
+  {% endfor %}
+
+  function checkPart(i) {
+    const mf = document.getElementById('mf-' + i);
+    const step = mf.getValue('ascii-math').trim();
+    if (!step) return;
+
+    fetch('/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ step, part_index: i }),
+    })
+    .then(r => r.json())
+    .then(data => {
+      const stepsEl    = document.getElementById('steps-' + i);
+      const feedbackEl = document.getElementById('feedback-' + i);
+
+      const stepDiv = document.createElement('div');
+      stepDiv.className = 'step ' + (data.is_correct ? 'correct' : 'incorrect');
+      stepDiv.textContent = (data.is_correct ? '✓  ' : '✗  ') + step;
+      stepsEl.appendChild(stepDiv);
+
+      if (data.status === 'PART_COMPLETE' || data.status === 'COMPLETE') {
+        partsDone.add(i);
+        mf.readOnly = true;
+        document.querySelectorAll('#input-area-' + i + ' button').forEach(b => b.style.display = 'none');
+        feedbackEl.textContent = 'Correct!';
+        feedbackEl.className = 'feedback ok';
+        feedbackEl.style.display = 'block';
+        if (data.status === 'COMPLETE') {
+          setTimeout(() => location.reload(), 1800);
+        }
+        return;
+      }
+
+      if (data.status === 'RETRY') {
+        document.getElementById('global-feedback').textContent = data.message;
+        document.getElementById('global-feedback').className = 'feedback ok';
+        document.getElementById('global-feedback').style.display = 'block';
+        setTimeout(() => location.reload(), 2000);
+        return;
+      }
+
+      if (!data.is_correct) {
+        feedbackEl.textContent = data.message || 'Deze stap klopt niet.';
+        feedbackEl.className = 'feedback error';
+        feedbackEl.style.display = 'block';
+        mf.setValue('');
+        mf.focus();
+        return;
+      }
+
+      if (data.status === 'CORRECT_SUBOPTIMAL') {
+        feedbackEl.textContent = data.message;
+        feedbackEl.className = 'feedback warning';
+        feedbackEl.style.display = 'block';
+      } else if (data.status === 'EQUIVALENT_BUT_NO_PROGRESS') {
+        feedbackEl.textContent = 'Correct, maar je bent nog niet verder gekomen.';
+        feedbackEl.className = 'feedback warning';
+        feedbackEl.style.display = 'block';
+      } else {
+        feedbackEl.style.display = 'none';
+      }
+
+      mf.setValue('');
+      mf.focus();
+    });
+  }
+
+  {% for part in item.parts %}
+  document.getElementById('mf-{{ loop.index0 }}').addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkPart({{ loop.index0 }});
+  });
+  {% endfor %}
+
+  document.getElementById('mf-0').focus();
+</script>
+
+{% else %}
+
+{# ── Single-part item ─────────────────────────────────────────────────────── #}
 <div class="problem-box">
   <span id="problem-display"></span>
 </div>
@@ -138,5 +315,7 @@
 
   mf.focus();
 </script>
+
+{% endif %}
 
 {% endblock %}

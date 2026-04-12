@@ -6,7 +6,7 @@ ITEMS_DIR = os.path.join(os.path.dirname(__file__), '..', 'items')
 
 def load_module(module_id: str) -> dict:
     path = os.path.join(ITEMS_DIR, f'{module_id}.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)  # {'log_steps': bool, 'items': [...]}
 
 def sync_modules() -> None:

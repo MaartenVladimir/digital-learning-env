@@ -104,7 +104,7 @@ def handle_completion(
     if had_error:
         return {'action': 'retry',
                 'retry_n': retry_n + 1,
-                'reset_step': item['sympy_str'],
+                'reset_step': item.get('sympy_str', ''),  # empty for multi-part items
                 'message': 'Goed gedaan! Probeer de opgave nu opnieuw met andere getallen.'}
 
     db.advance_module(student_pk, module_id, item_index + 1, total)

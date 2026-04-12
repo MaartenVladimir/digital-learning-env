@@ -1,0 +1,232 @@
+{
+  "title": "Lineaire formules opstellen",
+  "log_steps": true,
+  "items": [
+  {
+  "id": "lijn_door_punten_1_stijgend",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [0, 4]},
+    "y1": {"int": [0, 4]},
+    "dx": {"int": [1, 5]},
+    "dy": {"int": [1, 8]},
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+  {
+  "id": "lijn_door_punten_2_dalend",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [-4, -1]},
+    "y1": {"int": [4, 8]},
+    "dx": {"int": [3, 6]},
+    "dy": {"int": [-6, -2]},
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+  {
+  "id": "lijn_uit_grafiek_1_stijgend",
+  "graph": {
+    "bounding_box": [-8, 8, 8, -8],
+    "show_labels": false,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "b":  {"int": [1, 4]},
+    "x2": {"int": [1, 3]},
+    "y2": {"int": [4, 8]},
+    "x1": "0",
+    "y1": "b",
+    "a":  "(y2 - b) / x2"
+    }
+  },
+  {
+  "id": "lijn_uit_grafiek_2_dalen",
+  "graph": {
+    "bounding_box": [-8, 8, 8, -8],
+    "show_labels": false,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "b":  {"int": [1, 4]},
+    "x2": {"int": [1, 3]},
+    "y2": {"int": [-6, 0]},
+    "x1": "0",
+    "y1": "b",
+    "a":  "(y2 - b) / x2"
+    }
+  },
+  {
+  "id": "lijn_uit_grafiek_3_met_punten",
+  "graph": {
+    "bounding_box": ["{{bb_x_min}}", "{{bb_y_max}}", "{{bb_x_max}}", "{{bb_y_min}}"],
+    "show_labels": false,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}],
+    "points": [
+      {"x": "{{x1}}", "y": "{{y1}}"},
+      {"x": "{{x2}}", "y": "{{y2}}"}
+    ]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": true,
+  "post_crisis": {
+      "explanation": "Als je een formule moet opstellen van een lineaire grafiek door twee punten, zonder dat je iets kan aflezen, dan is dit net als een lijn opstellen door twee punten!",
+      "explanation_latex": "a=\\frac{\\text{verticale verandering}}{\\text{horizontale verandering}}\\newline \\newline \\text{Vervolgens vul je een bekend punt in om het startgetal te bepalen.}"
+  },
+  "params": {
+    "b":  {"int": [-6, -2]},
+    "x1": {"int": [1, 3]},
+    "y1": {"int": [2, 6]},
+    "dx": {"int": [1, 4]},
+    "dy": {"int": [3, 8]},
+    "a":  "dy / dx",
+    "x2": "x1 + dx",
+    "y2": "y1 + dy",
+    "bb_x_min": "x1 - 5",
+    "bb_y_max": "y2 + 5",
+    "bb_x_max": "x2 + 5",
+    "bb_y_min": "b - 10"
+    }
+  },
+  {
+  "id": "lijn_uit_grafiek_3_met_punten_dalend",
+  "graph": {
+    "bounding_box": ["{{bb_x_min}}", "{{bb_y_max}}", "{{bb_x_max}}", "{{bb_y_min}}"],
+    "show_labels": false,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}],
+    "points": [
+      {"x": "{{x1}}", "y": "{{y1}}"},
+      {"x": "{{x2}}", "y": "{{y2}}"}
+    ]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het snijpunt met de y-as. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [1, 2]},
+    "y1": {"int": [-3, 1]},
+    "dx": {"int": [2, 5]},
+    "dy": {"int": [-6, -2]},
+    "a":  "dy / dx",
+    "x2": "x1 + dx",
+    "y2": "y1 + dy",
+    "b": "y2 - a * x2",
+    "bb_x_min": "x1 - 5",
+    "bb_y_max": "b + 4",
+    "bb_x_max": "x2 + 5",
+    "bb_y_min": "y2 - 5"
+    }
+  }
+  ]
+}
