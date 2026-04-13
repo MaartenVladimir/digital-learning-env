@@ -76,7 +76,7 @@
   "id": "lijn_uit_grafiek_1_stijgend",
   "graph": {
     "bounding_box": [-8, 8, 8, -8],
-    "show_labels": false,
+    "show_labels": true,
     "lines": [{"formula": "{{a}} * x + {{b}}"}]
   },
   "parts": [
@@ -109,7 +109,7 @@
   "id": "lijn_uit_grafiek_2_dalen",
   "graph": {
     "bounding_box": [-8, 8, 8, -8],
-    "show_labels": false,
+    "show_labels": true,
     "lines": [{"formula": "{{a}} * x + {{b}}"}]
   },
   "parts": [
