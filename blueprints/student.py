@@ -93,7 +93,8 @@ def module(module_id):
     item    = exercise.get_item(items, progress.item_index, session['student_id'], retry_n)
 
     crisis_phase = exercise.resolve_crisis_phase(student_pk, module_id, item, group)
-    exercise.start_item_session(student_pk, module_id, item['id'], crisis_phase, retry_n=retry_n)
+    exercise.start_item_session(student_pk, module_id, item['id'], crisis_phase,
+                                is_crisis=item.get('is_crisis', False), retry_n=retry_n)
 
     if crisis_phase == 'post_crisis':
         item = exercise.get_item(items, progress.item_index, session['student_id'] + 'rr', 0)

@@ -65,6 +65,7 @@ class ItemSession:
     module_id: str
     item_id: str
     crisis_phase: Optional[str]
+    is_crisis: bool
     step_count: int
     retry_n: int
     started_at: str
@@ -134,12 +135,16 @@ def init_db():
             -- One row per student x item attempt.
             -- crisis_phase is NULL for normal items, 'crisis' or 'post_crisis'
             -- for treatment-group crisis items.
+            -- is_crisis marks crisis items for BOTH groups (control group always
+            -- has crisis_phase=NULL even on crisis items, so this is the only
+            -- reliable way to identify crisis items across groups).
             CREATE TABLE IF NOT EXISTS item_sessions (
                 id             INTEGER PRIMARY KEY AUTOINCREMENT,
                 student_pk     INTEGER NOT NULL REFERENCES students(pk),
                 module_id      TEXT NOT NULL,
                 item_id        TEXT NOT NULL,
                 crisis_phase   TEXT,
+                is_crisis      INTEGER NOT NULL DEFAULT 0,
                 step_count     INTEGER NOT NULL DEFAULT 0,
                 retry_n        INTEGER NOT NULL DEFAULT 0,
                 started_at     TEXT NOT NULL,
@@ -375,6 +380,7 @@ def get_active_item_session(student_pk: int, module_id: str,
 def start_item_session(student_pk: int, module_id: str,
                         item_id: str,
                         crisis_phase: Optional[str],
+                        is_crisis: bool = False,
                         retry_n: int = 0) -> ItemSession:
     """Return the open session for this item, creating one if needed."""
     existing = get_active_item_session(student_pk, module_id, item_id, crisis_phase)
@@ -384,13 +390,13 @@ def start_item_session(student_pk: int, module_id: str,
     with _conn() as conn:
         cursor = conn.execute(
             """INSERT INTO item_sessions
-               (student_pk, module_id, item_id, crisis_phase, step_count, retry_n, started_at)
-               VALUES (?,?,?,?,0,?,?)""",
-            (student_pk, module_id, item_id, crisis_phase, retry_n, now),
+               (student_pk, module_id, item_id, crisis_phase, is_crisis, step_count, retry_n, started_at)
+               VALUES (?,?,?,?,?,0,?,?)""",
+            (student_pk, module_id, item_id, crisis_phase, int(is_crisis), retry_n, now),
         )
         session_id = cursor.lastrowid
     return ItemSession(id=session_id, student_pk=student_pk, module_id=module_id,
-                       item_id=item_id, crisis_phase=crisis_phase,
+                       item_id=item_id, crisis_phase=crisis_phase, is_crisis=is_crisis,
                        step_count=0, retry_n=retry_n, started_at=now)
 
 

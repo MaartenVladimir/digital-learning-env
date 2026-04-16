@@ -21,7 +21,7 @@ class CheckResult:
 GOALS = {
     'solve_equation': SolveEquationGoal,
     'solve_quadratic_equation': SolveQuadraticEquationGoal,
-    'direct_answer': DirectAnswerGoal,
+    'direct_answer': DirectAnswerGoal
 }
 
 def build_seed(student_id: str, retry_n: int) -> str:
@@ -61,8 +61,9 @@ def record_step(student_pk: int, module_id: str, item_id: str,
     return item_session
 
 def start_item_session(student_pk: int, module_id: str, item_id: str,
-                       crisis_phase, retry_n: int = 0):
-    return db.start_item_session(student_pk, module_id, item_id, crisis_phase, retry_n=retry_n)
+                       crisis_phase, is_crisis: bool = False, retry_n: int = 0):
+    return db.start_item_session(student_pk, module_id, item_id, crisis_phase,
+                                 is_crisis=is_crisis, retry_n=retry_n)
 
 def check_step(item: dict, prev_step: str, step_input: str) -> CheckResult:
     goal = GOALS[item['goal']](item_context=item)
@@ -94,7 +95,8 @@ def handle_completion(
 
     if item.get('is_crisis') and group == 'treatment' and crisis_phase:
         if crisis_phase == 'crisis':
-            db.start_item_session(student_pk, module_id, item['id'], 'post_crisis')
+            db.start_item_session(student_pk, module_id, item['id'], 'post_crisis',
+                                  is_crisis=item.get('is_crisis', False))
             return {'action': 'phase_complete',
                     'message': 'Goed gedaan! Lees de uitleg en probeer opnieuw.'}
         else:
