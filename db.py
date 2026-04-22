@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from dataclasses import dataclass
 from typing import Optional
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'dle.db')
+DB_PATH = os.environ.get('DB_PATH', os.path.join(os.path.dirname(__file__), 'dle.db'))
 
 
 def _conn():

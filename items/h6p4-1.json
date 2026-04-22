@@ -3,87 +3,176 @@
   "log_steps": true,
   "items": [
     {
-      "id": "herleiden_ax_plus_bx_c",
-      "form": "ax + bx + c",
-      "display": "y = {{a}}x + {{b}}x {{c:term}}",
-      "sympy_str": "y = {{a}}*x + {{b}}*x + ({{c}})",
+      "id": "q1_pre_ax+bx+c",
+      "form": "ax+bx+c",
+      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [2, 7]},
-        "b": {"int": [2, 7]},
-        "c": {"int": [-9, -1]}
+        "a": {"int": [2, 8]},
+        "b": {"int": [2, 8]},
+        "c": {"int": [2, 8]}
       }
     },
     {
-      "id": "herleiden_ax_minus_bx_c",
-      "form": "ax - bx + c",
-      "display": "y = {{a}}x {{b_neg:term}}x {{c:term}}",
-      "sympy_str": "y = {{a}}*x + ({{b_neg}})*x + ({{c}})",
+      "id": "q2_pre_ax-bx+c",
+      "form": "ax-bx+c",
+      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [4, 9]},
-        "b": {"int": [1, 4]},
-        "b_neg": "-b",
-        "c": {"int": [-9, -1]}
+        "a": {"int": [2, 8]},
+        "b": {"int": [-8, 2]},
+        "c": {"int": [2, 8]}
       }
     },
     {
-      "id": "herleiden_vier_termen",
-      "form": "ax + c + bx + d",
-      "display": "y = {{a}}x {{c:term}} {{b_neg:term}}x {{d:term}}",
-      "sympy_str": "y = {{a}}*x + ({{c}}) + ({{b_neg}})*x + ({{d}})",
+      "id": "q3_pre_-ax+bx+c",
+      "form": "-ax+bx+c",
+      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [3, 8]},
-        "b": {"int": [1, 4]},
-        "b_neg": "-b",
-        "c": {"int": [-8, -1]},
-        "d": {"int": [1, 8]}
+        "a": {"int": [-8, -2]},
+        "b": {"int": [2, 8]},
+        "c": {"int": [2, 8]}
       }
     },
     {
-      "id": "herleiden_single_var_q",
-      "form": "aq + bq + c",
-      "display": "y = {{a}}q + {{b}}q {{c:term}}",
-      "sympy_str": "y = {{a}}*q + {{b}}*q + ({{c}})",
+      "id": "q4_pre_ax+bx+cx+d",
+      "form": "ax+bx+cx+d",
+      "display": "y = {{a}}x {{b:term}}x {{c:term}}x {{d:term}}",
+      "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}*x + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [2, 7]},
-        "b": {"int": [2, 7]},
-        "c": {"int": [-9, -1]}
+        "a": {"int": [2, 8]},
+        "b": {"int": [2, 8]},
+        "c": {"int": [2, 8]},
+        "d": {"int": [2, 8]}
       }
     },
     {
-      "id": "herleiden_other_lhs_var",
-      "form": "ax + bx + c",
-      "display": "z = {{a}}x {{b_neg:term}}x {{c:term}}",
-      "sympy_str": "z = {{a}}*x + ({{b_neg}})*x + ({{c}})",
+      "id": "q5_pre_ax+b+cx+d",
+      "form": "ax+bx+cx+d",
+      "display": "p = {{a}}q {{b:term}} {{c:term}}q {{d:term}}",
+      "sympy_str": "p = {{a}}*q + {{b}} + {{c}}*q + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [4, 9]},
-        "b": {"int": [1, 4]},
-        "b_neg": "-b",
-        "c": {"int": [-9, -1]}
+        "a": {"int": [2, 8]},
+        "b": {"int": [2, 8]},
+        "c": {"int": [2, 8]},
+        "d": {"int": [2, 8]}
       }
     },
     {
-      "id": "herleiden_multi_var",
-      "form": "aq + bp - cq + dp + k",
-      "display": "z = {{a}}q + {{b}}p {{c_neg:term}}q {{d:term}}p + k",
-      "sympy_str": "z = {{a}}*q + {{b}}*p + ({{c_neg}})*q + ({{d}})*p + k",
+      "id": "q6_pre_ax-b-cx+d",
+      "form": "ax-b-cx+d",
+      "display": "k = {{a}}z {{b:term}} {{c:term}}z {{d:term}}",
+      "sympy_str": "k = {{a}}*z + {{b}} + {{c}}*z + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
       "params": {
-        "a": {"int": [3, 8]},
-        "b": {"int": [10, 20]},
-        "c": {"int": [1, 4]},
-        "c_neg": "-c",
-        "d": {"int": [1, 8]}
+        "a": {"int": [2, 8]},
+        "b": {"int": [-8, -2]},
+        "c": {"int": [-8, -2]},
+        "d": {"int": [2, 8]}
+      }
+    },
+    {
+      "id": "q7_pre",
+      "form": "av+bv+c+d",
+      "display": "w = {{a}}v {{b:frac_term}}v {{c:term}} {{d:term}}",
+      "sympy_str": "w = {{a}}*v + {{b}}*v + {{c}} + {{d}}",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [2, 8]},
+        "b": {"fraction": {"lcd": 12, "negative": true}},
+        "c": {"int": [-8, -2]},
+        "d": {"int": [2, 8]}
+      }
+    },
+    {
+      "id": "q8_crisis",
+      "form": "ax-bx-cy-dx-eq",
+      "display": "r = {{a}}f {{b:term}}f {{c:term}}p {{d:term}}f {{e:term}}t",
+      "sympy_str": "r = {{a}}*f + {{b}} * f + {{c}}*p + {{d}} * f + {{e}} * t",
+      "goal": "simplify_expression",
+      "is_crisis": true,
+      "post_crisis": {
+        "explanation": "Als je een uitdrukking moet herleiden met daarin meerdere onbekende. Dan tel je alle onbekende van dezelfde soort bij elkaar op.",
+        "explanation_latex": "p = 3z + 4z - 3q + q - z \\newline \\text{alle z'tjes bij elkaar} \\newline p = 6z - 3q + q \\newline \\text{alle q'tjes bij elkaar} \\newline p = 6z - 2q"
+      },
+      "params": {
+        "a": {"int": [-8, -2]},
+        "b": {"int": [-8, -2]},
+        "c": {"int": [-8, -2]},
+        "d": {"int": [-8, -2]},
+        "e": {"int": [-8, -2]}
+      }
+    },
+    {
+      "id": "q9_post",
+      "form": "am+bn+cn+dp",
+      "display": "y = {{a}}m {{b:frac_term}}n {{c:frac_term}}n {{d:term}}m",
+      "sympy_str": "y = {{a}}*m + {{b}}*n + {{c}}*n + {{d}}*m",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [2, 8]},
+        "b": {"fraction": {"lcd": 12}},
+        "c": {"fraction": {"lcd": 12, "negative": true, "exclude_noemer": ["b"]}},
+        "d": {"int": [-8, -2]}
+      }
+    },
+    {
+      "id": "q10_post",
+      "form": "a+bk+ck+d+em",
+      "display": "z = {{a}} {{b:frac_term}}k {{c:frac_term}}k {{d:term}} {{e:term}}m",
+      "sympy_str": "z = {{a}} + {{b}}*k + {{c}}*k + {{d}} + {{e}}*m",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [2, 8]},
+        "b": {"fraction": {"lcd": 12}},
+        "c": {"fraction": {"lcd": 12, "exclude_noemer": ["b"]}},
+        "d": {"int": [-8, -2]},
+        "e": {"int": [2, 8]}
+      }
+    },
+    {
+      "id": "q11_post",
+      "form": "ax-bx-cy-dx-eq",
+      "display": "r = {{a}}f {{b:term}}f {{c:frac_term}}t {{d:term}}f {{e:frac_term}}t",
+      "sympy_str": "r = {{a}}*f + {{b}} * f + {{c}}*t + {{d}} * f + {{e}} * t",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [-8, -2]},
+        "b": {"int": [-8, -2]},
+        "c": {"fraction": {"lcd": 12}},
+        "d": {"int": [-8, -2]},
+        "e": {"fraction": {"lcd": 12, "exclude_noemer": ["c"]}}
+      }
+    },
+    {
+      "id": "q12_post",
+      "form": "ax-bx-cy-dx-eq",
+      "display": "z = {{a:frac}} {{b:frac_term}}k {{c:frac_term}}f {{d:term}}k {{e:frac_term}}",
+      "sympy_str": "z = {{a}} + {{b}} * k + {{c}}*f + {{d}} * k + {{e}}",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"fraction": {"lcd": 12}},
+        "b": {"fraction": {"lcd": 12, "negative": true}},
+        "c": {"fraction": {"lcd": 12}},
+        "d": {"int": [-8, -2]},
+        "e": {"fraction": {"lcd": 12, "exclude_noemer": ["a"]}}
       }
     }
   ]
