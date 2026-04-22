@@ -1,8 +1,90 @@
 {
-  "title": "Vergelijkingen met x aan beide kanten oplossen",
+  "title": "Herleiden",
   "log_steps": true,
   "items": [
-  {
-  }
+    {
+      "id": "herleiden_ax_plus_bx_c",
+      "form": "ax + bx + c",
+      "display": "y = {{a}}x + {{b}}x {{c:term}}",
+      "sympy_str": "y = {{a}}*x + {{b}}*x + ({{c}})",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [2, 7]},
+        "b": {"int": [2, 7]},
+        "c": {"int": [-9, -1]}
+      }
+    },
+    {
+      "id": "herleiden_ax_minus_bx_c",
+      "form": "ax - bx + c",
+      "display": "y = {{a}}x {{b_neg:term}}x {{c:term}}",
+      "sympy_str": "y = {{a}}*x + ({{b_neg}})*x + ({{c}})",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [4, 9]},
+        "b": {"int": [1, 4]},
+        "b_neg": "-b",
+        "c": {"int": [-9, -1]}
+      }
+    },
+    {
+      "id": "herleiden_vier_termen",
+      "form": "ax + c + bx + d",
+      "display": "y = {{a}}x {{c:term}} {{b_neg:term}}x {{d:term}}",
+      "sympy_str": "y = {{a}}*x + ({{c}}) + ({{b_neg}})*x + ({{d}})",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [3, 8]},
+        "b": {"int": [1, 4]},
+        "b_neg": "-b",
+        "c": {"int": [-8, -1]},
+        "d": {"int": [1, 8]}
+      }
+    },
+    {
+      "id": "herleiden_single_var_q",
+      "form": "aq + bq + c",
+      "display": "y = {{a}}q + {{b}}q {{c:term}}",
+      "sympy_str": "y = {{a}}*q + {{b}}*q + ({{c}})",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [2, 7]},
+        "b": {"int": [2, 7]},
+        "c": {"int": [-9, -1]}
+      }
+    },
+    {
+      "id": "herleiden_other_lhs_var",
+      "form": "ax + bx + c",
+      "display": "z = {{a}}x {{b_neg:term}}x {{c:term}}",
+      "sympy_str": "z = {{a}}*x + ({{b_neg}})*x + ({{c}})",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [4, 9]},
+        "b": {"int": [1, 4]},
+        "b_neg": "-b",
+        "c": {"int": [-9, -1]}
+      }
+    },
+    {
+      "id": "herleiden_multi_var",
+      "form": "aq + bp - cq + dp + k",
+      "display": "z = {{a}}q + {{b}}p {{c_neg:term}}q {{d:term}}p + k",
+      "sympy_str": "z = {{a}}*q + {{b}}*p + ({{c_neg}})*q + ({{d}})*p + k",
+      "goal": "simplify_expression",
+      "is_crisis": false,
+      "params": {
+        "a": {"int": [3, 8]},
+        "b": {"int": [10, 20]},
+        "c": {"int": [1, 4]},
+        "c_neg": "-c",
+        "d": {"int": [1, 8]}
+      }
+    }
   ]
 }
