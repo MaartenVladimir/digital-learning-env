@@ -1,0 +1,187 @@
+{
+  "title": "Vergelijkingen met x aan beide kanten oplossen",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "form": "ax + b = cx + d",
+    "display": "{{a}}x {{b:term}} = {{c}}x {{d:term}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 8]},
+      "c":     {"int": [2, 8], "exclude": ["a"]},
+      "b":     {"int": [2, 8]},
+      "d":     {"int": [2, 8], "exclude": ["b"]},
+      "x_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q2_pre",
+    "form": "-ax + b = -cx + d",
+    "display": "{{a}}x {{b:term}} = {{c}}x {{d:term}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [-8, -2]},
+      "c":     {"int": [-8, -2], "exclude": ["a"]},
+      "b":     {"int": [2, 8]},
+      "d":     {"int": [2, 8], "exclude": ["b"]},
+      "x_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q3_pre",
+    "form": "-a + bx = cx - d",
+    "display": "{{a}} {{b:term}}x = {{c}}x {{d:term}}",
+    "sympy_str": "{{a}} + {{b}}*x = {{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [-8, -2]},
+      "c":     {"int": [2, 8]},
+      "b":     {"int": [2, 8]},
+      "d":     {"int": [-8, -2], "exclude": ["a"]},
+      "x_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q4_pre",
+    "form": "-at + b = -ct + d",
+    "display": "{{a}}t {{b:term}} = {{c}}t {{d:term}}",
+    "sympy_str": "{{a}}*t + {{b}} = {{c}}*t + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [-8, -2]},
+      "c":     {"int": [-8, -2], "exclude": ["a"]},
+      "b":     {"int": [2, 8]},
+      "d":     {"int": [2, 8], "exclude": ["b"]},
+      "t_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q5_pre",
+    "form": "a - bx = c - dx",
+    "display": "{{a}} - {{b}}x = {{c}} - {{d}}x",
+    "sympy_str": "{{a}} - {{b}}*x = {{c}} - {{d}}*x",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 8]},
+      "b":     {"int": [2, 8]},
+      "c":     {"int": [2, 8], "exclude": ["a"]},
+      "d":     {"int": [2, 8], "exclude": ["b"]},
+      "x_sol": "(c - a) / (d - b)"
+    }
+  },
+  {
+    "id": "q6_pre",
+    "form": "ak - a = a - ak",
+    "display": "{{a}}k - {{a}} = {{a}} - {{a}}k",
+    "sympy_str": "{{a}}*k - {{a}} = {{a}} - {{a}}*k",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 8]},
+      "k_sol": "1"
+    }
+  },
+  {
+    "id": "q7_pre",
+    "form": "-b - ax = -c - dx",
+    "display": "-{{b}} - {{a}}x = -{{c}} - {{d}}x",
+    "sympy_str": "-{{b}} - {{a}}*x = -{{c}} - {{d}}*x",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"int": [2, 8]},
+      "b":     {"int": [2, 8]},
+      "c":     {"int": [2, 8], "exclude": ["b"]},
+      "d":     {"int": [2, 8], "exclude": ["a"]},
+      "x_sol": "(b - c) / (d - a)"
+    }
+  },
+  {
+    "id": "q8_crisis",
+    "form": "ax + b = cx + d (b,d fractions)",
+    "display": "{{a}}x {{b:frac_term}} = {{c}}x {{d:frac_term}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": true,
+    "post_crisis": {
+      "explanation": "Wanneer je een vergelijking met breuken hebt, is het vaak handiger de breueken eerst weg te werken! Je kan dit doen door beide kanten met hetzelfd getal te vermenigvuldigen.",
+      "explanation_latex": "\\frac{1}{3}x + \\frac{2}{6} = -\\frac{3}{4}x + 2 \\newline \\text{Alles met 12 vermenigvuldigen} \\newline 4x + 4 = -9x + 24"
+    },
+    "params": {
+      "a":     {"int": [2, 8]},
+      "c":     {"int": [2, 8], "exclude": ["a"]},
+      "b":     {"fraction": {"lcd": 6}},
+      "d":     {"fraction": {"lcd": 6, "negative": true, "exclude_noemer": ["b"]}},
+      "x_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q9_post",
+    "form": "ax + b = -cx + d (a,c fractions)",
+    "display": "{{a:frac}}x {{b:term}} = -{{c:frac}}x {{d:term}}",
+    "sympy_str": "{{a}}*x + {{b}} = -{{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"fraction": {"lcd": 10}},
+      "b":     {"int": [-8, 8], "exclude": [0]},
+      "c":     {"fraction": {"lcd": 10, "exclude_noemer": ["a"]}},
+      "d":     {"int": [-8, 8], "exclude": [0, "b"]},
+      "x_sol": "(d - b) / (a + c)"
+    }
+  },
+  {
+    "id": "q10_post",
+    "form": "ax + b = cx + d (a,b,c,d fractions)",
+    "display": "{{a:frac}}x {{b:frac_term}} = {{c:frac}}x {{d:frac_term}}",
+    "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"fraction": {"lcd": 12}},
+      "b":     {"fraction": {"lcd": 12}},
+      "c":     {"fraction": {"lcd": 12, "exclude_noemer": ["a"]}},
+      "d":     {"fraction": {"lcd": 12, "exclude_noemer": ["b"]}},
+      "x_sol": "(d - b) / (a - c)"
+    }
+  },
+  {
+    "id": "q11_post",
+    "form": "b - ax = cx - d (a,b,c,d fractions)",
+    "display": "{{b:frac}} - {{a:frac}}x = {{c:frac}}x - {{d:frac}}",
+    "sympy_str": "{{b}} - {{a}}*x = {{c}}*x - {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"fraction": {"lcd": 6}},
+      "b":     {"fraction": {"lcd": 4}},
+      "c":     {"fraction": {"lcd": 6, "exclude_noemer": ["a"]}},
+      "d":     {"fraction": {"lcd": 4, "exclude_noemer": ["b"]}},
+      "x_sol": "(b + d) / (a + c)"
+    }
+  },
+  {
+    "id": "q12_post",
+    "form": "-b - ax = -cx - d (a,b,c,d fractions)",
+    "display": "-{{b:frac}} - {{a:frac}}x = -{{c:frac}}x - {{d:frac}}",
+    "sympy_str": "-{{b}} - {{a}}*x = -{{c}}*x - {{d}}",
+    "goal": "solve_equation",
+    "is_crisis": false,
+    "params": {
+      "a":     {"fraction": {"lcd": 12}},
+      "b":     {"fraction": {"lcd": 24}},
+      "c":     {"fraction": {"lcd": 12, "exclude_noemer": ["a"]}},
+      "d":     {"fraction": {"lcd": 24, "exclude_noemer": ["b"]}},
+      "x_sol": "(b - d) / (c - a)"
+    }
+  }
+  ]
+}

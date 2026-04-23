@@ -116,8 +116,9 @@
   {% endfor %}
 
   function checkPart(i) {
-    const mf = document.getElementById('mf-' + i);
-    const step = mf.getValue('ascii-math').trim();
+    const mf        = document.getElementById('mf-' + i);
+    const step      = mf.getValue('ascii-math').trim();
+    const stepLatex = mf.getValue('latex').trim();
     if (!step) return;
 
     fetch('/check', {
@@ -132,7 +133,12 @@
 
       const stepDiv = document.createElement('div');
       stepDiv.className = 'step ' + (data.is_correct ? 'correct' : 'incorrect');
-      stepDiv.textContent = (data.is_correct ? '✓  ' : '✗  ') + step;
+      const icon = document.createElement('span');
+      icon.textContent = data.is_correct ? '✓' : '✗';
+      const mathSpan = document.createElement('span');
+      katex.render(stepLatex, mathSpan, { throwOnError: false, displayMode: false });
+      stepDiv.appendChild(icon);
+      stepDiv.appendChild(mathSpan);
       stepsEl.appendChild(stepDiv);
 
       if (data.status === 'PART_COMPLETE' || data.status === 'COMPLETE') {
@@ -149,17 +155,21 @@
       }
 
       if (data.status === 'RETRY') {
-        document.getElementById('global-feedback').textContent = data.message;
-        document.getElementById('global-feedback').className = 'feedback ok';
-        document.getElementById('global-feedback').style.display = 'block';
+        const gf = document.getElementById('global-feedback');
+        gf.textContent = data.message;
+        gf.className = 'feedback ok';
+        gf.style.display = 'block';
+        renderMathInElement(gf, { delimiters: [{ left: '\\(', right: '\\)', display: false }], throwOnError: false });
         setTimeout(() => location.reload(), 2000);
         return;
       }
 
       if (!data.is_correct) {
-        feedbackEl.textContent = data.message || 'Deze stap klopt niet.';
+        const msg = data.message || 'Deze stap klopt niet.';
+        feedbackEl.textContent = msg;
         feedbackEl.className = 'feedback error';
         feedbackEl.style.display = 'block';
+        renderMathInElement(feedbackEl, { delimiters: [{ left: '\\(', right: '\\)', display: false }], throwOnError: false });
         mf.setValue('');
         mf.focus();
         return;
@@ -169,6 +179,7 @@
         feedbackEl.textContent = data.message;
         feedbackEl.className = 'feedback warning';
         feedbackEl.style.display = 'block';
+        renderMathInElement(feedbackEl, { delimiters: [{ left: '\\(', right: '\\)', display: false }], throwOnError: false });
       } else if (data.status === 'EQUIVALENT_BUT_NO_PROGRESS') {
         feedbackEl.textContent = 'Correct, maar je bent nog niet verder gekomen.';
         feedbackEl.className = 'feedback warning';
@@ -244,18 +255,27 @@
     feedbackEl.textContent = text;
     feedbackEl.className   = 'feedback ' + type;
     feedbackEl.style.display = text ? 'block' : 'none';
+    if (text) renderMathInElement(feedbackEl, {
+      delimiters: [{ left: '\\(', right: '\\)', display: false }],
+      throwOnError: false,
+    });
   }
 
-  function addStepToHistory(text, correct) {
+  function addStepToHistory(latexStr, correct) {
     const div = document.createElement('div');
     div.className = 'step ' + (correct ? 'correct' : 'incorrect');
-    div.textContent = (correct ? '✓  ' : '✗  ') + text;
+    const icon = document.createElement('span');
+    icon.textContent = correct ? '✓' : '✗';
+    const mathSpan = document.createElement('span');
+    katex.render(latexStr, mathSpan, { throwOnError: false, displayMode: false });
+    div.appendChild(icon);
+    div.appendChild(mathSpan);
     stepsEl.appendChild(div);
   }
 
   function checkStep() {
-    // getValue('ascii-math') gives plain text like "x/2 + 1 = 3"
-    const step = mf.getValue('ascii-math').trim();
+    const step      = mf.getValue('ascii-math').trim();
+    const stepLatex = mf.getValue('latex').trim();
     if (!step) return;
 
     fetch('/check', {
@@ -265,7 +285,7 @@
     })
     .then(r => r.json())
     .then(data => {
-      addStepToHistory(step, data.is_correct);
+      addStepToHistory(stepLatex, data.is_correct);
 
       const msg = data.message;
 
