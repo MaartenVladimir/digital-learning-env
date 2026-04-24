@@ -112,7 +112,7 @@
     "goal": "solve_equation",
     "is_crisis": true,
     "post_crisis": {
-      "explanation": "Wanneer je een vergelijking met breuken hebt, is het vaak handiger de breueken eerst weg te werken! Je kan dit doen door beide kanten met hetzelfd getal te vermenigvuldigen.",
+      "explanation": "Wanneer je een vergelijking met breuken hebt, is het vaak handiger de breuken eerst weg te werken! Je kan dit doen door beide kanten met hetzelfde getal te vermenigvuldigen.",
       "explanation_latex": "\\frac{1}{3}x + \\frac{2}{6} = -\\frac{3}{4}x + 2 \\newline \\text{Alles met 12 vermenigvuldigen} \\newline 4x + 4 = -9x + 24"
     },
     "params": {

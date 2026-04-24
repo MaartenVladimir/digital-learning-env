@@ -145,7 +145,7 @@
         partsDone.add(i);
         mf.readOnly = true;
         document.querySelectorAll('#input-area-' + i + ' button').forEach(b => b.style.display = 'none');
-        feedbackEl.textContent = 'Correct!';
+        feedbackEl.textContent = 'Juist!';
         feedbackEl.className = 'feedback ok';
         feedbackEl.style.display = 'block';
         if (data.status === 'COMPLETE') {
