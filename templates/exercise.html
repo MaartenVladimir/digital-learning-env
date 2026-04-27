@@ -48,6 +48,12 @@
   ></div>
   <div id="input-area-{{ loop.index0 }}">
     <math-field id="mf-{{ loop.index0 }}" virtual-keyboard-mode="onfocus"></math-field>
+    <div class="insert-bar" data-part="{{ loop.index0 }}">
+      <button class="btn-insert" data-sym="0" title="Breuk"><span class="frac-icon"><span>a</span><span>b</span></span></button>
+      <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
+      <button class="btn-insert" data-sym="2" title="Optellen">+</button>
+      <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+    </div>
     <br>
     {% if part.goal == 'direct_answer' %}
     <button class="btn" onclick="checkPart({{ loop.index0 }})">Controleer antwoord</button>
@@ -227,6 +233,18 @@
   });
   {% endfor %}
 
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  document.querySelectorAll('.insert-bar').forEach(bar => {
+    const partIdx = parseInt(bar.dataset.part);
+    bar.querySelectorAll('.btn-insert').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById('mf-' + partIdx);
+        el.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
+        el.focus();
+      });
+    });
+  });
+
   document.getElementById('mf-0').focus();
 </script>
 
@@ -250,6 +268,12 @@
 
 <div id="input-area">
   <math-field id="mf" virtual-keyboard-mode="onfocus"></math-field>
+  <div class="insert-bar">
+    <button class="btn-insert" data-sym="0" title="Breuk"><span class="frac-icon"><span>a</span><span>b</span></span></button>
+    <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
+    <button class="btn-insert" data-sym="2" title="Optellen">+</button>
+    <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+  </div>
   <br>
   {% if item.goal == 'solve_quadratic_equation' %}
   <button class="btn btn-secondary" onclick="insertOr()" title='Voeg "of" in (∨)'>&nbsp;∨</button>
@@ -367,6 +391,14 @@
       mf.focus();
     });
   }
+
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  document.querySelectorAll('.insert-bar .btn-insert').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mf.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
+      mf.focus();
+    });
+  });
 
   function insertOr() {
     mf.insert('\\vee');
