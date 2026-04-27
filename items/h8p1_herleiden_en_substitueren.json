@@ -1,0 +1,42 @@
+{
+  "title": "Herleiden en substitueren",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "context": "4x^2 - x",
+    "display": "\\text{Substitueer } x = {{n}} \\text{ en herleid stap voor stap.}",
+    "sympy_str": "4*{{n}}**2 - {{n}}",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "n": {"int": [2, 6]}
+      }
+  },
+  {
+    "id": "q2_pre",
+    "context": "{{a:frac}}x - x^2",
+    "display": "\\text{Substitueer } x = {{n}} \\text{ en herleid stap voor stap.}",
+    "sympy_str": "{{a}}*{{n}} - {{n}}**2",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "n": {"int": [2, 6]},
+      "q": {"int": [2, 4], "step": 2},
+      "a": "1/q"
+      }
+  },
+  {
+    "id": "q3_pre",
+    "context": "(x - {{a}})^2",
+    "display": "\\text{Substitueer } x = {{n}} \\text{ en herleid stap voor stap.}",
+    "sympy_str": "({{n}} - {{a}})**2",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [4, 8]},
+      "n": "a + 3"
+      }
+  }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "title": "Snijpunten van lijnen bepalen",
+  "log_steps": true,
+  "items": [
+  {
+  "id": "q1_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{a}}x + {{b}} \\text{ en } y = {{m}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a}}*x + {{b}} = {{m}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a}} + {{b}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a": {"int": [3, 6]},
+    "b": {"int": [3, 10]},
+    "x_sol": {"int": [2, 5]},
+    "m": "x_sol * a + b"
+    }
+  },
+  {
+  "id": "q2_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{a}}x + {{b}} \\text{ en } y = {{m}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a}}*x + {{b}} = {{m}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a}} + {{b}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a": {"int": [-6, -3]},
+    "b": {"int": [3, 10]},
+    "x_sol": {"int": [2, 5]},
+    "m": "x_sol * a + b"
+    }
+  },
+  {
+  "id": "q3_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{b}} + {{a}}x \\text{ en } y = {{m}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a}}*x + {{b}} = {{m}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a}} + {{b}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a": {"int": [3, 6]},
+    "b": {"int": [-10, -3]},
+    "x_sol": {"int": [2, 5]},
+    "m": "x_sol * a + b"
+    }
+  },
+  {
+  "id": "q4_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{b}} {{a:frac_term}}x \\text{ en } y = {{m:frac}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a}}*x + {{b}} = {{m}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a}} + {{b}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a": {"fraction": {"lcd": 6}},
+    "m": {"fraction": {"lcd": 6, "exclude_noemer": ["a"]}},
+    "b": "-6 * a - 6 * m",
+    "x_sol": "(m - b) / a"
+    }
+  },
+  {
+  "id": "q5_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{a1}}x {{b1:term}} \\text{ en } y = {{a2}}x {{b2:term}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a1}} * x + {{b1}} = {{a2}} * x + {{b2}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a1}} + {{b1}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a1": {"int": [3, 6]},
+    "a2": {"int": [3, 6], "exclude": ["a1"]},
+    "b1": {"int": [2, 6]},
+    "b2": {"int": [2, 6], "exclude": ["b1"]},
+    "x_sol": "(b2 - b1) / (a1 - a2)"
+    }
+  },
+  {
+  "id": "q6_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{a1}}x {{b1:term}} \\text{ en } y = {{a2}}x {{b2:term}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a1}} * x + {{b1}} = {{a2}} * x + {{b2}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a1}} + {{b1}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a1": {"int": [-6, -3]},
+    "not_a1": "-1 * a1",
+    "a2": {"int": [3, 6], "exclude": ["not_a1"]},
+    "b2": {"int": [-6, -2]},
+    "not_b2": "-1 * b2",
+    "b1": {"int": [2, 6], "exclude": ["not_b2"]},
+    "x_sol": "(b2 - b1) / (a1 - a2)"
+    }
+  },
+  {
+  "id": "q7_pre",
+  "context": "\\text{Gegeven zijn de lijnen } y = {{a1:frac}}x {{b1:term}} \\text{ en } y = {{a2:frac}}x {{b2:term}}",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bereken de x-coördinaat van het snijpunt.}",
+      "goal": "solve_equation",
+      "sympy_str": "{{a1}} * x + {{b1}} = {{a2}} * x + {{b2}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bereken de y-coördinaat van het snijpunt.}",
+      "goal": "simplify_expression",
+      "sympy_str": "y = {{x_sol}} * {{a1}} + {{b1}}",
+      "input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Vul je berekening stap voor stap in.} \\\\",
+        "y = 3 \\cdot 2 + 1 \\\\",
+        "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ]
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "a1": {"fraction": {"lcd": 8}},
+    "a2": {"fraction": {"lcd": 8, "exclude_noemer": ["a1"]}},
+    "b2": {"int": [2, 6]},
+    "not_b2": "-1 * b2",
+    "b1": {"int": [-6, -2], "exclude": ["not_b2"]},
+    "x_sol": "(b2 - b1) / (a1 - a2)"
+    }
+  }
+]
+}

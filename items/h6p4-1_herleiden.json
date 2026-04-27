@@ -5,7 +5,8 @@
     {
       "id": "q1_pre_ax+bx+c",
       "form": "ax+bx+c",
-      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "context": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -18,7 +19,8 @@
     {
       "id": "q2_pre_ax-bx+c",
       "form": "ax-bx+c",
-      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "context": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -31,7 +33,8 @@
     {
       "id": "q3_pre_-ax+bx+c",
       "form": "-ax+bx+c",
-      "display": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "context": "y = {{a}}x {{b:term}}x {{c:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -44,7 +47,8 @@
     {
       "id": "q4_pre_ax+bx+cx+d",
       "form": "ax+bx+cx+d",
-      "display": "y = {{a}}x {{b:term}}x {{c:term}}x {{d:term}}",
+      "context": "y = {{a}}x {{b:term}}x {{c:term}}x {{d:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "y = {{a}}*x + {{b}}*x + {{c}}*x + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -58,7 +62,8 @@
     {
       "id": "q5_pre_ax+b+cx+d",
       "form": "ax+bx+cx+d",
-      "display": "p = {{a}}q {{b:term}} {{c:term}}q {{d:term}}",
+      "context": "p = {{a}}q {{b:term}} {{c:term}}q {{d:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "p = {{a}}*q + {{b}} + {{c}}*q + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -72,7 +77,8 @@
     {
       "id": "q6_pre_ax-b-cx+d",
       "form": "ax-b-cx+d",
-      "display": "k = {{a}}z {{b:term}} {{c:term}}z {{d:term}}",
+      "context": "k = {{a}}z {{b:term}} {{c:term}}z {{d:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "k = {{a}}*z + {{b}} + {{c}}*z + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -86,7 +92,8 @@
     {
       "id": "q7_pre",
       "form": "av+bv+c+d",
-      "display": "w = {{a}}v {{b:frac_term}}v {{c:term}} {{d:term}}",
+      "context": "w = {{a}}v {{b:frac_term}}v {{c:term}} {{d:term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "w = {{a}}*v + {{b}}*v + {{c}} + {{d}}",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -100,7 +107,8 @@
     {
       "id": "q8_crisis",
       "form": "ax-bx-cy-dx-eq",
-      "display": "r = {{a}}f {{b:term}}f {{c:term}}p {{d:term}}f {{e:term}}t",
+      "context": "r = {{a}}f {{b:term}}f {{c:term}}p {{d:term}}f {{e:term}}t",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "r = {{a}}*f + {{b}} * f + {{c}}*p + {{d}} * f + {{e}} * t",
       "goal": "simplify_expression",
       "is_crisis": true,
@@ -119,7 +127,8 @@
     {
       "id": "q9_post",
       "form": "am+bn+cn+dp",
-      "display": "y = {{a}}m {{b:frac_term}}n {{c:frac_term}}n {{d:term}}m",
+      "context": "y = {{a}}m {{b:frac_term}}n {{c:frac_term}}n {{d:term}}m",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "y = {{a}}*m + {{b}}*n + {{c}}*n + {{d}}*m",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -133,7 +142,8 @@
     {
       "id": "q10_post",
       "form": "a+bk+ck+d+em",
-      "display": "z = {{a}} {{b:frac_term}}k {{c:frac_term}}k {{d:term}} {{e:term}}m",
+      "context": "z = {{a}} {{b:frac_term}}k {{c:frac_term}}k {{d:term}} {{e:term}}m",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "z = {{a}} + {{b}}*k + {{c}}*k + {{d}} + {{e}}*m",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -148,7 +158,8 @@
     {
       "id": "q11_post",
       "form": "ax-bx-cy-dx-eq",
-      "display": "r = {{a}}f {{b:term}}f {{c:frac_term}}t {{d:term}}f {{e:frac_term}}t",
+      "context": "r = {{a}}f {{b:term}}f {{c:frac_term}}t {{d:term}}f {{e:frac_term}}t",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "r = {{a}}*f + {{b}} * f + {{c}}*t + {{d}} * f + {{e}} * t",
       "goal": "simplify_expression",
       "is_crisis": false,
@@ -163,7 +174,8 @@
     {
       "id": "q12_post",
       "form": "ax-bx-cy-dx-eq",
-      "display": "z = {{a:frac}} {{b:frac_term}}k {{c:frac_term}}f {{d:term}}k {{e:frac_term}}",
+      "context": "z = {{a:frac}} {{b:frac_term}}k {{c:frac_term}}f {{d:term}}k {{e:frac_term}}",
+      "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
       "sympy_str": "z = {{a}} + {{b}} * k + {{c}}*f + {{d}} * k + {{e}}",
       "goal": "simplify_expression",
       "is_crisis": false,

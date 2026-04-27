@@ -1,0 +1,355 @@
+{
+  "title": "Lijn door 2 punten opstellen",
+  "log_steps": true,
+  "items": [
+  {
+  "id": "q1_pre",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": "0",
+    "y2": "0",
+    "c":  {"int": [3, 10]},
+    "y1": "c",
+    "x2": "c",
+    "dx": "x2 - x1",
+    "dy": "y2 - y1"
+    }
+  },
+
+  {
+  "id": "q2_pre",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [1, 2]},
+    "y1": {"int": [-4, -2]},
+    "dx": {"int": [3, 6]},
+    "a":  {"int": [3, 4]},
+    "dy": "dx * a",
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+
+  {
+  "id": "q3_pre",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [-4, -2]},
+    "y1": {"int": [4, 10]},
+    "dx": {"int": [4, 12]},
+    "dy":  {"int": [-40, -20], "step": 10},
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+
+  {
+  "id": "q4_pre",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [-8, -4]},
+    "y1": {"int": [-6, -2]},
+    "dx": {"int": [4, 6]},
+    "dy":  {"int": [4, 6]},
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+
+  {
+  "id": "q5_pre",
+  "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "({{y2}} - {{y1}}) / ({{x2}} - {{x1}})",
+      "wrong_answer_hints": [
+        {
+          "if_answer": "{{dx}} / {{dy}}",
+          "message": "Je hebt teller en noemer omgedraaid: de richtingscoëfficiënt is verticale verandering / horizontale verandering."
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{y1}} - (({{y2}} - {{y1}}) / ({{x2}} - {{x1}})) * {{x1}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": {"int": [-15, -8]},
+    "y1": {"int": [-10, -8]},
+    "dx": {"int": [4, 6]},
+    "dy":  {"int": [4, 6]},
+    "x2": "x1 + dx",
+    "y2": "y1 + dy"
+    }
+  },
+
+  {
+  "id": "q6_pre",
+  "graph": {
+    "bounding_box": [-8, 8, 8, -8],
+    "show_labels": true,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": "0",
+    "y1": {"int": [1, 3]},
+    "y2": "0",
+    "x2": "2 * y1",
+    "a": "(y2 - y1) / (x2 - x1)",
+    "b": "y1"
+    }
+  },
+
+  {
+  "id": "q7_pre",
+  "graph": {
+    "bounding_box": [-8, 8, 8, -8],
+    "show_labels": true,
+    "lines": [{"formula": "{{a}} * x + {{b}}"}]
+  },
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{a}}"
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{b}}"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "x1": "0",
+    "y1": {"int": [-3, -1]},
+    "c": {"int": [2, 4]},
+    "y2": "0",
+    "x2": "-1 * (c * y1)",
+    "a": "(y2 - y1) / (x2 - x1)",
+    "b": "y1"
+    }
+  },
+
+  {
+  "id": "q8_crisis",
+  "context": [
+    "\\begin{array}{l}",
+    "\\text{Gegeven is lijn } l \\text{ met de formule } y = {{al}}x + {{bl}}\\\\",
+    "\\text{Lijn m is evenwijdig met lijn } l \\text{ en gaat door het punt } ({{p1}}, {{p2}})",
+    "\\end{array}"
+  ],
+  "display": "test",
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt van lijn m. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "{{al}}",
+      "wrong_answer_hints": [
+        {
+          "message": "Tip! Als twee lijnen evenwijdig zijn, dan zijn ze even stijl!"
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal van lijn m. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{p2}} - {{p1}}*{{al}}"
+    }
+  ],
+  "is_crisis": true,
+  "post_crisis": {
+    "explanation": "Als twee lijnen evenwijdig zijn. Dan hebben ze dezelfde richtingscoëfficiënt!",
+    "explanation_latex": [
+      "\\begin{array}{l}",
+      " \\text{Lijn } l \\text{ heeft de formule } y = 3x  + 2. \\\\",
+      " \\text{Lijn } k \\text{ is evenwijdig met lijn } l \\text{ en gaat door het punt } (3, 4)\\\\",
+      " \\text{Stel de formule op van lijn k.} \\\\",
+      " \\\\ ",
+      " \\text{Vul de richtingscoëfficiënt in, in de formule } y = ax + b \\\\",
+      " y = 3x + b \\\\",
+      " \\\\",
+      " \\text{Vul de coördinaten van het bekende punt in, en los de vergelijking op.} \\\\", 
+      " 4 = 3 \\cdot 3 + b\\\\",
+      " 9 + b = 4 \\\\",
+      " b = -5 \\\\",
+      " \\\\",
+      " \\text{De formule van lijn k is dan: } y = 3x - 5",
+      "\\end{array}"
+    ]
+  },
+  "params": {
+    "al": {"int": [2, 6]},
+    "bl": {"int": [2, 6]},
+    "p1": {"int": [3, 7]},
+    "p2": {"int": [4, 8]},
+    "b": {"int": [3, 10]}
+    }
+  },
+
+  {
+  "id": "q9_post",
+  "context": [
+    "\\begin{array}{l}",
+    "\\text{Gegeven is lijn } l \\text{ met de formule } y = {{al}}x + {{bl}}\\\\",
+    "\\text{Lijn m is loodrecht op lijn } l \\text{ en gaat door het punt } ({{p1}}, {{p2}})",
+    "\\end{array}"
+  ],
+  "parts": [
+    {
+      "label": "Vraag 1",
+      "display": "\\text{Bepaal de richtingscoëfficiënt van lijn m. Vul alleen het antwoord in.}",
+      "sympy_str": "slope",
+      "goal": "direct_answer",
+      "expected_answer": "-1 * {{al}}",
+      "wrong_answer_hints": [
+        {
+          "message": "Tip! Als twee lijnen loodrecht zijn, dan zijn ze even stijl, maar een stijgt en de ander daalt!"
+        }
+      ]
+    },
+    {
+      "label": "Vraag 2",
+      "display": "\\text{Bepaal het startgetal van lijn m. Vul alleen het antwoord in.}",
+      "sympy_str": "intercept",
+      "goal": "direct_answer",
+      "expected_answer": "{{p2}} - {{p1}}* (-1 * {{al}})"
+    }
+  ],
+  "is_crisis": false,
+  "params": {
+    "al": {"int": [2, 6]},
+    "bl": {"int": [2, 6]},
+    "p1": {"int": [3, 7]},
+    "p2": {"int": [4, 8]},
+    "b": {"int": [3, 10]}
+    }
+  }
+  ]
+}
