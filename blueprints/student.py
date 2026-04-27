@@ -116,6 +116,7 @@ def module(module_id):
         module_id=module_id,
         crisis_phase=crisis_phase,
         post_crisis_explanation=exercise.get_post_crisis_explanation(item, crisis_phase),
+        input_hint=exercise.get_input_hint(item),
     )
 
 

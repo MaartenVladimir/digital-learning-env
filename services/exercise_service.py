@@ -47,7 +47,7 @@ def get_post_crisis_explanation(item: dict, crisis_phase: str | None) -> dict | 
     post = item.get('post_crisis', {})
     return {
         'text': post.get('explanation', ''),
-        'latex': post.get('explanation_latex', ''),
+        'latex': ' '.join(post['explanation_latex']) if isinstance(post.get('explanation_latex'), list) else post.get('explanation_latex', ''),
     }
 
 def get_progress(student_pk: int, module_id: str):
@@ -66,6 +66,27 @@ def start_item_session(student_pk: int, module_id: str, item_id: str,
                        crisis_phase, is_crisis: bool = False, retry_n: int = 0):
     return db.start_item_session(student_pk, module_id, item_id, crisis_phase,
                                  is_crisis=is_crisis, retry_n=retry_n)
+
+def _hint_for_goal(goal_name: str) -> str | None:
+    goal_class = GOALS.get(goal_name)
+    return getattr(goal_class, 'input_hint', None) if goal_class else None
+
+def get_input_hint(item: dict) -> str | list[str | None] | None:
+    """
+    Single-part: returns a hint string (or None).
+    Multi-part:  returns a list with one hint per part (entry may be None).
+    Item-level 'input_hint' overrides everything.
+    """
+    if 'input_hint' in item and not 'parts' in item:
+        hint = item['input_hint']
+        return ' '.join(hint) if isinstance(hint, list) else hint
+    if 'parts' in item:
+        hints = []
+        for part in item['parts']:
+            h = part.get('input_hint') or _hint_for_goal(part.get('goal', ''))
+            hints.append(' '.join(h) if isinstance(h, list) else h)
+        return hints
+    return _hint_for_goal(item.get('goal', ''))
 
 def check_step(item: dict, prev_step: str, step_input: str) -> CheckResult:
     goal = GOALS[item['goal']](item_context=item)

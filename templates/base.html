@@ -47,6 +47,16 @@
       margin: 16px 0;
     }
 
+    .problem-box-context {
+      font-size: 1.1em;
+      text-align: left;
+      padding: 14px 20px;
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+
     .steps { margin: 16px 0; }
 
     .step {
@@ -156,6 +166,62 @@
       font-weight: 500;
       color: #444;
     }
+
+    /* ── Input hint modal ── */
+    .hint-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .hint-overlay.open { display: flex; }
+    .hint-modal {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px 28px 20px;
+      max-width: 520px;
+      width: 92%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+    .hint-modal h3 {
+      margin: 0 0 16px;
+      font-size: 1em;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .hint-modal-body { font-size: 1.15em; }
+    .hint-modal-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 1.3em;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #888;
+      line-height: 1;
+    }
+    .hint-modal-close:hover { color: #333; }
+    .btn-hint {
+      display: inline-block;
+      margin-top: 12px;
+      margin-right: 8px;
+      padding: 8px 16px;
+      font-size: 0.9em;
+      background: #f0f0f0;
+      color: #555;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-hint:hover { background: #e4e4e4; }
 
     /* ── Home page ── */
     .module-card {

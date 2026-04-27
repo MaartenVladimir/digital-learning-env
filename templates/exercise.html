@@ -30,8 +30,9 @@
 {# ── Multi-part item ──────────────────────────────────────────────────────── #}
 {% if item.graph %}
 <div id="graph-context" class="graph-box"></div>
-{% elif item.context %}
-<div class="problem-box">
+{% endif %}
+{% if item.context %}
+<div class="problem-box-context">
   <span id="problem-context"></span>
 </div>
 {% endif %}
@@ -53,6 +54,9 @@
     {% else %}
     <button class="btn" onclick="checkPart({{ loop.index0 }})">Controleer stap</button>
     {% endif %}
+    {% if input_hint and input_hint[loop.index0] %}
+    <button class="btn-hint" onclick="openHintModal({{ loop.index0 }})">Wat moet ik invullen?</button>
+    {% endif %}
   </div>
   <div id="feedback-{{ loop.index0 }}" class="feedback" style="display:none"></div>
 </div>
@@ -60,10 +64,33 @@
 
 <div id="global-feedback" class="feedback" style="display:none"></div>
 
+{% if input_hint %}
+{% for hint in input_hint %}
+{% if hint %}
+<span id="hint-src-{{ loop.index0 }}" style="display:none"></span>
+{% endif %}
+{% endfor %}
+{% endif %}
+
 <script>
   const MODULE_ID = {{ module_id | tojson }};
   const NUM_PARTS = {{ item.parts | length }};
   const partsDone = new Set();
+
+  {% if input_hint %}
+  {% for hint in input_hint %}
+  {% if hint %}
+  katex.render({{ hint | tojson }}, document.getElementById('hint-src-{{ loop.index0 }}'), { throwOnError: false, displayMode: true });
+  {% endif %}
+  {% endfor %}
+  function openHintModal(i) {
+    const src = document.getElementById('hint-src-' + i);
+    document.getElementById('hint-content').innerHTML = src ? src.innerHTML : '';
+    document.getElementById('hint-overlay').classList.add('open');
+  }
+  function closeHintModal() { document.getElementById('hint-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHintModal(); });
+  {% endif %}
 
   {% if item.graph %}
   (function() {
@@ -94,7 +121,8 @@
       });
     });
   })();
-  {% elif item.context %}
+  {% endif %}
+  {% if item.context %}
   katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), {
     throwOnError: false,
     displayMode: true,
@@ -205,9 +233,16 @@
 {% else %}
 
 {# ── Single-part item ─────────────────────────────────────────────────────── #}
+{% if item.context %}
+<div class="problem-box-context">
+  <span id="problem-context"></span>
+</div>
+<p id="problem-display"></p>
+{% else %}
 <div class="problem-box">
   <span id="problem-display"></span>
 </div>
+{% endif %}
 
 <div class="steps" id="steps"
   {% if item.goal == 'direct_answer' %}style="display:none"{% endif %}
@@ -224,6 +259,9 @@
   {% else %}
   <button class="btn" onclick="checkStep()">Controleer stap</button>
   {% endif %}
+  {% if input_hint %}
+  <button class="btn-hint" onclick="openHintModal()">Wat moet ik invullen?</button>
+  {% endif %}
 </div>
 
 <div id="feedback" class="feedback" style="display:none"></div>
@@ -234,10 +272,17 @@
   const MODULE_ID    = {{ module_id | tojson }};
   const IS_DIRECT    = {{ (item.goal == 'direct_answer') | tojson }};
 
+  {% if item.context %}
+  katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), {
+    throwOnError: false,
+    displayMode: true,
+  });
+  {% endif %}
+
   // Render the problem with KaTeX
   katex.render(PROBLEM, document.getElementById('problem-display'), {
     throwOnError: false,
-    displayMode: true,
+    displayMode: {% if item.context %}false{% else %}true{% endif %},
   });
 
   {% if post_crisis_explanation and post_crisis_explanation.latex %}
@@ -336,6 +381,29 @@
   mf.focus();
 </script>
 
+{% endif %}
+
+{% if input_hint %}
+<div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHintModal()">
+  <div class="hint-modal">
+    <button class="hint-modal-close" onclick="closeHintModal()" aria-label="Sluiten">&times;</button>
+    <h3>Voorbeeld</h3>
+    <div class="hint-modal-body">
+      <span id="hint-content"></span>
+    </div>
+  </div>
+</div>
+{% if not item.parts %}
+<script>
+  katex.render({{ input_hint | tojson }}, document.getElementById('hint-content'), {
+    throwOnError: false,
+    displayMode: true,
+  });
+  function openHintModal()  { document.getElementById('hint-overlay').classList.add('open'); }
+  function closeHintModal() { document.getElementById('hint-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHintModal(); });
+</script>
+{% endif %}
 {% endif %}
 
 {% endblock %}
