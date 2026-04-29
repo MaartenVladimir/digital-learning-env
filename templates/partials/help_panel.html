@@ -1,0 +1,92 @@
+<aside class="info-panel">
+  <div class="info-panel-header">Hulp</div>
+  <div class="accordion" id="help-accordion"></div>
+</aside>
+
+<script>
+
+// To add a topic: append a json object with { vraag, antwoord }.
+// Each item can have { tekst } and optionally { formule } (LaTeX string).
+const HELP_TOPICS = [
+  {
+    vraag: "Hoe voer ik een breuk in?",
+    antwoord: [
+      { tekst: "Klik op de breuk-knop <kbd>a/b</kbd> onder de vraag, of typ een <kbd>/</kbd> op je toetsenbord." },
+      { tekst: "Je kan alleen <b>enkelvoudige</b> breuken invoeren!"},
+      { tekst: "Voorbeeld  drie-kwart:", formule: "\\frac{3}{4}" },
+      { tekst: "Voorbeeld anderhalf:", formule: "\\frac{3}{2}" },
+    ]
+  },
+  {
+    vraag: "Hoe voer ik een vermenigvuldiging in?",
+    antwoord: [
+      { tekst: "Klik op de <kbd>x</kbd> knop onder de vraag, of typ een sterretje <kbd>*</kbd> op je toetsenbord." },    
+    ]
+  },
+  {
+    vraag: "Hoe typ ik plus of min?",
+    antwoord: [
+      { tekst: "Klik op de <kbd>+</kbd> knop onder de vraag, of typ een plus <kbd>+</kbd> op je toetsenbord." },    
+    ]
+  },
+  {
+    vraag: "Ik zit vast. Wat nu?",
+    antwoord: [
+      { tekst: "Kijk of er een knop <em>Wat moet ik invullen?</em> staat. Die laat zien op wat voor manier je je antwoord in moet vullen." },
+      { tekst: "Kom je niet uit de vraag? Probeer de theorie in je boek nog eens door te lezen."},
+      { tekst: "Als je er echt niet uitkomt, vraag dan je docent om hulp." },
+    ]
+  },
+];
+// ──────────────────────────────────────────────────────────────────────────
+
+(function () {
+  const acc = document.getElementById('help-accordion');
+
+  HELP_TOPICS.forEach(function (topic) {
+    const item = document.createElement('div');
+    item.className = 'acc-item';
+
+    const btn = document.createElement('button');
+    btn.className = 'acc-btn';
+    btn.type = 'button';
+    btn.innerHTML = '<span>' + topic.vraag + '</span>';
+    btn.setAttribute('aria-expanded', 'false');
+
+    const panel = document.createElement('div');
+    panel.className = 'acc-panel';
+    panel.hidden = true;
+
+    // Build panel content
+    topic.antwoord.forEach(function (item) {
+      const p = document.createElement('p');
+      p.innerHTML = item.tekst;
+      panel.appendChild(p);
+      if (item.formule) {
+        const d = document.createElement('div');
+        d.className = 'acc-formula';
+        katex.render(item.formule, d, { throwOnError: false, displayMode: true });
+        panel.appendChild(d);
+      }
+    });
+
+    btn.addEventListener('click', function () {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all
+      acc.querySelectorAll('.acc-btn').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.hidden = true;
+      });
+      // Toggle clicked one
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      }
+    });
+
+    item.appendChild(btn);
+    item.appendChild(panel);
+    acc.appendChild(item);
+  });
+})();
+</script>

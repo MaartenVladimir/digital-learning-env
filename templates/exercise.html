@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Module {{ module_id }} — DLE{% endblock %}
+{% block body_class %} class="has-panel"{% endblock %}
 
 {% if item.graph %}
 {% block extra_head %}
@@ -9,6 +10,9 @@
 {% endif %}
 
 {% block content %}
+<div class="page-with-panel">
+{% include "partials/help_panel.html" %}
+<div class="exercise-main">
 
 <p class="progress">Module {{ module_id }} &mdash; opgave {{ item_num }} van {{ total }}</p>
 
@@ -34,6 +38,11 @@
 {% if item.context %}
 <div class="problem-box-context">
   <span id="problem-context"></span>
+</div>
+{% endif %}
+{% if item.display %}
+<div class="problem-box-part">
+  <span id="item-display"></span>
 </div>
 {% endif %}
 
@@ -132,6 +141,12 @@
   katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), {
     throwOnError: false,
     displayMode: true,
+  });
+  {% endif %}
+  {% if item.display %}
+  katex.render({{ item.display | tojson }}, document.getElementById('item-display'), {
+    throwOnError: false,
+    displayMode: false,
   });
   {% endif %}
 
@@ -438,4 +453,7 @@
 {% endif %}
 {% endif %}
 
+</div>{# .exercise-main #}
+<div class="panel-spacer"></div>
+</div>{# .page-with-panel #}
 {% endblock %}
