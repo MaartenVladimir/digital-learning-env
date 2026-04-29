@@ -5,6 +5,7 @@
   {
   "id": "q1_pre",
   "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "display": "\\text{Stel de formule op van een lijn door deze punten.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -42,6 +43,7 @@
   {
   "id": "q2_pre",
   "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "display": "\\text{Stel de formule op van een lijn door deze punten.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -79,6 +81,7 @@
   {
   "id": "q3_pre",
   "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "display": "\\text{Stel de formule op van een lijn door deze punten.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -115,6 +118,7 @@
   {
   "id": "q4_pre",
   "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "display": "\\text{Stel de formule op van een lijn door deze punten.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -151,6 +155,7 @@
   {
   "id": "q5_pre",
   "context": "\\text{Gegeven de punten } ({{x1}}, {{y1}}) \\text{ en } ({{x2}}, {{y2}})",
+  "display": "\\text{Stel de formule op van een lijn door deze punten.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -191,6 +196,7 @@
     "show_labels": true,
     "lines": [{"formula": "{{a}} * x + {{b}}"}]
   },
+  "display": "\\text{Stel de formule op van de lijn.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -225,6 +231,7 @@
     "show_labels": true,
     "lines": [{"formula": "{{a}} * x + {{b}}"}]
   },
+  "display": "\\text{Stel de formule op van de lijn.}",
   "parts": [
     {
       "label": "Vraag 1",
@@ -261,7 +268,6 @@
     "\\text{Lijn m is evenwijdig met lijn } l \\text{ en gaat door het punt } ({{p1}}, {{p2}})",
     "\\end{array}"
   ],
-  "display": "test",
   "parts": [
     {
       "label": "Vraag 1",

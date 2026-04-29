@@ -351,9 +351,113 @@
       border-radius: 4px;
       margin-bottom: 12px;
     }
+
+    /* ── Exercise page layout with help panel ── */
+    /* panel(236) + gap(28) + exercise(680) + gap(28) + spacer(236) + body-padding(48) = 1256 */
+    body.has-panel { max-width: 1256px; }
+
+    .page-with-panel {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 28px;
+    }
+
+    .exercise-main {
+      flex: 0 0 680px;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    /* Invisible right spacer — mirrors the panel width to keep exercise centered */
+    .panel-spacer {
+      width: 236px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1050px) {
+      .info-panel, .panel-spacer { display: none; }
+      body.has-panel { max-width: 680px; }
+    }
+
+    .info-panel {
+      width: 236px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+      background: #f7f9fc;
+      border: 1px solid #dde4f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .info-panel-header {
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 0.78em;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #5a6a8a;
+      background: #edf0f8;
+      border-bottom: 1px solid #dde4f0;
+    }
+
+    /* ── Accordion ── */
+    .acc-item { border-bottom: 1px solid #dde4f0; }
+    .acc-item:last-child { border-bottom: none; }
+
+    .acc-btn {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 10px 14px;
+      font-size: 0.84em;
+      color: #334466;
+      cursor: pointer;
+      line-height: 1.4;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .acc-btn::after {
+      content: '\25B8';
+      font-size: 0.75em;
+      color: #8899bb;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: transform 0.15s;
+    }
+    .acc-btn[aria-expanded="true"]::after { transform: rotate(90deg); }
+    .acc-btn:hover { background: #eef1f8; }
+
+    .acc-panel {
+      padding: 4px 14px 12px;
+      font-size: 0.83em;
+      color: #444;
+      line-height: 1.55;
+    }
+    .acc-panel p { margin: 5px 0; }
+    .acc-panel kbd {
+      display: inline-block;
+      padding: 1px 5px;
+      font-size: 0.9em;
+      background: #fff;
+      border: 1px solid #bcc;
+      border-bottom-width: 2px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    .acc-formula {
+      text-align: center;
+      margin: 8px 0 4px;
+      overflow-x: auto;
+    }
   </style>
 </head>
-<body>
+<body{% block body_class %}{% endblock %}>
 {% block content %}{% endblock %}
 </body>
 </html>
