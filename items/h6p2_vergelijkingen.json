@@ -155,8 +155,22 @@
     "goal": "solve_equation",
     "is_crisis": true,
     "post_crisis": {
-      "explanation": "Als je een vergelijking met haakjes hebt, moet je eerst de haakjes wegwerken. Dit doe je met de bordjesmethode. Leg een bordje op de haakjes en vraag jezelf wat er onder moet staan zodat de vergelijking klopt",
-      "explanation_latex": "2(x - 3) = 30\\newline x - 3 = 15"
+      "explanation": "Als je een vergelijking met haakjes hebt, kan je die eerst weghalen met de bordjesmethode. Een voorbeeld:"      ,
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        " \\text{Los op: } 2(x-3) = 30 \\\\ \\\\",
+        " \\text{Leg een } \\emph{bordje } \\text{(of je vinger) op de haakjes } (x - 3) \\\\",
+        " \\text{Je vergelijking is dan: } 2 \\cdot \\text{bordje} = 30 \\\\ ",
+        " \\text{Wat moet er dan onder het bordje staan, zodat de vergelijking klopt?} \\\\",
+        " 15 \\text{! Want } 2\\cdot 15 = 30  \\\\",
+        " \\\\",
+        " \\text{Je lost de vergelijking dus als volgt op:} \\\\", 
+        " 2(x-3) = 30\\\\",
+        " x - 3 = 15\\\\",
+        " x = 18\\\\",
+        " \\\\",
+        "\\end{array}"
+      ]
     },
     "params": {
       "a":     {"int": [2, 7]},
