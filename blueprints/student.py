@@ -56,13 +56,27 @@ def home():
     student_pk = session['student_pk']
     class_id   = session['class_id']
 
-    modules  = module_service.get_visible_modules(class_id)
-    progress = {p.module_id: p for p in module_service.get_all_module_progress(student_pk)}
+    modules     = module_service.get_visible_modules(class_id)
+    all_progress = module_service.get_all_module_progress(student_pk)
+    progress    = {p.module_id: p for p in all_progress}
+
+    selftest_by_base = {}
+    for p in all_progress:
+        if '_selftest_' in p.module_id:
+            base_id, attempt_str = p.module_id.rsplit('_selftest_', 1)
+            existing = selftest_by_base.get(base_id)
+            if existing is None or int(attempt_str) > int(existing['attempt']):
+                selftest_by_base[base_id] = {
+                    'module_id': p.module_id,
+                    'status': p.status,
+                    'attempt': attempt_str,
+                }
 
     module_list = [
         {
             'module': m,
             'status': progress[m.id].status if m.id in progress else 'not_started',
+            'selftest': selftest_by_base.get(m.id),
         }
         for m in modules
     ]
@@ -75,29 +89,34 @@ def home():
 @student_required
 def module(module_id):
     student_pk = session['student_pk']
+    student_id = session['student_id']
     class_id   = session['class_id']
     group      = session['group']
 
+    is_selftest = '_selftest_' in module_id
+    base_id     = module_id.rsplit('_selftest_', 1)[0] if is_selftest else module_id
+
     visible_ids = {m.id for m in module_service.get_visible_modules(class_id)}
-    if module_id not in visible_ids:
+    if base_id not in visible_ids:
         return redirect(url_for('student.home'))
 
-    mod      = module_service.load_module(module_id)
+    mod      = module_service.load_module(module_id, student_id)
     items    = mod['items']
     progress = module_service.start_module(student_pk, module_id)
 
     if progress.item_index >= len(items):
         return redirect(url_for('student.home'))
 
-    retry_n = session.get('item_retry', 0)
-    item    = exercise.get_item(items, progress.item_index, session['student_id'], retry_n)
+    selftest_attempt = mod.get('selftest_attempt', 0)
+    retry_n = (selftest_attempt - 1) if is_selftest else session.get('item_retry', 0)
+    item    = exercise.get_item(items, progress.item_index, student_id, retry_n)
 
     crisis_phase = exercise.resolve_crisis_phase(student_pk, module_id, item, group)
     exercise.start_item_session(student_pk, module_id, item['id'], crisis_phase,
                                 is_crisis=item.get('is_crisis', False), retry_n=retry_n)
 
     if crisis_phase == 'post_crisis':
-        item = exercise.get_item(items, progress.item_index, session['student_id'] + 'rr', 0)
+        item = exercise.get_item(items, progress.item_index, student_id + 'rr', 0)
 
     session['module_id'] = module_id
     if 'parts' in item:
@@ -116,7 +135,8 @@ def module(module_id):
         module_id=module_id,
         crisis_phase=crisis_phase,
         post_crisis_explanation=exercise.get_post_crisis_explanation(item, crisis_phase),
-        input_hint=exercise.get_input_hint(item),
+        input_hint=exercise.get_input_hint(item, is_selftest=is_selftest),
+        is_selftest=is_selftest,
     )
 
 
@@ -131,7 +151,7 @@ def check():
     group      = session['group']
     retry_n    = session.get('item_retry', 0)
 
-    mod      = module_service.load_module(module_id)
+    mod      = module_service.load_module(module_id, session['student_id'])
     progress = exercise.get_progress(student_pk, module_id)
     item         = exercise.get_item(mod['items'], progress.item_index, session['student_id'], retry_n)
     crisis_phase = exercise.resolve_crisis_phase(student_pk, module_id, item, group)
@@ -233,6 +253,89 @@ def check():
         'is_correct': result.is_correct,
         'message': result.message,
     })
+
+
+@bp.post('/selftest/start/<base_module_id>')
+@student_required
+def selftest_start(base_module_id):
+    student_pk = session['student_pk']
+    class_id   = session['class_id']
+
+    visible_ids = {m.id for m in module_service.get_visible_modules(class_id)}
+    if base_module_id not in visible_ids:
+        return redirect(url_for('student.home'))
+
+    all_progress = module_service.get_all_module_progress(student_pk)
+    attempts = []
+    for p in all_progress:
+        if p.module_id.startswith(base_module_id + '_selftest_'):
+            _, attempt_str = p.module_id.rsplit('_selftest_', 1)
+            if attempt_str.isdigit():
+                attempts.append((int(attempt_str), p.module_id, p.status))
+
+    if attempts:
+        attempts.sort()
+        latest_n, latest_id, latest_status = attempts[-1]
+        if latest_status == 'in_progress':
+            return redirect(url_for('student.module', module_id=latest_id))
+        next_n = latest_n + 1
+    else:
+        next_n = 1
+
+    new_module_id = f'{base_module_id}_selftest_{next_n}'
+    module_service.start_module(student_pk, new_module_id)
+    return redirect(url_for('student.module', module_id=new_module_id))
+
+
+@bp.post('/selftest_check')
+@student_required
+def selftest_check():
+    body       = request.get_json()
+    answers    = body.get('answers', [])
+    student_pk = session['student_pk']
+    student_id = session['student_id']
+    module_id  = session['module_id']
+
+    mod      = module_service.load_module(module_id, student_id)
+    progress = exercise.get_progress(student_pk, module_id)
+
+    selftest_attempt = mod.get('selftest_attempt', 1)
+    retry_n = selftest_attempt - 1
+    item = exercise.get_item(mod['items'], progress.item_index, student_id, retry_n)
+
+    results = []
+    item_session = None
+
+    if 'parts' in item:
+        for i, part in enumerate(item['parts']):
+            answer = answers[i] if i < len(answers) else ''
+            result = exercise.check_step(part, part['sympy_str'], answer)
+            item_session = exercise.record_step(
+                student_pk, module_id, item['id'], None,
+                answer, result.is_correct, result.error_id,
+                mod.get('log_steps', False),
+            )
+            results.append({
+                'is_correct': result.is_correct,
+                'expected_answer_latex': exercise.get_expected_answer(part),
+            })
+    else:
+        answer = answers[0] if answers else ''
+        result = exercise.check_step(item, item['sympy_str'], answer)
+        item_session = exercise.record_step(
+            student_pk, module_id, item['id'], None,
+            answer, result.is_correct, result.error_id,
+            mod.get('log_steps', False),
+        )
+        results.append({
+            'is_correct': result.is_correct,
+            'expected_answer_latex': exercise.get_expected_answer(item),
+        })
+
+    exercise.complete_and_advance(student_pk, module_id, item_session,
+                                  progress.item_index, len(mod['items']))
+
+    return jsonify({'results': results})
 
 
 @bp.route('/done')

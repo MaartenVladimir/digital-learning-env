@@ -19,13 +19,21 @@
         <span class="badge badge-new">Nieuw</span>
       {% endif %}
     </div>
-    <a href="{{ url_for('student.module', module_id=entry.module.id) }}"
-       class="btn {% if entry.status == 'completed' %}btn-secondary{% endif %}">
-      {% if entry.status == 'completed' %}Opnieuw
-      {% elif entry.status == 'in_progress' %}Verder
-      {% else %}Start
+    {% if entry.status == 'completed' %}
+      {% if entry.selftest and entry.selftest.status == 'in_progress' %}
+        <a href="{{ url_for('student.module', module_id=entry.selftest.module_id) }}"
+           class="btn">Test jezelf</a>
+      {% else %}
+        <form method="post" action="{{ url_for('student.selftest_start', base_module_id=entry.module.id) }}" style="display:inline">
+          <button type="submit" class="btn">Test jezelf</button>
+        </form>
       {% endif %}
-    </a>
+    {% else %}
+      <a href="{{ url_for('student.module', module_id=entry.module.id) }}"
+         class="btn {% if entry.status == 'completed' %}btn-secondary{% endif %}">
+        {% if entry.status == 'in_progress' %}Verder{% else %}Start{% endif %}
+      </a>
+    {% endif %}
   </div>
   {% endfor %}
 {% endif %}

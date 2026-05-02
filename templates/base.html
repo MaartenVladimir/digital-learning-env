@@ -455,6 +455,41 @@
       margin: 8px 0 4px;
       overflow-x: auto;
     }
+
+    /* ── Selftest ── */
+    .selftest-intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .selftest-intro-modal {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 28px 24px;
+      max-width: 480px;
+      width: 92%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .selftest-intro-modal h3 { margin: 0 0 12px; }
+    .selftest-intro-modal p  { margin: 0 0 20px; color: #444; }
+
+    .selftest-result-row {
+      padding: 10px 0;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    .selftest-result-row.correct  { color: #2a7a2a; }
+    .selftest-result-row.incorrect { color: #b00; }
+
+    .selftest-expected {
+      padding: 6px 0 10px;
+      font-size: 1em;
+      color: #333;
+    }
   </style>
 </head>
 <body{% block body_class %}{% endblock %}>

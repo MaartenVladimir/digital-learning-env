@@ -10,8 +10,23 @@
     "goal": "simplify_expression",
     "is_crisis": false,
     "params": {
-      "n": {"int": [2, 6]}
-      }
+      "n": {"int": [2, 5]}
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3 \\cdot 2^2 - 4\\\\",
+      "3 \\cdot 4 - 4 \\\\",
+      "12 - 4 \\\\",
+      "8",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "8a + 1 \\text{    of    } 8",
+      "\\end{array}"
+    ]
   },
   {
     "id": "q2_pre",
@@ -21,10 +36,25 @@
     "goal": "simplify_expression",
     "is_crisis": false,
     "params": {
-      "n": {"int": [2, 6]},
+      "n": {"int": [2, 4]},
       "q": {"int": [2, 4], "step": 2},
       "a": "1/q"
-      }
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3 \\cdot 2^2 - 4\\\\",
+      "3 \\cdot 4 - 4 \\\\",
+      "12 - 4 \\\\",
+      "8",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "8a + 1 \\text{    of    } 8",
+      "\\end{array}"
+    ]
   },
   {
     "id": "q3_pre",
@@ -36,7 +66,22 @@
     "params": {
       "a": {"int": [4, 8]},
       "n": "a + 3"
-      }
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3 \\cdot 2^2 - 4\\\\",
+      "3 \\cdot 4 - 4 \\\\",
+      "12 - 4 \\\\",
+      "8",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "8a + 1 \\text{    of    } 8",
+      "\\end{array}"
+    ]
   }
   ]
 }

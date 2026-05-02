@@ -16,6 +16,17 @@
 
 <p class="progress">Module {{ module_id }} &mdash; opgave {{ item_num }} van {{ total }}</p>
 
+{# ── Selftest intro popup (first question only) ──────────────────────────── #}
+{% if is_selftest and item_num == 1 %}
+<div class="selftest-intro-overlay" id="selftest-intro">
+  <div class="selftest-intro-modal">
+    <h3>Test jezelf</h3>
+    <p>In deze zelftest vul je alleen het eindantwoord in. Je krijgt geen stapsgewijze feedback. Na elke vraag zie je of je antwoord correct was.</p>
+    <button class="btn" onclick="document.getElementById('selftest-intro').style.display='none'">Begrepen, start de test</button>
+  </div>
+</div>
+{% endif %}
+
 {% if post_crisis_explanation %}
 <div class="post-crisis-box">
   <strong>Uitleg</strong>
@@ -31,7 +42,171 @@
 
 {% if item.parts %}
 
-{# ── Multi-part item ──────────────────────────────────────────────────────── #}
+{# ═══════════════════════════════ MULTI-PART ════════════════════════════════ #}
+
+{% if is_selftest %}
+
+{# ── Selftest: all parts at once ─────────────────────────────────────────── #}
+{% if item.graph %}
+<div id="graph-context" class="graph-box"></div>
+{% endif %}
+{% if item.context %}
+<div class="problem-box-context"><span id="problem-context"></span></div>
+{% endif %}
+{% if item.display %}
+<div class="problem-box-part"><span id="item-display"></span></div>
+{% endif %}
+
+{% for part in item.parts %}
+<div class="part-block">
+  <p class="part-label"><strong>{{ part.label }}</strong></p>
+  <div class="problem-box-part"><span id="part-display-{{ loop.index0 }}"></span></div>
+  <div id="input-area-{{ loop.index0 }}">
+    <math-field id="mf-{{ loop.index0 }}" virtual-keyboard-mode="onfocus"></math-field>
+    <div class="insert-bar" data-part="{{ loop.index0 }}">
+      <button class="btn-insert" data-sym="0" title="Breuk"><span class="frac-icon"><span>a</span><span>b</span></span></button>
+      <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
+      <button class="btn-insert" data-sym="2" title="Optellen">+</button>
+      <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+    </div>
+  </div>
+  <div id="part-result-{{ loop.index0 }}" class="selftest-result-row" style="display:none"></div>
+  <div id="part-expected-{{ loop.index0 }}" class="selftest-expected" style="display:none">
+    <span>Correct antwoord:&nbsp;</span><span id="part-expected-display-{{ loop.index0 }}"></span>
+  </div>
+</div>
+{% endfor %}
+
+<div id="submit-area">
+  <button class="btn" id="submit-btn" onclick="submitSelftest()">Antwoord controleren</button>
+  {% if input_hint %}
+  <button class="btn-hint" onclick="openHintModal(0)">Wat moet ik invullen?</button>
+  {% endif %}
+</div>
+<div id="next-area" style="display:none">
+  <button class="btn" onclick="location.reload()">Volgende vraag</button>
+</div>
+
+{% if input_hint %}
+{% for hint in input_hint %}
+{% if hint %}
+<span id="hint-src-{{ loop.index0 }}" style="display:none"></span>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<script>
+  const MODULE_ID = {{ module_id | tojson }};
+  const NUM_PARTS = {{ item.parts | length }};
+
+  {% if input_hint %}
+  {% for hint in input_hint %}
+  {% if hint %}
+  katex.render({{ hint | tojson }}, document.getElementById('hint-src-{{ loop.index0 }}'), { throwOnError: false, displayMode: true });
+  {% endif %}
+  {% endfor %}
+  function openHintModal(i) {
+    const src = document.getElementById('hint-src-' + i);
+    document.getElementById('hint-content').innerHTML = src ? src.innerHTML : '';
+    document.getElementById('hint-overlay').classList.add('open');
+  }
+  function closeHintModal() { document.getElementById('hint-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHintModal(); });
+  {% endif %}
+
+  {% if item.graph %}
+  (function() {
+    const g = {{ item.graph | tojson }};
+    const board = JXG.JSXGraph.initBoard('graph-context', {
+      boundingbox: g.bounding_box.map(v => Function('return (' + v + ')')()),
+      axis: true, grid: g.show_labels !== false,
+      showNavigation: false, showCopyright: false,
+      defaultAxes: {
+        x: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+        y: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+      },
+    });
+    (g.lines || []).forEach(line => {
+      const fn = new Function('x', 'return ' + line.formula);
+      board.create('functiongraph', [fn], { strokeWidth: line.strokeWidth || 2 });
+    });
+    (g.points || []).forEach(pt => {
+      const x = Function('return (' + pt.x + ')')(), y = Function('return (' + pt.y + ')')();
+      const label = pt.label !== undefined ? pt.label : '(' + x + ', ' + y + ')';
+      board.create('point', [x, y], { fixed: true, size: 4, name: label, label: { fontSize: 13, offset: [8, 8] } });
+    });
+  })();
+  {% endif %}
+  {% if item.context %}
+  katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), { throwOnError: false, displayMode: true });
+  {% endif %}
+  {% if item.display %}
+  katex.render({{ item.display | tojson }}, document.getElementById('item-display'), { throwOnError: false, displayMode: false });
+  {% endif %}
+  {% for part in item.parts %}
+  katex.render({{ part.display | tojson }}, document.getElementById('part-display-{{ loop.index0 }}'), { throwOnError: false, displayMode: false });
+  {% endfor %}
+
+  function submitSelftest() {
+    const answers = [];
+    for (let i = 0; i < NUM_PARTS; i++) {
+      answers.push(document.getElementById('mf-' + i).getValue('ascii-math').trim());
+    }
+    document.getElementById('submit-btn').disabled = true;
+
+    fetch('/selftest_check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers }),
+    })
+    .then(r => r.json())
+    .then(data => {
+      data.results.forEach((r, i) => {
+        document.getElementById('input-area-' + i).style.display = 'none';
+        const resEl = document.getElementById('part-result-' + i);
+        resEl.textContent = r.is_correct ? '✓ Juist!' : '✗ Niet correct.';
+        resEl.className = 'selftest-result-row ' + (r.is_correct ? 'correct' : 'incorrect');
+        resEl.style.display = 'block';
+        if (!r.is_correct && r.expected_answer_latex) {
+          document.getElementById('part-expected-' + i).style.display = 'block';
+          katex.render(r.expected_answer_latex, document.getElementById('part-expected-display-' + i), {
+            throwOnError: false, displayMode: false,
+          });
+        }
+      });
+      document.getElementById('submit-area').style.display = 'none';
+      document.getElementById('next-area').style.display = 'block';
+    });
+  }
+
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  document.querySelectorAll('.insert-bar').forEach(bar => {
+    const partIdx = parseInt(bar.dataset.part);
+    bar.querySelectorAll('.btn-insert').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById('mf-' + partIdx);
+        el.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
+        el.focus();
+      });
+    });
+  });
+
+  document.getElementById('mf-0').focus();
+</script>
+
+{% if input_hint %}
+<div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHintModal()">
+  <div class="hint-modal">
+    <button class="hint-modal-close" onclick="closeHintModal()" aria-label="Sluiten">&times;</button>
+    <h3>Voorbeeld</h3>
+    <div class="hint-modal-body"><span id="hint-content"></span></div>
+  </div>
+</div>
+{% endif %}
+
+{% else %}
+
+{# ── Normal multi-part ────────────────────────────────────────────────────── #}
 {% if item.graph %}
 <div id="graph-context" class="graph-box"></div>
 {% endif %}
@@ -122,7 +297,6 @@
       },
     });
     (g.lines || []).forEach(line => {
-      // formula is a JS expression in x, e.g. "2/3 * x + 1"
       const fn = new Function('x', 'return ' + line.formula);
       board.create('functiongraph', [fn], { strokeWidth: line.strokeWidth || 2 });
     });
@@ -263,9 +437,139 @@
   document.getElementById('mf-0').focus();
 </script>
 
+{% if input_hint %}
+<div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHintModal()">
+  <div class="hint-modal">
+    <button class="hint-modal-close" onclick="closeHintModal()" aria-label="Sluiten">&times;</button>
+    <h3>Voorbeeld</h3>
+    <div class="hint-modal-body">
+      <span id="hint-content"></span>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endif %}{# is_selftest / multi-part #}
+
 {% else %}
 
-{# ── Single-part item ─────────────────────────────────────────────────────── #}
+{# ═══════════════════════════════ SINGLE-PART ═══════════════════════════════ #}
+
+{% if is_selftest %}
+
+{# ── Selftest: single final answer ────────────────────────────────────────── #}
+{% if item.context %}
+<div class="problem-box-context">
+  <span id="problem-context"></span>
+</div>
+<p id="problem-display"></p>
+{% else %}
+<div class="problem-box">
+  <span id="problem-display"></span>
+</div>
+{% endif %}
+
+<div id="input-area">
+  <math-field id="mf" virtual-keyboard-mode="onfocus"></math-field>
+  <div class="insert-bar">
+    <button class="btn-insert" data-sym="0" title="Breuk"><span class="frac-icon"><span>a</span><span>b</span></span></button>
+    <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
+    <button class="btn-insert" data-sym="2" title="Optellen">+</button>
+    <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+  </div>
+  <br>
+  {% if item.goal == 'solve_quadratic_equation' %}
+  <button class="btn btn-secondary" onclick="insertOr()" title='Voeg "of" in (∨)'>&nbsp;∨</button>
+  {% endif %}
+  <button class="btn" id="submit-btn" onclick="submitSelftest()">Antwoord controleren</button>
+  {% if input_hint %}
+  <button class="btn-hint" onclick="openHintModal()">Wat moet ik invullen?</button>
+  {% endif %}
+</div>
+
+<div id="selftest-result" style="display:none">
+  <div id="result-row" class="selftest-result-row"></div>
+  <div id="expected-row" class="selftest-expected" style="display:none">
+    <span>Correct antwoord:&nbsp;</span><span id="expected-display"></span>
+  </div>
+  <br>
+  <button class="btn" onclick="location.reload()">Volgende vraag</button>
+</div>
+
+<script>
+  const PROBLEM   = {{ item.display | tojson }};
+  const MODULE_ID = {{ module_id | tojson }};
+
+  {% if item.context %}
+  katex.render({{ item.context | tojson }}, document.getElementById('problem-context'), { throwOnError: false, displayMode: true });
+  {% endif %}
+  katex.render(PROBLEM, document.getElementById('problem-display'), {
+    throwOnError: false,
+    displayMode: {% if item.context %}false{% else %}true{% endif %},
+  });
+
+  const mf = document.getElementById('mf');
+
+  function submitSelftest() {
+    const answer = mf.getValue('ascii-math').trim();
+    if (!answer) return;
+    document.getElementById('submit-btn').disabled = true;
+
+    fetch('/selftest_check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers: [answer] }),
+    })
+    .then(r => r.json())
+    .then(data => {
+      const r = data.results[0];
+      document.getElementById('input-area').style.display = 'none';
+      document.getElementById('selftest-result').style.display = 'block';
+      const rowEl = document.getElementById('result-row');
+      rowEl.textContent = r.is_correct ? '✓ Juist!' : '✗ Niet correct.';
+      rowEl.className = 'selftest-result-row ' + (r.is_correct ? 'correct' : 'incorrect');
+      if (!r.is_correct && r.expected_answer_latex) {
+        document.getElementById('expected-row').style.display = 'block';
+        katex.render(r.expected_answer_latex, document.getElementById('expected-display'), {
+          throwOnError: false, displayMode: false,
+        });
+      }
+    });
+  }
+
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  document.querySelectorAll('.insert-bar .btn-insert').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mf.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
+      mf.focus();
+    });
+  });
+
+  function insertOr() { mf.insert('\\vee'); mf.focus(); }
+
+  mf.addEventListener('keydown', e => { if (e.key === 'Enter') submitSelftest(); });
+  mf.focus();
+</script>
+
+{% if input_hint %}
+<div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHintModal()">
+  <div class="hint-modal">
+    <button class="hint-modal-close" onclick="closeHintModal()" aria-label="Sluiten">&times;</button>
+    <h3>Voorbeeld</h3>
+    <div class="hint-modal-body"><span id="hint-content"></span></div>
+  </div>
+</div>
+<script>
+  katex.render({{ input_hint | tojson }}, document.getElementById('hint-content'), { throwOnError: false, displayMode: true });
+  function openHintModal()  { document.getElementById('hint-overlay').classList.add('open'); }
+  function closeHintModal() { document.getElementById('hint-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHintModal(); });
+</script>
+{% endif %}
+
+{% else %}
+
+{# ── Normal single-part ───────────────────────────────────────────────────── #}
 {% if item.context %}
 <div class="problem-box-context">
   <span id="problem-context"></span>
@@ -318,7 +622,6 @@
   });
   {% endif %}
 
-  // Render the problem with KaTeX
   katex.render(PROBLEM, document.getElementById('problem-display'), {
     throwOnError: false,
     displayMode: {% if item.context %}false{% else %}true{% endif %},
@@ -420,15 +723,12 @@
     mf.focus();
   }
 
-  // Submit on Enter
   mf.addEventListener('keydown', e => {
     if (e.key === 'Enter') checkStep();
   });
 
   mf.focus();
 </script>
-
-{% endif %}
 
 {% if input_hint %}
 <div class="hint-overlay" id="hint-overlay" onclick="if(event.target===this)closeHintModal()">
@@ -440,7 +740,6 @@
     </div>
   </div>
 </div>
-{% if not item.parts %}
 <script>
   katex.render({{ input_hint | tojson }}, document.getElementById('hint-content'), {
     throwOnError: false,
@@ -451,7 +750,10 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHintModal(); });
 </script>
 {% endif %}
-{% endif %}
+
+{% endif %}{# is_selftest / single-part #}
+
+{% endif %}{# item.parts #}
 
 </div>{# .exercise-main #}
 <div class="panel-spacer"></div>
