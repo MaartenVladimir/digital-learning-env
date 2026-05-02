@@ -34,6 +34,8 @@ def get_item(items: list, index: int, student_id: str, retry_n: int) -> dict:
 
 def resolve_crisis_phase(student_pk: int, module_id: str,
                           item: dict, group: str) -> str | None:
+    if '_selftest_' in module_id:
+        return None
     for phase in ('post_crisis', 'crisis'):
         if db.get_active_item_session(student_pk, module_id, item['id'], phase):
             return phase
@@ -67,26 +69,64 @@ def start_item_session(student_pk: int, module_id: str, item_id: str,
     return db.start_item_session(student_pk, module_id, item_id, crisis_phase,
                                  is_crisis=is_crisis, retry_n=retry_n)
 
-def _hint_for_goal(goal_name: str) -> str | None:
+def _hint_for_goal(goal_name: str, is_selftest: bool = False) -> str | None:
     goal_class = GOALS.get(goal_name)
-    return getattr(goal_class, 'input_hint', None) if goal_class else None
+    if not goal_class:
+        return None
+    if is_selftest:
+        return getattr(goal_class, 'selftest_input_hint', None) or getattr(goal_class, 'input_hint', None)
+    return getattr(goal_class, 'input_hint', None)
 
-def get_input_hint(item: dict) -> str | list[str | None] | None:
+def _resolve_hint(raw) -> str | None:
+    "Resolve hint to single string"
+    if raw is None:
+        return None
+    return ' '.join(raw) if isinstance(raw, list) else raw
+
+def get_input_hint(item: dict, is_selftest: bool = False) -> str | list[str | None] | None:
     """
     Single-part: returns a hint string (or None).
     Multi-part:  returns a list with one hint per part (entry may be None).
-    Item-level 'input_hint' overrides everything.
+
+    What hint is taken in self-test mode:
+      1. item-level  'selftest_input_hint'
+      2. goal class  selftest_input_hint
+      3. goal class  input_hint
+
+    What hint is used in non self-test mode (normal mode):
+      1. item-level  'input_hint'
+      2. goal class  input_hint
     """
-    if 'input_hint' in item and not 'parts' in item:
-        hint = item['input_hint']
-        return ' '.join(hint) if isinstance(hint, list) else hint
     if 'parts' in item:
         hints = []
         for part in item['parts']:
-            h = part.get('input_hint') or _hint_for_goal(part.get('goal', ''))
-            hints.append(' '.join(h) if isinstance(h, list) else h)
+            if is_selftest:
+                h = _resolve_hint(part.get('selftest_input_hint')) \
+                    or _hint_for_goal(part.get('goal', ''), is_selftest=True)
+            else:
+                h = _resolve_hint(part.get('input_hint')) \
+                    or _hint_for_goal(part.get('goal', ''))
+            hints.append(h)
         return hints
-    return _hint_for_goal(item.get('goal', ''))
+    if is_selftest:
+        return _resolve_hint(item.get('selftest_input_hint')) \
+            or _hint_for_goal(item.get('goal', ''), is_selftest=True)
+    return _resolve_hint(item.get('input_hint')) \
+        or _hint_for_goal(item.get('goal', ''))
+
+def get_expected_answer(item: dict) -> str | list[str | None] | None:
+    """
+    Return the expected answer in LaTeX for an item.
+    Multi-part items return a list, one entry per part.
+    """
+    if 'parts' in item:
+        results = []
+        for part in item['parts']:
+            goal_class = GOALS.get(part.get('goal', ''))
+            results.append(goal_class.get_expected_answer(part) if goal_class else None)
+        return results
+    goal_class = GOALS.get(item.get('goal', ''))
+    return goal_class.get_expected_answer(item) if goal_class else None
 
 def check_step(item: dict, prev_step: str, step_input: str) -> CheckResult:
     goal = GOALS[item['goal']](item_context=item)
@@ -99,6 +139,14 @@ def check_step(item: dict, prev_step: str, step_input: str) -> CheckResult:
         message=raw.error_diagnosis or raw.strategy_message or raw.message,
         error_id=raw.error_id,
     )
+
+def complete_and_advance(student_pk: int, module_id: str, item_session,
+                          item_index: int, total: int) -> None:
+    """Complete the current item session and advance the module progress."""
+    if item_session:
+        db.complete_item_session(item_session.id)
+    db.advance_module(student_pk, module_id, item_index + 1, total)
+
 
 def handle_completion(
     student_pk: int, module_id: str, item: dict,
