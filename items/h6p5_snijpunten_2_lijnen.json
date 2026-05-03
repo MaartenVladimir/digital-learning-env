@@ -238,6 +238,139 @@
     "b1": {"int": [-6, -2], "exclude": ["not_b2"]},
     "x_sol": "(b2 - b1) / (a1 - a2)"
     }
-  }
+  },
+  {
+    "id": "q8_crisis",
+    "graph": {
+      "bounding_box": [-20, 40, 40, -20],
+      "tick_distance_x": 5,
+      "tick_distance_y": 5,
+      "show_labels": true,
+      "x_label": "x",
+      "y_label": "y",
+      "lines": [{"formula": "{{a1}} * x + {{b1}}", "label": "m"},
+                {"formula": "{{a2}} * x + {{b2}}", "label": "n"}]
+    },
+    "display": "\\text{Je gaat het snijpunt van lijn n en lijn m bepalen.}",
+    "parts": [
+      {
+        "display": "\\text{Stel de formule op van lijn m. Vul alleen de formule in.}",
+        "sympy_str": "y = {{a1}}*x + {{b1}}",
+        "goal": "simplify_expression",
+        "input_hint": [
+          "\\begin{array}{l}",
+          "\\text{Vul de formule in. Bijvoorbeeld.} \\\\",
+          "y = 3x - 10\\\\",
+          "\\end{array}"
+        ]
+      },
+      {
+        "label": "Vraag 2",
+        "display": "\\text{Bepaal de formule van lijn n. Vul alleen de formule in.}",
+        "sympy_str": "y = {{a2}}*x + {{b2}}",
+        "goal": "simplify_expression",
+        "input_hint": [
+          "\\begin{array}{l}",
+          "\\text{Vul de formule in. Bijvoorbeeld.} \\\\",
+          "y = 3x - 10\\\\",
+          "\\end{array}"
+        ]
+      },
+      {
+        "label": "Vraag 3",
+        "display": "\\text{Bereken met behulp van een vergelijking de x-coördinaat van het snijpunt van de twee lijnen.}",
+        "sympy_str": "{{a1}}*x + {{b1}} = {{a2}}*x + {{b2}}",
+        "goal": "solve_equation",
+        "input_hint": [
+          "\\begin{array}{l}",
+          "\\text{Los je vergelijking stap voor stap op. Bijvoorbeeld.} \\\\",
+          "3x - 10 = 2x + 5\\\\",
+          "x - 10 = 5\\\\",
+          "x = 15\\\\",
+          "\\end{array}"
+        ]
+      }
+    ],
+    "is_crisis": true,
+    "post_crisis": {
+      "explanation": "Om het snijpunt van twee grafieken te bepalen, moet je eerst de formule van beide lijnen opstellen. Vervolgens kun je deze formules aan elkaar gelijkstellen, en de vergelijking oplossen om de x-coördinaat van het snijpunt te bepalen. Ten slotte kun je deze x-coördinaat invullen in een van de twee formules om de y-coördinaat van het snijpunt te bepalen."
+    },
+      "params": {
+      "x1": "0",
+      "y1": {"int": [15, 30], "step": 15},
+      "rc1": {"int": [-2, -1]},
+      "x2": "x1 + 1",
+      "y2": "y1 + rc1",
+      "a1": "rc1",
+      "b1": "y1",
+      "x12": "0",
+      "y12": {"int": [20, 25], "step": 5},
+      "rc2": {"int": [2, 4], "step": 2},
+      "x22": "x12 + 1",
+      "y22": "y12 + rc2",
+      "a2": "rc2",
+      "b2": "y12"
+      }
+    },
+      {
+    "id": "q9_post",
+    "graph": {
+      "bounding_box": [-1, 300, 10, -20],
+      "domain": [0, 10],
+      "tick_distance_x": 1,
+      "tick_distance_y": 20,
+      "x_straightFirst": false,
+      "y_straightFirst": false,
+      "show_labels": true,
+      "x_label": "t (uren)",
+      "y_label": "h (cm)",
+      "lines": [{"formula": "{{a1}} * x + {{b1}}", "label": "emmer A"},
+                {"formula": "{{a2}} * x + {{b2}}", "label": "emmer B"}]
+    },
+    "display": [
+      "\\begin{array}{l}",
+      "\\text{Twee emmers worden tegelijkertijd gevuld.} \\\\",
+      "\\text{In de grafiek zie je hoe de hoogte van het water } h \\text{ (in cm) afhangt van de tijd } t \\text{ (in uren).}",
+      "\\end{array}"
+    ],
+    "parts": [
+      {
+        "display": "\\text{Bereken met behulp van een vergelijking na hoeveel uur het water in beide emmers even hoog staat.}",
+        "sympy_str": "{{a1}}*t + {{b1}} = {{a2}}*t + {{b2}}",
+        "goal": "solve_equation",
+        "input_hint": [
+          "\\begin{array}{l}",
+          "\\text{Los je vergelijking stap voor stap op. Bijvoorbeeld.} \\\\",
+          "3t - 10 = 2t + 5\\\\",
+          "t - 10 = 5\\\\",
+          "t = 15\\\\",
+          "\\end{array}"
+        ],
+        "selftest_input_hint": [
+          "\\begin{array}{l}",
+          "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+          "t = 1",
+          "\\end{array}"
+      ]
+      }
+    ],
+    "is_crisis": false,
+    "params": {
+      "x1": "0",
+      "y1": "0",
+      "x2": "3",
+      "y2": {"int": [100, 140], "step": 20},
+      "a1": "y2 / x2",
+      "b1": "0",
+
+      "x12": "0",
+      "y12": {"int": [80, 100], "step": 20},
+      "x22": "7",
+      "y22": {"int": [180, 240], "step": 20, "exclude": [220]},
+      
+      "a2": "(y22 - y12) / (x22 - x12)",
+      "b2": "y12 - a2 * x12"
+      }
+    }
 ]
 }

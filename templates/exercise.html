@@ -117,18 +117,21 @@
   {% if item.graph %}
   (function() {
     const g = {{ item.graph | tojson }};
+    const bb = g.bounding_box.map(v => Function('return (' + v + ')')());
     const board = JXG.JSXGraph.initBoard('graph-context', {
-      boundingbox: g.bounding_box.map(v => Function('return (' + v + ')')()),
+      boundingbox: bb,
       axis: true, grid: g.show_labels !== false,
       showNavigation: false, showCopyright: false,
       defaultAxes: {
-        x: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
-        y: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+        x: { ticks: { ticksDistance: g.tick_distance_x || g.tick_distance || 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+        y: { ticks: { ticksDistance: g.tick_distance_y || g.tick_distance || 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
       },
     });
+    if (g.x_label) board.create('text', [bb[2], 0.3, g.x_label], { anchorX: 'right', anchorY: 'bottom', fontSize: 13, fixed: true, highlight: false });
+    if (g.y_label) board.create('text', [0.3, bb[1], g.y_label], { anchorX: 'left', anchorY: 'top', fontSize: 13, fixed: true, highlight: false });
     (g.lines || []).forEach(line => {
       const fn = new Function('x', 'return ' + line.formula);
-      board.create('functiongraph', [fn], { strokeWidth: line.strokeWidth || 2 });
+      board.create('functiongraph', [fn, bb[0], bb[2]], { strokeWidth: line.strokeWidth || 2, withLabel: !!line.label, name: line.label || '', label: { position: '0.2fr left', anchorX: 'middle', anchorY: 'middle', fontSize: 16, offset: [0, 0] } });
     });
     (g.points || []).forEach(pt => {
       const x = Function('return (' + pt.x + ')')(), y = Function('return (' + pt.y + ')')();
@@ -285,20 +288,54 @@
   {% if item.graph %}
   (function() {
     const g = {{ item.graph | tojson }};
+    const bb = g.bounding_box.map(v => Function('return (' + v + ')')());
     const board = JXG.JSXGraph.initBoard('graph-context', {
-      boundingbox: g.bounding_box.map(v => Function('return (' + v + ')')()),
+      boundingbox: bb,
       axis: true,
       grid: g.show_labels !== false,
       showNavigation: false,
       showCopyright: false,
       defaultAxes: {
-        x: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
-        y: { ticks: { ticksDistance: 1, insertTicks: false, drawLabels: g.show_labels !== false, visible: g.show_labels !== false } },
+        x: { 
+          straightFirst: g.x_straightFirst !== false, 
+          ticks: { 
+            ticksDistance: g.tick_distance_x || g.tick_distance || 1, 
+            insertTicks: false, 
+            drawLabels: g.show_labels !== false, 
+            visible: g.show_labels !== false 
+            } 
+          },
+        y: { 
+          straightFirst: g.y_straightFirst !== false, 
+          ticks: { 
+            ticksDistance: g.tick_distance_y || g.tick_distance || 1, 
+            insertTicks: false, 
+            drawLabels: g.show_labels !== false, 
+            visible: g.show_labels !== false 
+            } 
+          },
       },
     });
+    if (g.x_label) board.create('text', [bb[2], 0.3, g.x_label], { anchorX: 'right', anchorY: 'bottom', fontSize: 13, fixed: true, highlight: false });
+    if (g.y_label) board.create('text', [0.3, bb[1], g.y_label], { anchorX: 'left', anchorY: 'top', fontSize: 13, fixed: true, highlight: false });
     (g.lines || []).forEach(line => {
       const fn = new Function('x', 'return ' + line.formula);
-      board.create('functiongraph', [fn], { strokeWidth: line.strokeWidth || 2 });
+      board.create('functiongraph', [
+        fn, 
+        (g.domain && g.domain[0] !== undefined) ? g.domain[0] : bb[0], 
+        (g.domain && g.domain[1] !== undefined) ? g.domain[1] : bb[2]
+        ], {
+           strokeWidth: line.strokeWidth || 2, 
+           withLabel: !!line.label, 
+           name: line.label || '', 
+           label: { 
+            position: '0.2fr left', 
+            anchorX: 'middle', 
+            anchorY: 'middle', 
+            fontSize: 16, 
+            offset: [0, 0] 
+           } 
+        });
     });
     (g.points || []).forEach(pt => {
       const x = Function('return (' + pt.x + ')')(), y = Function('return (' + pt.y + ')')();
