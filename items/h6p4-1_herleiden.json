@@ -114,7 +114,14 @@
       "is_crisis": true,
       "post_crisis": {
         "explanation": "Als je een uitdrukking moet herleiden met daarin meerdere onbekende. Dan tel je alle onbekende van dezelfde soort bij elkaar op.",
-        "explanation_latex": "p = 3z + 4z - 3q + q - z \\newline \\text{alle z'tjes bij elkaar} \\newline p = 6z - 3q + q \\newline \\text{alle q'tjes bij elkaar} \\newline p = 6z - 2q"
+        "explanation_latex": [
+          "\\begin{array}{l}",
+          "p = 3z + 4z - 3q + q - z \\\\",
+          "p = 7z - 3q + q - z \\\\",
+          "p = 6z - 3q + q \\\\",
+          "p = 6z - 2q \\\\",
+          "\\end{array}"
+        ]
       },
       "params": {
         "a": {"int": [-8, -2]},
