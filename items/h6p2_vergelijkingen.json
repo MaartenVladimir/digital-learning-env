@@ -155,7 +155,7 @@
     "goal": "solve_equation",
     "is_crisis": true,
     "post_crisis": {
-      "explanation": "Als je een vergelijking met haakjes hebt, kan je die eerst weghalen met de bordjesmethode. Een voorbeeld:"      ,
+      "explanation": "Als je een vergelijking met haakjes hebt, kan je die eerst weghalen met de bordjesmethode. Een voorbeeld:",
       "explanation_latex": [
         "\\begin{array}{l}",
         " \\text{Los op: } 2(x-3) = 30 \\\\ \\\\",
