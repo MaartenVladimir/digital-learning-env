@@ -324,7 +324,7 @@
   "context": [
     "\\begin{array}{l}",
     "\\text{Gegeven is lijn } l \\text{ met de formule } y = {{al}}x + {{bl}}\\\\",
-    "\\text{Lijn m is loodrecht op lijn } l \\text{ en gaat door het punt } ({{p1}}, {{p2}})",
+    "\\text{Lijn m is evenwijdig met lijn } l \\text{ en gaat door het punt } ({{p1}}, {{p2}})",
     "\\end{array}"
   ],
   "parts": [
@@ -333,10 +333,10 @@
       "display": "\\text{Bepaal de richtingscoëfficiënt van lijn m. Vul alleen het antwoord in.}",
       "sympy_str": "slope",
       "goal": "direct_answer",
-      "expected_answer": "-1 * {{al}}",
+      "expected_answer": "{{al}}",
       "wrong_answer_hints": [
         {
-          "message": "Tip! Als twee lijnen loodrecht zijn, dan zijn ze even stijl, maar een stijgt en de ander daalt!"
+          "message": "Tip! Als twee lijnen evenwijdig zijn, dan zijn ze even stijl!"
         }
       ]
     },
@@ -345,7 +345,7 @@
       "display": "\\text{Bepaal het startgetal van lijn m. Vul alleen het antwoord in.}",
       "sympy_str": "intercept",
       "goal": "direct_answer",
-      "expected_answer": "{{p2}} - {{p1}}* (-1 * {{al}})"
+      "expected_answer": "{{p2}} - {{p1}}* {{al}}"
     }
   ],
   "is_crisis": false,
