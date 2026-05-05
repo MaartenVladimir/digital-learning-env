@@ -12,7 +12,8 @@
 
   <!-- MathLive for math input (ESM — registers <math-field> custom element) -->
   <script type="module">
-    import 'https://esm.sh/mathlive';
+    import { MathfieldElement } from 'https://esm.sh/mathlive';
+    MathfieldElement.decimalSeparator = ',';
   </script>
 
   {% block extra_head %}{% endblock %}
