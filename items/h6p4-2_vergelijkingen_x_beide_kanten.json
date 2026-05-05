@@ -9,6 +9,7 @@
     "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [2, 8]},
       "c":     {"int": [2, 8], "exclude": ["a"]},
@@ -24,6 +25,7 @@
     "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [-8, -2]},
       "c":     {"int": [-8, -2], "exclude": ["a"]},
@@ -39,6 +41,7 @@
     "sympy_str": "{{a}} + {{b}}*x = {{c}}*x + {{d}}",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [-8, -2]},
       "c":     {"int": [2, 8]},
@@ -54,6 +57,7 @@
     "sympy_str": "{{a}}*t + {{b}} = {{c}}*t + {{d}}",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [-8, -2]},
       "c":     {"int": [-8, -2], "exclude": ["a"]},
@@ -69,6 +73,7 @@
     "sympy_str": "{{a}} - {{b}}*x = {{c}} - {{d}}*x",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [2, 8]},
       "b":     {"int": [2, 8]},
@@ -84,6 +89,7 @@
     "sympy_str": "{{a}}*k - {{a}} = {{a}} - {{a}}*k",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [2, 8]},
       "k_sol": "1"
@@ -96,6 +102,7 @@
     "sympy_str": "-{{b}} - {{a}}*x = -{{c}} - {{d}}*x",
     "goal": "solve_equation",
     "is_crisis": false,
+    "show_kan_niet": true,
     "params": {
       "a":     {"int": [2, 8]},
       "b":     {"int": [2, 8]},
@@ -106,30 +113,29 @@
   },
   {
     "id": "q8_crisis",
-    "form": "ax + b = cx + d (b,d fractions)",
-    "display": "{{a}}x {{b:frac_term}} = {{c}}x {{d:frac_term}}",
+    "form": "ax + b = cx + d",
+    "display": "{{a:frac}}x {{b:term}} = {{c:frac}}x {{d:term}}",
     "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
     "goal": "solve_equation",
+    "no_solution": true,
+    "show_kan_niet": true,
     "is_crisis": true,
     "post_crisis": {
-      "explanation": "Wanneer je een vergelijking met breuken hebt, is het vaak handiger de breuken eerst weg te werken! Je kan dit doen door beide kanten met hetzelfde getal te vermenigvuldigen.",
+      "explanation": "Niet alle vergelijkingen hebben een oplossing. Door de balansmethode te gebruiken verdwijnt de variabele helemaal en je eindigt met een onmogelijke vergelijking. Dan weet je dat er geen oplossing is.",
       "explanation_latex": [
         "\\begin{array}{l}",
-        "\\frac{1}{3}x + \\frac{2}{6} = -\\frac{3}{4}x + 2 \\\\ \\\\",
-        "\\text{Alles met 12 vermenigvuldigen} \\\\ \\\\",
-        "4x + 4 = -9x + 24 \\\\",
-        "13x + 4 = 24 \\\\",
-        "13x = 20 \\\\",
-        "x = \\frac{20}{13}",
+        "3x + 2 = 3x + 5 \\\\ \\\\",
+        "2 = 5",
+        "\\\\ \\\\",
+        "\\text{2 en 5 zijn niet hetzelfde, dus er is geen oplossing!}",
         "\\end{array}"
       ]
     },
     "params": {
-      "a":     {"int": [2, 8]},
-      "c":     {"int": [2, 8], "exclude": ["a"]},
-      "b":     {"fraction": {"lcd": 6}},
-      "d":     {"fraction": {"lcd": 6, "negative": true, "exclude_noemer": ["b"]}},
-      "x_sol": "(d - b) / (a - c)"
+      "a": {"fraction": {"lcd": 6}},
+      "c": "a",
+      "b": {"int": [2, 8]},
+      "d": {"int": [4, 10]}
     }
   },
   {
@@ -138,6 +144,7 @@
     "display": "{{a:frac}}x {{b:term}} = -{{c:frac}}x {{d:term}}",
     "sympy_str": "{{a}}*x + {{b}} = -{{c}}*x + {{d}}",
     "goal": "solve_equation",
+    "show_kan_niet": true,
     "is_crisis": false,
     "params": {
       "a":     {"fraction": {"lcd": 10}},
@@ -153,6 +160,7 @@
     "display": "{{a:frac}}x {{b:frac_term}} = {{c:frac}}x {{d:frac_term}}",
     "sympy_str": "{{a}}*x + {{b}} = {{c}}*x + {{d}}",
     "goal": "solve_equation",
+    "show_kan_niet": true,
     "is_crisis": false,
     "params": {
       "a":     {"fraction": {"lcd": 12}},
@@ -163,18 +171,19 @@
     }
   },
   {
-    "id": "q11_post",
+    "id": "q11_crisis_2",
     "form": "b - ax = cx - d (a,b,c,d fractions)",
     "display": "{{b:frac}} - {{a:frac}}x = {{c:frac}}x - {{d:frac}}",
     "sympy_str": "{{b}} - {{a}}*x = {{c}}*x - {{d}}",
     "goal": "solve_equation",
+    "show_kan_niet": true,
+    "no_solution": true,
     "is_crisis": false,
     "params": {
       "a":     {"fraction": {"lcd": 6}},
       "b":     {"fraction": {"lcd": 4}},
-      "c":     {"fraction": {"lcd": 6, "exclude_noemer": ["a"]}},
-      "d":     {"fraction": {"lcd": 4, "exclude_noemer": ["b"]}},
-      "x_sol": "(b + d) / (a + c)"
+      "c":     "-1 * a",
+      "d":     {"fraction": {"lcd": 4, "exclude_noemer": ["b"]}}
     }
   },
   {
@@ -183,6 +192,7 @@
     "display": "-{{b:frac}} - {{a:frac}}x = -{{c:frac}}x - {{d:frac}}",
     "sympy_str": "-{{b}} - {{a}}*x = -{{c}}*x - {{d}}",
     "goal": "solve_equation",
+    "show_kan_niet": true,
     "is_crisis": false,
     "params": {
       "a":     {"fraction": {"lcd": 12}},

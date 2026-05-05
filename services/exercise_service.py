@@ -119,6 +119,8 @@ def get_expected_answer(item: dict) -> str | list[str | None] | None:
     Return the expected answer in LaTeX for an item.
     Multi-part items return a list, one entry per part.
     """
+    if item.get('no_solution'):
+        return r'\text{geen oplossing}'
     if 'parts' in item:
         results = []
         for part in item['parts']:
@@ -129,6 +131,16 @@ def get_expected_answer(item: dict) -> str | list[str | None] | None:
     return goal_class.get_expected_answer(item) if goal_class else None
 
 def check_step(item: dict, prev_step: str, step_input: str) -> CheckResult:
+    if step_input == "KAN_NIET":
+        if item.get('no_solution'):
+            return CheckResult(is_correct=True, is_complete=True, is_intermediate=False,
+                               status=StepStatus.COMPLETE.name,
+                               message="Juist! De vergelijking heeft geen oplossing.",
+                               error_id=None)
+        return CheckResult(is_correct=False, is_complete=False, is_intermediate=False,
+                           status=StepStatus.INCORRECT.name,
+                           message="Deze vergelijking heeft wel een oplossing.",
+                           error_id=None)
     goal = GOALS[item['goal']](item_context=item)
     raw = goal.check_step(prev_step, step_input)
     return CheckResult(

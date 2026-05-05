@@ -519,6 +519,9 @@
   <button class="btn btn-secondary" onclick="insertOr()" title='Voeg "of" in (∨)'>&nbsp;∨</button>
   {% endif %}
   <button class="btn" id="submit-btn" onclick="submitSelftest()">Antwoord controleren</button>
+  {% if item.show_kan_niet %}
+  <button class="btn" id="kan-niet-btn" onclick="submitKanNietSelftest()">Geen oplossingen</button>
+  {% endif %}
   {% if input_hint %}
   <button class="btn-hint" onclick="openHintModal()">Wat moet ik invullen?</button>
   {% endif %}
@@ -584,6 +587,33 @@
 
   function insertOr() { mf.insert('\\vee'); mf.focus(); }
 
+  {% if item.show_kan_niet %}
+  function submitKanNietSelftest() {
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('kan-niet-btn').disabled = true;
+    fetch('/selftest_check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers: ['KAN_NIET'] }),
+    })
+    .then(r => r.json())
+    .then(data => {
+      const r = data.results[0];
+      document.getElementById('input-area').style.display = 'none';
+      document.getElementById('selftest-result').style.display = 'block';
+      const rowEl = document.getElementById('result-row');
+      rowEl.textContent = r.is_correct ? '✓ Juist!' : '✗ Niet correct.';
+      rowEl.className = 'selftest-result-row ' + (r.is_correct ? 'correct' : 'incorrect');
+      if (!r.is_correct && r.expected_answer_latex) {
+        document.getElementById('expected-row').style.display = 'block';
+        katex.render(r.expected_answer_latex, document.getElementById('expected-display'), {
+          throwOnError: false, displayMode: false,
+        });
+      }
+    });
+  }
+  {% endif %}{# show_kan_niet #}
+
   mf.addEventListener('keydown', e => { if (e.key === 'Enter') submitSelftest(); });
   mf.focus();
 </script>
@@ -638,6 +668,9 @@
   <button class="btn" onclick="checkStep()">Controleer antwoord</button>
   {% else %}
   <button class="btn" onclick="checkStep()">Controleer stap</button>
+  {% endif %}
+  {% if item.show_kan_niet %}
+  <button class="btn" id="kan-niet-btn" onclick="submitKanNiet()">Geen oplossingen</button>
   {% endif %}
   {% if input_hint %}
   <button class="btn-hint" onclick="openHintModal()">Wat moet ik invullen?</button>
@@ -763,6 +796,27 @@
   mf.addEventListener('keydown', e => {
     if (e.key === 'Enter') checkStep();
   });
+
+  {% if item.show_kan_niet %}
+  function submitKanNiet() {
+    fetch('/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ step: 'KAN_NIET' }),
+    })
+    .then(r => r.json())
+    .then(data => {
+      addStepToHistory('\\text{geen oplossing}', data.is_correct);
+      if (data.status === 'COMPLETE' || data.status === 'PHASE_COMPLETE') {
+        showFeedback(data.message || 'Goed gedaan! Volgende opgave...', 'ok');
+        document.getElementById('input-area').style.display = 'none';
+        setTimeout(() => location.reload(), 1800);
+        return;
+      }
+      showFeedback(data.message || 'Niet correct.', 'error');
+    });
+  }
+  {% endif %}{# show_kan_niet #}
 
   mf.focus();
 </script>
