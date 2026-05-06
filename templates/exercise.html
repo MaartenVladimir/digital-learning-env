@@ -813,6 +813,12 @@
         setTimeout(() => location.reload(), 1800);
         return;
       }
+      if (data.status === 'RETRY') {
+        showFeedback(data.message, 'ok');
+        document.getElementById('input-area').style.display = 'none';
+        setTimeout(() => location.reload(), 2000);
+        return;
+      }
       showFeedback(data.message || 'Niet correct.', 'error');
     });
   }

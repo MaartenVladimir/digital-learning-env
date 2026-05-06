@@ -316,7 +316,7 @@ def selftest_check():
                 mod.get('log_steps', False),
             )
             results.append({
-                'is_correct': result.is_correct,
+                'is_correct': result.is_complete,
                 'expected_answer_latex': exercise.get_expected_answer(part),
             })
     else:
@@ -328,7 +328,7 @@ def selftest_check():
             mod.get('log_steps', False),
         )
         results.append({
-            'is_correct': result.is_correct,
+            'is_correct': result.is_complete,
             'expected_answer_latex': exercise.get_expected_answer(item),
         })
 
