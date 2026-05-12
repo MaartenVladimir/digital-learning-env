@@ -69,6 +69,9 @@
       <button class="btn-insert" data-sym="2" title="Optellen">+</button>
       <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
     </div>
+    {% if input_hint and input_hint[loop.index0] %}
+    <button class="btn-hint" onclick="openHintModal({{ loop.index0 }})">Wat moet ik invullen?</button>
+    {% endif %}
   </div>
   <div id="part-result-{{ loop.index0 }}" class="selftest-result-row" style="display:none"></div>
   <div id="part-expected-{{ loop.index0 }}" class="selftest-expected" style="display:none">
@@ -79,9 +82,6 @@
 
 <div id="submit-area">
   <button class="btn" id="submit-btn" onclick="submitSelftest()">Antwoord controleren</button>
-  {% if input_hint %}
-  <button class="btn-hint" onclick="openHintModal(0)">Wat moet ik invullen?</button>
-  {% endif %}
 </div>
 <div id="next-area" style="display:none">
   <button class="btn" onclick="location.reload()">Volgende vraag</button>

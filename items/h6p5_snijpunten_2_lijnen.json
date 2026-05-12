@@ -24,6 +24,12 @@
         "y = 6 + 1 \\\\",
         "y = 7",
         "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+        "y = 7",
+        "\\end{array}"
       ]
     }
   ],
@@ -55,6 +61,12 @@
         "\\text{Vul je berekening stap voor stap in.} \\\\",
         "y = 3 \\cdot 2 + 1 \\\\",
         "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
         "y = 7",
         "\\end{array}"
       ]
@@ -90,6 +102,12 @@
         "y = 6 + 1 \\\\",
         "y = 7",
         "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+        "y = 7",
+        "\\end{array}"
       ]
     }
   ],
@@ -123,6 +141,12 @@
         "y = 6 + 1 \\\\",
         "y = 7",
         "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+        "y = 7",
+        "\\end{array}"
       ]
     }
   ],
@@ -154,6 +178,12 @@
         "\\text{Vul je berekening stap voor stap in.} \\\\",
         "y = 3 \\cdot 2 + 1 \\\\",
         "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
         "y = 7",
         "\\end{array}"
       ]
@@ -190,6 +220,12 @@
         "y = 6 + 1 \\\\",
         "y = 7",
         "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+        "y = 7",
+        "\\end{array}"
       ]
     }
   ],
@@ -224,6 +260,12 @@
         "\\text{Vul je berekening stap voor stap in.} \\\\",
         "y = 3 \\cdot 2 + 1 \\\\",
         "y = 6 + 1 \\\\",
+        "y = 7",
+        "\\end{array}"
+      ],
+      "selftest_input_hint": [
+        "\\begin{array}{l}",
+        "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
         "y = 7",
         "\\end{array}"
       ]
