@@ -68,6 +68,8 @@
       <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
       <button class="btn-insert" data-sym="2" title="Optellen">+</button>
       <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+      <button class="btn-insert" data-sym="4" title="Haakjes">(  )</button>
+      <button class="btn-insert" data-sym="5" title="Macht">x<sup>n</sup></button>
     </div>
     {% if input_hint and input_hint[loop.index0] %}
     <button class="btn-hint" onclick="openHintModal({{ loop.index0 }})">Wat moet ik invullen?</button>
@@ -182,7 +184,7 @@
     });
   }
 
-  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-', '\\left(#?\\right)', '^{#?}'];{% endraw %}
   document.querySelectorAll('.insert-bar').forEach(bar => {
     const partIdx = parseInt(bar.dataset.part);
     bar.querySelectorAll('.btn-insert').forEach(btn => {
@@ -240,6 +242,8 @@
       <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
       <button class="btn-insert" data-sym="2" title="Optellen">+</button>
       <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+      <button class="btn-insert" data-sym="4" title="Haakjes">(  )</button>
+      <button class="btn-insert" data-sym="5" title="Macht">x<sup>n</sup></button>
     </div>
     <br>
     {% if part.goal == 'direct_answer' %}
@@ -459,7 +463,7 @@
   });
   {% endfor %}
 
-  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-', '\\left(#?\\right)', '^{#?}'];{% endraw %}
   document.querySelectorAll('.insert-bar').forEach(bar => {
     const partIdx = parseInt(bar.dataset.part);
     bar.querySelectorAll('.btn-insert').forEach(btn => {
@@ -513,6 +517,8 @@
     <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
     <button class="btn-insert" data-sym="2" title="Optellen">+</button>
     <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+    <button class="btn-insert" data-sym="4" title="Haakjes">(  )</button>
+    <button class="btn-insert" data-sym="5" title="Macht">x<sup>n</sup></button>
   </div>
   <br>
   {% if item.goal == 'solve_quadratic_equation' %}
@@ -577,7 +583,7 @@
     });
   }
 
-  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-', '\\left(#?\\right)', '^{#?}'];{% endraw %}
   document.querySelectorAll('.insert-bar .btn-insert').forEach(btn => {
     btn.addEventListener('click', () => {
       mf.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
@@ -659,6 +665,8 @@
     <button class="btn-insert" data-sym="1" title="Vermenigvuldigen">×</button>
     <button class="btn-insert" data-sym="2" title="Optellen">+</button>
     <button class="btn-insert" data-sym="3" title="Aftrekken">−</button>
+    <button class="btn-insert" data-sym="4" title="Haakjes">(  )</button>
+    <button class="btn-insert" data-sym="5" title="Macht">x<sup>n</sup></button>
   </div>
   <br>
   {% if item.goal == 'solve_quadratic_equation' %}
@@ -780,7 +788,7 @@
     });
   }
 
-  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-'];{% endraw %}
+  {% raw %}const _INSERT_SYMS = ['\\frac{#?}{#?}', '\\cdot', '+', '-', '\\left(#?\\right)', '^{#?}'];{% endraw %}
   document.querySelectorAll('.insert-bar .btn-insert').forEach(btn => {
     btn.addEventListener('click', () => {
       mf.insert(_INSERT_SYMS[parseInt(btn.dataset.sym)]);
