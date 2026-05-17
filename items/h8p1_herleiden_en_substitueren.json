@@ -107,9 +107,9 @@
   },
   {
     "id": "q5_pre",
-    "context": "3ab + b^2  - {{c1}}ab",
+    "context": "3a + b^2  - {{c1}}a",
     "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
-    "sympy_str": "3*a * b + b**2 - {{c1}}*a * b",
+    "sympy_str": "3*a + b**2 - {{c1}}*a",
     "goal": "simplify_expression",
     "is_crisis": false,
     "params": {
