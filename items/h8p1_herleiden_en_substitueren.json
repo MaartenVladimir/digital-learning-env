@@ -30,34 +30,6 @@
   },
   {
     "id": "q2_pre",
-    "context": "{{a:frac}}x - x^2",
-    "display": "\\text{Substitueer } x = {{n}} \\text{ en herleid stap voor stap.}",
-    "sympy_str": "{{a}}*{{n}} - {{n}}**2",
-    "goal": "simplify_expression",
-    "is_crisis": false,
-    "params": {
-      "n": {"int": [2, 4]},
-      "q": {"int": [2, 4], "step": 2},
-      "a": "1/q"
-      },
-    "input_hint": [
-      "\\begin{array}{l}",
-      "\\text{Vul je antwoord stap voor stap in.} \\\\",
-      "3 \\cdot 2^2 - 4\\\\",
-      "3 \\cdot 4 - 4 \\\\",
-      "12 - 4 \\\\",
-      "8",
-      "\\end{array}"
-    ],
-    "selftest_input_hint": [
-      "\\begin{array}{l}",
-      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
-      "8a + 1 \\text{    of    } 8",
-      "\\end{array}"
-    ]
-  },
-  {
-    "id": "q3_pre",
     "context": "(x - {{a}})^2",
     "display": "\\text{Substitueer } x = {{n}} \\text{ en herleid stap voor stap.}",
     "sympy_str": "({{n}} - {{a}})**2",
@@ -80,6 +52,242 @@
       "\\begin{array}{l}",
       "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
       "8a + 1 \\text{    of    } 8",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q3_pre",
+    "context": "x^2",
+    "display": "\\text{Substitueer } x = {{x}} \\text{ en herleid stap voor stap.}",
+    "sympy_str": "{{x}}**2",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "x": {"int": [-4, -2]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in. Bijvoorbeeld:} \\\\",
+      "(-5)^2\\\\",
+      "25",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "8",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q4_pre",
+    "context": "3a^3 - 2a^2",
+    "display": "\\text{Substitueer } a = {{a}} \\text{ en herleid stap voor stap.}",
+    "sympy_str": "3*{{a}}**3 - 2*{{a}}**2",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": "-2"
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3 \\cdot (-2)^2 - 2 \\cdot (-2) \\\\",
+      "3 \\cdot 4 - 2 \\cdot (-2) \\\\",
+      "12 + 4 \\\\",
+      "16",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "16",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q5_pre",
+    "context": "3ab + b^2  - {{c1}}ab",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "3*a * b + b**2 - {{c1}}*a * b",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "c1"  : {"int": [5, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in. Bijvoorbeeld:} \\\\",
+      "2a - 4a \\\\",
+      "-2a \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "2a + b^2",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q6_pre",
+    "context": "{{c3}} - 5p^2 - 6pq + {{c2}}p^2 -1 + {{c1}}pq",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c3}} - 5*p**2 - 6*p*q + {{c2}}*p**2 - 1 + {{c1}}*p*q",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "c1"  : {"int": [2, 4]},
+      "c2"  : {"int": [2, 4]},
+      "c3"  : {"int": [4, 10]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in. Bijvoorbeeld:} \\\\",
+      "3b - a^2 + 5b + 6a^2 \\\\",
+      "8b - a^2 + 6a^2 \\\\",
+      "8b + 5a^2 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "2a + b^2",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q7_pre",
+    "context": "{{c1}}a \\cdot {{c2}}a",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c1}}*a * {{c2}}*a",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "c1"  : {"int": [-5, -2]},
+      "c2"  : {"int": [-10, -8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "a \\cdot 2a + 4b \\\\",
+      "2a^2 + 4b \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "6a^2 + 4b",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q8_crisis",
+    "context": "{{c1}}ab^3 \\cdot a^2 + {{c2}}a^3b^3",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c1}}*a*b**3 * a**2 + {{c2}}*a**3*b**3",
+    "goal": "simplify_expression",
+    "is_crisis": true,
+    "params": {
+      "c1"  : {"int": [4, 8]},
+      "c2"  : {"int": [3, 10]}
+    },
+    "post_crisis": {
+      "explanation": "Bij het vermenigvuldigen van factoren, maakt de volgorde niet uit. Hier kun je gebruik van maken bij het herleiden van uitdrukkingen.",
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        "2ab^3 \\cdot a^2 + a^3b^3\\\\",
+        "= 2 \\cdot a \\cdot a^2 \\cdot b^3 + 1 \\cdot a^3 \\cdot b^3 \\\\",
+        "= 2a^3b^3 + a^3b^3 \\\\",
+        "= 3a^3b^3",
+        "\\end{array}"
+      ]
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "a \\cdot 2a + 4b \\\\",
+      "2a^2 + 4b \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "6a^2 + 4b",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q9_post",
+    "context": "{{c1}}a^2b - 2b \\cdot {{c2}}a^2 - {{c3}}a",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c1}}*a**2*b - 2*b * {{c2}}*a**2 - {{c3}}*a",
+    "goal": "simplify_expression",
+    "params": {
+      "c1"  : {"int": [4, 5]},
+      "c2"  : {"int": [3, 10]},
+      "c3"  : {"int": [3, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "a \\cdot 2a + 4b \\\\",
+      "2a^2 + 4b \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "6a^2 + 4b",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q10_post",
+    "context": "{{c1}}x \\cdot {{c2}}yz - 2q + {{c3}}xyz + 4q",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c1}}*x*y * {{c2}}*z - 2*q + {{c3}}*x*y*z + 4*q",
+    "goal": "simplify_expression",
+    "params": {
+      "c1"  : {"int": [4, 5]},
+      "c2"  : {"int": [3, 10]},
+      "c3"  : {"int": [3, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "a \\cdot 2a + 4b \\\\",
+      "2a^2 + 4b \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "6a^2 + 4b",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q11_post",
+    "context": "{{c1}}x^2 \\cdot 3x^3 - 2x \\cdot 5x^4 + {{c2}}x^4",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{c1}}*x**2*3*x**3 - 2*x*5*x**4 + {{c2}}*x**4",
+    "goal": "simplify_expression",
+    "params": {
+      "c1"  : {"int": [4, 5]},
+      "c2"  : {"int": [3, 10]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "a \\cdot 2a + 4b \\\\",
+      "2a^2 + 4b \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "6a^2 + 4b",
       "\\end{array}"
     ]
   }
