@@ -98,6 +98,17 @@ def toggle_module(class_id, module_id):
     return redirect(url_for('admin.klas', class_id=class_id))
 
 
+# Student progress routing
+
+@bp.route('/class/<class_id>/progress')
+@admin_required
+def student_progress(class_id):
+    data = admin_service.get_student_progress_overview(class_id)
+    if not data:
+        return redirect(url_for('admin.dashboard'))
+    return render_template('admin_student_progress.html', **data)
+
+
 # Data inspection routing
 
 @bp.route('/data')

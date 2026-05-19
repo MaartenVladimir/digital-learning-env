@@ -435,6 +435,46 @@ def get_sessions(module_id: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def get_class_item_completion(class_id: str) -> list[dict]:
+    """
+    Completed question count per (student_pk, module_id) for a whole class.
+    A question counts as done only when it has at least one completed session
+    """
+    with _conn() as conn:
+        rows = conn.execute(
+            """
+            WITH item_status AS (
+                SELECT i.student_pk, i.module_id, i.item_id,
+                       MAX(i.completed_at IS NOT NULL) AS has_complete,
+                       MAX(i.completed_at IS NULL)     AS has_open
+                FROM item_sessions i
+                JOIN students s ON s.pk = i.student_pk
+                WHERE s.class_id = ?
+                GROUP BY i.student_pk, i.module_id, i.item_id
+            )
+            SELECT student_pk, module_id, COUNT(*) AS completed_count
+            FROM item_status
+            WHERE has_complete = 1 AND has_open = 0
+            GROUP BY student_pk, module_id
+            """,
+            (class_id,)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def get_class_module_progress(class_id: str) -> list[dict]:
+    """All module_progress rows for every student in a class."""
+    with _conn() as conn:
+        rows = conn.execute(
+            """SELECT s.pk AS student_pk, mp.module_id, mp.status
+               FROM module_progress mp
+               JOIN students s ON s.pk = mp.student_pk
+               WHERE s.class_id = ?""",
+            (class_id,)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
 def get_steps(session_id: int) -> list[dict]:
     """All step inputs for a given item session."""
     with _conn() as conn:

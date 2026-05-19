@@ -4,7 +4,10 @@
 
 <div class="admin-header">
   <h2>{{ klas.name }} <code class="klas-id">{{ klas.id }}</code></h2>
-  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">← Terug</a>
+  <div>
+    <a href="{{ url_for('admin.student_progress', class_id=klas.id) }}" class="btn btn-secondary">Voortgang leerlingen</a>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">← Terug</a>
+  </div>
 </div>
 
 <!-- Students -->

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Voortgang — {{ klas.name }}{% endblock %}
+{% block content %}
+
+<style>
+  body { max-width: 1400px; }
+
+  .progress-table { font-size: 0.85em; }
+  .progress-table th, .progress-table td { padding: 7px 10px; white-space: nowrap; }
+
+  .progress-table thead tr:first-child th {
+    border-bottom: 1px solid #e0e0e0;
+    color: #444;
+    font-weight: 600;
+    background: #f7f7f7;
+  }
+
+  .progress-table thead tr:last-child th {
+    font-size: 0.85em;
+    color: #888;
+    font-weight: 500;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .mod-header { max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+
+  .prog-cell { text-align: center; }
+
+  .prog-done   { color: #1a6b2a; font-weight: 600; }
+  .prog-busy   { color: #856404; }
+  .prog-empty  { color: #bbb; }
+
+  .selftest-entry { line-height: 1.8; }
+  .attempt-n { font-size: 0.8em; color: #999; margin-left: 2px; }
+
+  .fraction { font-variant-numeric: tabular-nums; }
+</style>
+
+<div class="admin-header">
+  <h2>Voortgang <span class="klas-id">{{ klas.name }}</span></h2>
+  <a href="{{ url_for('admin.klas', class_id=klas.id) }}" class="btn btn-secondary">← Klas</a>
+</div>
+
+{% if not modules %}
+  <p class="admin-empty" style="margin-top: 24px;">Geen modules toegevoegd aan deze klas.</p>
+{% elif not students %}
+  <p class="admin-empty" style="margin-top: 24px;">Geen leerlingen in deze klas.</p>
+{% else %}
+<div class="admin-section" style="overflow-x: auto; padding-top: 0; border-top: none; margin-top: 16px;">
+  <table class="admin-table progress-table">
+    <thead>
+      <tr>
+        <th rowspan="2">Leerling</th>
+        <th rowspan="2">Groep</th>
+        {% for m in modules %}
+          <th colspan="2" class="mod-header" title="{{ m.id }}">{{ m.title }}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for m in modules %}
+          <th class="prog-cell">Module</th>
+          <th class="prog-cell">Test jezelf</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for student in students %}
+      <tr>
+        <td><code>{{ student.id }}</code></td>
+        <td>
+          <span class="badge {% if student.group_name == 'treatment' %}badge-treatment{% else %}badge-control{% endif %}">
+            {{ student.group_name }}
+          </span>
+        </td>
+
+        {% for m in modules %}
+          {% set info = student.modules[m.id] %}
+
+          {# ── Regular module column ── #}
+          <td class="prog-cell">
+            {% if info.status == 'not_started' %}
+              <span class="prog-empty">—</span>
+            {% elif info.status == 'completed' %}
+              <span class="fraction prog-done">{{ info.completed }}/{{ info.total }}</span>
+            {% else %}
+              <span class="fraction prog-busy">{{ info.completed }}/{{ info.total }}</span>
+            {% endif %}
+          </td>
+
+          {# ── Self-test column ── #}
+          <td class="prog-cell">
+            {% if info.selftests %}
+              {% for st in info.selftests %}
+                <div class="selftest-entry">
+                  {% if st.status == 'completed' %}
+                    <span class="fraction prog-done">{{ st.completed }}/{{ st.total }}</span>
+                  {% else %}
+                    <span class="fraction prog-busy">{{ st.completed }}/{{ st.total }}</span>
+                  {% endif %}
+                  {% if info.selftests | length > 1 %}
+                    <span class="attempt-n">({{ st.attempt }})</span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {% else %}
+              <span class="prog-empty">—</span>
+            {% endif %}
+          </td>
+
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock %}
