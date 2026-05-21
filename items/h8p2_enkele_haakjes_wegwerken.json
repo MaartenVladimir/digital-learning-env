@@ -1,0 +1,267 @@
+{
+  "title": "Enkele haakjes wegwerken",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "context": "{{a}}(x+{{b}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "{{a}}*(x+{{b}})",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 8]},
+      "b": {"int": [2, 5]}
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) \\\\",
+      "3x - 3 \\cdot 4 \\\\",
+      "3x - 12",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 12",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q2_pre",
+    "context": "{{a}}({{b}}x - {{c}}x)",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "{{a}}*({{b}}*x - {{c}}*x)",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 8]},
+      "b": {"int": [2, 8]},
+      "c": {"int": [2, 8]}
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) \\\\",
+      "3x - 3 \\cdot 4 \\\\",
+      "3x - 12",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 12",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q3_pre",
+    "context": "-({{a}}x-{{b}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "-({{a}}*x - {{b}})",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [-8, -2]},
+      "b": {"int": [2, 8]}
+      },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) \\\\",
+      "3x - 3 \\cdot 4 \\\\",
+      "3x - 12",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 12",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q4_pre",
+    "context": "{{a}}x - {{b}}(x + {{c}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "{{a}}*x - {{b}}*(x + {{c}})",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [-8, -2]},
+      "b": {"int": [2, 8]},
+      "c": {"int": [2, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q5_pre",
+    "context": "-x - {{a:frac}}({{b}}x - {{c}}) - {{d}}",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "-x - {{a}}*({{b}}*x - {{c}}) - {{d}}",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"fraction": {"lcd": 6}},
+      "b": {"int": [2, 8]},
+      "c": {"int": [2, 8]},
+      "d": {"int": [2, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q6_pre",
+    "context": "-({{a}}x + {{b}}) - {{c}}({{d}}x + {{e}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "-({{a}}*x + {{b}}) - {{c}}*({{d}}*x + {{e}})",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "b": {"int": [2, 6]},
+      "c": {"int": [2, 4], "step": 2},
+      "d": {"int": [2, 6]},
+      "e": {"int": [2, 6]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q7_crisis",
+    "context": "{{a}}(x + y + {{b}})",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "{{a}}*(x + y + {{b}})",
+    "goal": "simplify_expression",
+    "is_crisis": true,
+    "params": {
+      "a": {"int": [2, 4]},
+      "b": {"int": [2, 4]}
+    },
+    "post_crisis": {
+      "explanation": "Haakjes met meer dan twee termen kan je op dezelfde manier wegwerken als bij twee termen. Je kan de haakjes dus wegwerken door elke term in de haakjes te vermenigvuldigen met het getal voor de haakjes. In het voorbeeld vermenigvuldig je dus 3 met x, 3 met y en 3 met 2.",
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        "{\\color{purple}3}({\\color{blue}x} + {\\color{red}y} + {\\color{green}2}) \\\\ \\\\",
+        "{\\color{purple}3} \\cdot {\\color{blue}x} + {\\color{purple}3} \\cdot {\\color{red}y} + {\\color{purple}3} \\cdot {\\color{green}2} \\\\ \\\\",
+        "3x + 3y + 6",
+        "\\end{array}"
+      ]
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q8_post",
+    "context": "-{{a}}({{b}}-x+y-{{c}}z) - {{d}}y",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "-{{a}}*({{b}} - x + y - {{c}}*z) - {{d}}*y",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "b": {"int": [2, 6]},
+      "c": {"int": [2, 6], "step": 2},
+      "d": {"int": [2, 6]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q9_post",
+    "context": "x({{a}} + {{b}}x - {{c}}y) + {{d}}y(x-y)",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "x*({{a}} + {{b}}*x - {{c}}*y) + {{d}}*y*(x - y)",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "b": {"int": [2, 6]},
+      "c": {"int": [2, 6], "step": 2},
+      "d": {"int": [2, 4], "step": 2}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) + 3 \\\\",
+      "3x - 3 \\cdot 4 + 3 \\\\",
+      "3x - 12 + 3 \\\\", 
+      "3x - 9 \\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 9",
+      "\\end{array}"
+    ]
+  }
+  ]
+}
