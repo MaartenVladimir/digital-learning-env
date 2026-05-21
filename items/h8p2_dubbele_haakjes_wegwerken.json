@@ -1,0 +1,284 @@
+{
+  "title": "Dubbele haakjes wegwerken",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "context": "(a + {{c1}})(b+{{c2}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "(a + {{c1}})(b + {{c2}})",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [1, 3]},
+      "c2": {"int": [2, 3], "exclude": ["c1"]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(a + 4)(b + 5) \\\\",
+      "ab + 5a + 4b + 20",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "ab + 5a + 4b + 20",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q2_pre",
+    "context": "({{c1}}a-{{c2}})({{c3}}a-{{c4}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "({{c1}}*a - {{c2}})*({{c3}}*a - {{c4}})",
+    "goal": "simplify_expression",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [2, 4]},
+      "c2": {"int": [2, 3], "exclude": ["c1"]},
+      "c3": {"int": [2, 4]},
+      "c4": {"int": [2, 3], "exclude": ["c3"]}  
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(a - 1)(3a + 2) \\\\",
+      "3a^2 + 2a - 1 \\cdot 3a - 1 \\cdot 2 \\\\",
+      "3a^2 + 2a - 3a - 2 \\\\",
+      "3a^2 - a - 2",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3a^2 - a - 2",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q3_pre",
+    "context": "({{c1}}x - {{c2}}) \\cdot {{c3}}",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "({{c1}}*x - {{c2}})*{{c3}}",
+    "goal": "simplify_expression",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [2, 4]},
+      "c2": {"int": [3, 5], "exclude": ["c1"]},
+      "c3": {"int": [2, 4]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 4) \\\\",
+      "3x - 3 \\cdot 4 \\\\",
+      "3x - 12",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "3x - 12",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q4_pre",
+    "context": "({{c1}} - x)^2",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "({{c1}} - x)**2",
+    "goal": "simplify_expression",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [1, 2]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(3 - x)(2 - x) \\\\",
+      "6 - 3x - 2x + x^2 \\\\",
+      "x^2 - 5x + 6",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x^2 - 5x + 6",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q5_pre",
+    "context": "({{c1}}x +{{c2}})({{c3}}x+{{c4}}) - {{c5}}x",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "({{c1}}*x + {{c2}})*({{c3}}*x + {{c4}}) - {{c5}}*x",
+    "goal": "simplify_expression",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [2, 4]},
+      "c2": {"int": [1, 4], "exclude": ["c1"]},
+      "c3": {"int": [2, 4]},
+      "c4": {"int": [1, 4], "exclude": ["c3"]},
+      "c5": {"int": [4, 10]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(x + 3)(x + 2) \\\\",
+      "x^2 + 2x + 3x + 6 \\\\",
+      "x^2 + 5x + 6\\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x^2 + 5x + 6",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q6_pre",
+    "context": "-(x+{{c1}})(x-{{c1}})",
+    "display": "\\text{Herleid en schrijf zo kort mogelijk.}",
+    "sympy_str": "-(x + {{c1}})*(x - {{c1}})",
+    "goal": "simplify_expression",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [1, 3]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(x + 3)(x + 2) \\\\",
+      "x^2 + 2x + 3x + 6 \\\\",
+      "x^2 + 5x + 6\\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x^2 + 5x + 6",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q7_pre",
+    "context": "{{c1}}(x - 1) = {{c2}}",
+    "display": "\\text{Werk de haakjes weg en los op.}",
+    "sympy_str": "{{c1}}*(x - 1) = {{c2}}",
+    "goal": "solve_equation",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [1, 3]},
+      "c2": "4 * c1"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "6(x - 1) = 12 \\\\",
+      "6x - 6 = 12 \\\\",
+      "6x = 18 \\\\",
+      "x = 3",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x = 3",      
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q8_pre",
+    "context": "{{c1:frac}}(x - {{c2}}) + {{c4}} = {{c3}}",
+    "display": "\\text{Werk de haakjes weg en los op.}",
+    "sympy_str": "{{c1}}*(x - {{c2}}) + {{c4}} = {{c3}}",
+    "goal": "solve_equation",  
+    "is_crisis": false,
+    "params": {
+      "c1": {"fraction": {"lcd": 6}},
+      "c2": {"int": [6, 24], "step": 6},
+      "c3": {"int": [6, 24]},
+      "c4": "c1 * c2"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "3(x - 1) = 12 \\\\",
+      "3x - 3 = 12 \\\\",
+      "3x = 15 \\\\",
+      "x = 5",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x = 5",      
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q9_crisis",
+    "context": "(x + {{c1}})(x + y - {{c1}})",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "(x + {{c1}})*(x + y - {{c1}})",
+    "goal": "simplify_expression",
+    "is_crisis": true,
+    "params": {
+      "c1": {"int": [1, 3]}
+    },
+    "post_crisis": {
+      "explanation": "Als je bij het dubbele haakjes wegwerken meer dan twee termen in een haakje hebt, dan moet je nogsteeds elke term in het eerste haakje vermenigvuldigen met elke term in het tweede haakje.\n\nIn het voorbeeld is met kleur aangegeven welke termen met elkaar vermenigvuldigd moeten worden. Dit kan je ook met de papagaaienbekmethode uit het boek doen.",
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        "({\\color{blue}x} + {\\color{red}2})({\\color{green}x} + {\\color{orange}y} - {\\color{purple}2}) \\\\ \\\\",
+        "{\\color{blue}x} \\cdot {\\color{green}x} + {\\color{blue}x} \\cdot {\\color{orange}y} - {\\color{blue}x} \\cdot {\\color{purple}2} + {\\color{red}2} \\cdot {\\color{green}x} + {\\color{red}2} \\cdot {\\color{orange}y} - {\\color{red}2} \\cdot {\\color{purple}2} \\\\ \\\\",
+        "x^2 + xy - 2x + 2x + 2y - 4 \\\\ \\\\",
+        "x^2 + xy + 2y - 4",
+        "\\end{array}"
+      ]
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(x + 3)(x + 2) \\\\",
+      "x^2 + 2x + 3x + 6 \\\\",
+      "x^2 + 5x + 6\\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x^2 + 5x + 6",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q10_post",
+    "context": "(-x + {{c1}})(x + y - {{c1}}) + {{c2}}x",
+    "display": "\\text{Herleid de uitdrukking en schrijf deze zo kort mogelijk.}",
+    "sympy_str": "(-x + {{c1}})*(x + y - {{c1}}) + {{c2}}*x",
+    "goal": "simplify_expression",
+    "is_crisis": false,
+    "params": {
+      "c1": {"int": [1, 3]},
+      "c2": {"int": [1, 3]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Vul je antwoord stap voor stap in.} \\\\",
+      "(x + 3)(x + 2) \\\\",
+      "x^2 + 2x + 3x + 6 \\\\",
+      "x^2 + 5x + 6\\\\",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je antwoord in. Bijvoorbeeld:}\\\\[6pt]",
+      "x^2 + 5x + 6",
+      "\\end{array}"
+    ]
+  }
+  ]
+}
