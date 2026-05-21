@@ -168,8 +168,13 @@ def check():
         prev_step  = session.get('current_steps', {})[str(part_index)]
         result     = exercise.check_step(sub_item, prev_step, step_input)
 
-        if not result.is_correct:
-            session['had_error'] = True
+        if not result.is_correct and result.status != 'PARSE_ERROR':
+            consec = session.get('consecutive_errors', 0) + 1
+            session['consecutive_errors'] = consec
+            if consec >= 2:
+                session['had_error'] = True
+        elif result.is_correct:
+            session['consecutive_errors'] = 0
 
         item_session = exercise.record_step(
             student_pk, module_id, item['id'], crisis_phase,
@@ -188,6 +193,7 @@ def check():
             session['parts_done'] = list(parts_done)
 
             if len(parts_done) < len(item['parts']):
+                session['consecutive_errors'] = 0
                 return jsonify({'status': 'PART_COMPLETE', 'is_correct': True, 'message': ''})
 
             # All parts done
@@ -203,9 +209,11 @@ def check():
                 session['current_steps'] = {str(i): part['sympy_str']
                                             for i, part in enumerate(item['parts'])}
                 session['parts_done'] = []
+                session.pop('consecutive_errors', None)
                 return jsonify({'status': 'RETRY', 'is_correct': True,
                                 'message': outcome['message']})
             session.pop('item_retry', None)
+            session.pop('consecutive_errors', None)
 
         return jsonify({
             'status': result.status,
@@ -217,8 +225,13 @@ def check():
     prev_step    = session['current_step']
     result       = exercise.check_step(item, prev_step, step_input)
 
-    if not result.is_correct:
-        session['had_error'] = True
+    if not result.is_correct and result.status != 'PARSE_ERROR':
+        consec = session.get('consecutive_errors', 0) + 1
+        session['consecutive_errors'] = consec
+        if consec >= 2:
+            session['had_error'] = True
+    elif result.is_correct:
+        session['consecutive_errors'] = 0
 
     item_session = exercise.record_step(
         student_pk, module_id, item['id'], crisis_phase,
@@ -239,14 +252,17 @@ def check():
         )
         if outcome['action'] == 'phase_complete':
             session['current_step'] = item['sympy_str']
+            session.pop('consecutive_errors', None)
             return jsonify({'status': 'PHASE_COMPLETE', 'is_correct': True,
                             'message': outcome['message']})
         if outcome['action'] == 'retry':
             session['item_retry'] = outcome['retry_n']
             session['current_step'] = outcome['reset_step']
+            session.pop('consecutive_errors', None)
             return jsonify({'status': 'RETRY', 'is_correct': True,
                             'message': outcome['message']})
         session.pop('item_retry', None)
+        session.pop('consecutive_errors', None)
 
     return jsonify({
         'status': result.status,
