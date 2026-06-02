@@ -1,0 +1,250 @@
+{
+  "title": "Tweeterm ontbinden in factoren",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "context": "{{a}}x + {{c}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "{{a}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 6]},
+      "m": {"int": [2, 6]},
+      "c": "a * m"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q2_pre",
+    "context": "{{c1}}x - {{c2}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "{{c1}}*x - {{c2}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "k": {"int": [2, 5]},
+      "m": {"int": [2, 5]},
+      "c1": "a * k",
+      "c2": "a * m"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q3_pre",
+    "context": "-{{c1}}a - {{c2}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "-{{c1}}*a - {{c2}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "k": {"int": [2, 5]},
+      "m": {"int": [2, 5]},
+      "c1": "a * k",
+      "c2": "a * m"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q4_pre",
+    "context": "{{b}}x^2 - x",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "{{b}}*x**2 - x",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "b": {"int": [2, 8]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q5_pre",
+    "context": "-{{c}}x^{2} + {{a}}x",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "-{{c}}*x**2 + {{a}}*x",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [2, 4]},
+      "m": {"int": [2, 6]},
+      "c": "a * m"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q6_crisis",
+    "context": "x^2 + {{a}}xy + {{b}}x",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{a}}*x*y + {{b}}*x",
+    "goal": "factor_expression",
+    "is_crisis": true,
+    "params": {
+      "a": {"int": [3, 5]},
+      "b": {"int": [2, 4]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ],
+    "post_crisis": {
+      "explanation": "Ook als er in een uitdrukking drie of meer termen staan, kun je een gemeenschappelijke factor buiten haakjes halen. Je zoekt dan de grootste gemeenschappelijke factor van alle termen.",
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        "x^2 + xy + 2x \\\\ \\\\",
+        "{\\color{purple}x} \\cdot {\\color{blue}x} + {\\color{purple}x} \\cdot {\\color{red}y} + {\\color{purple}x} \\cdot {\\color{green}2} \\\\ \\\\",
+        "{\\color{purple}x}({\\color{blue}x} + {\\color{red}y} + {\\color{green}2})",
+         "\\end{array}"
+      ]
+    }
+  },
+  {
+    "id": "q7_post",
+    "context": "{{a}}a^3 + {{b}}a^2 - {{c}}a",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "{{a}}*a**3 + {{b}}*a**2 - {{c}}*a",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "k": {"int": [2, 5]},
+      "a": {"int": [2, 6]},
+      "b": {"int": [2, 6], "exclude": ["a"]},
+      "c": {"int": [2, 6], "exclude": ["a", "b"]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q8_post",
+    "context": "-{{a}}a^6 + {{b}}a^4 - {{c}}a^2",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "-{{a}}*a**6 + {{b}}*a**4 - {{c}}*a**2",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "k": {"int": [2, 5]},
+      "a": {"int": [2, 6]},
+      "b": {"int": [2, 6], "exclude": ["a"]},
+      "c": {"int": [2, 6], "exclude": ["a", "b"]}
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q9_post",
+    "context": "x^6 + x^5 + x^4 + x^2",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**6 + x**5 + x**4 + x**2",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Ontbind de uitdrukking stap voor stap in factoren.} \\\\[6pt]",
+      "4x + 8 \\\\",
+      "4(x + 2)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "3(2x + 3)",
+      "\\end{array}"
+    ]
+  }
+  ]
+}

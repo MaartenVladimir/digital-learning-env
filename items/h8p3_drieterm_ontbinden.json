@@ -1,0 +1,248 @@
+{
+  "title": "Drieterm ontbinden in factoren",
+  "log_steps": true,
+  "items": [
+  {
+    "id": "q1_pre",
+    "context": "x^2 + {{b}}x + {{c}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{b}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "p": {"int": [2, 4]},
+      "q": "p",
+      "b": "p + q",
+      "c": "p * q"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q2_pre",
+    "context": "x^2 + {{b}}x + {{c}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{b}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "p": {"int": [2, 4]},
+      "q": {"int": [2, 4], "exclude": ["p"]},
+      "b": "p + q",
+      "c": "p * q"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q3_pre",
+    "context": "x^2 {{b:term}}x {{c:term}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{b}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "p": {"int": [2, 7]},
+      "q": {"int": [2, 7], "exclude": ["p"]},
+      "b": "p - q",
+      "c": "p * -q"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q4_pre",
+    "context": "x^2 {{b:term}}x {{c:term}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{b}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "p": {"int": [2, 7]},
+      "q": {"int": [2, 7], "exclude": ["p"]},
+      "b": "-p - q",
+      "c": "-p * -q"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q5_pre",
+    "context": "{{b}}x + x^2 {{c:term}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 + {{b}}*x + {{c}}",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "p": {"int": [4, 8]},
+      "q": {"int": [4, 8], "exclude": ["p"]},
+      "b": "p - q",
+      "c": "p * -q"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q6_crisis",
+    "context": "x^2 - {{b}}",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "x**2 - {{b}}",
+    "goal": "factor_expression",
+    "is_crisis": true,
+    "params": {
+      "a": {"int": [3, 6]},
+      "b": "a**2"
+    },
+    "post_crisis": {
+      "explanation": "Deze uitdrukking kan je schrijven als een drieterm. Dan kan je met de product-som methode de uitdrukking ontbinden in factoren.",
+      "explanation_latex": [
+        "\\begin{array}{l}",
+        "x^2 - 16 \\\\ \\\\",
+        "x^2 + 0 \\cdot x - 16 \\\\ \\\\",
+        "\\text{Zoek twee getallen waarvan de som } 0 \\text{ en het product } -16 \\text{ is:} \\\\[6pt]",
+        "(x - 4)(x + 4)",
+        "\\end{array}"
+      ]
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q7_post",
+    "context": "- {{b}} + x^2",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "- {{b}} + x**2",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+      "a": {"int": [3, 5]},
+      "b": "a**2"
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q8_post",
+    "context": "a^2 + 2ab + b^2",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "a**2 + 2*a*b + b**2",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  },
+  {
+    "id": "q9_post",
+    "context": "a^2 - b^2",
+    "display": "\\text{Ontbind de uitdrukking in factoren.}",
+    "sympy_str": "a**2 - b**2",
+    "goal": "factor_expression",
+    "is_crisis": false,
+    "params": {
+    },
+    "input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Gebruik de product-som methode. Voer stap voor stap in.} \\\\[6pt]",
+      "x^2 + 7x + 12 \\\\",
+      "(x + 3)(x + 4)",
+      "\\end{array}"
+    ],
+    "selftest_input_hint": [
+      "\\begin{array}{l}",
+      "\\text{Voer alleen je eindantwoord in. Bijvoorbeeld:} \\\\[6pt]",
+      "(x + 2)(x + 3)",
+      "\\end{array}"
+    ]
+  }
+  ]
+}
