@@ -4,6 +4,7 @@ from algebra_checker.goals.solve_equation import SolveEquationGoal
 from algebra_checker.goals.solve_quadratic_equation import SolveQuadraticEquationGoal
 from algebra_checker.goals.direct_answer import DirectAnswerGoal
 from algebra_checker.goals.simplify_expression import SimplifyExpressionGoal
+from algebra_checker.goals.factor_expression import FactorExpressionGoal
 from algebra_checker.validator import StepStatus
 
 import db
@@ -24,6 +25,7 @@ GOALS = {
     'solve_quadratic_equation': SolveQuadraticEquationGoal,
     'direct_answer': DirectAnswerGoal,
     'simplify_expression': SimplifyExpressionGoal,
+    'factor_expression': FactorExpressionGoal,
 }
 
 def build_seed(student_id: str, retry_n: int) -> str:
